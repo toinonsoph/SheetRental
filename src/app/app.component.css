@@ -1,0 +1,156 @@
+
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', Arial, sans-serif;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden; /* Prevent scrollbars */
+}
+
+/* Body Layout */
+body {
+  display: flex;
+  flex-direction: column;
+  background-color: #f9f9f9; /* Light background */
+}
+
+/* Background Image Section */
+.image-section {
+  position: relative;
+  width: 100%;
+  height: 10vh; /* Match the navbar height */
+  background-image: url('pictures/DeHaan.jpg'); /* Replace with your image path */
+  background-size: cover;
+  background-position: center;
+}
+
+/* Transparent Navbar */
+.navbar {
+  position: absolute; 
+  top: 0;
+  left: 0;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  height: 10vh; 
+  padding: 0 20px;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  z-index: 10; /* Ensure it sits above the image */
+  color: white;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 2vw; 
+}
+
+/* Navbar Logo */
+.navbar-logo img {
+  height: 40px; /* Adjust logo size */
+  width: auto;
+}
+
+/* Navigation Links */
+.custom-tab-bar {
+  display: flex;
+  gap: 20px; /* Space between tabs */
+}
+
+.custom-tab-link {
+  text-decoration: none;
+  color: white; 
+  font-size: 1rem;
+  padding: 10px 15px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.custom-tab-link:hover {
+  background-color: rgba(255, 255, 255, 0.8); /* White background on hover */
+  color: #800020; 
+}
+
+/* Main Content Area */
+.tab-content {
+  position: relative;
+  flex: 1; /* Takes up remaining height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
+  margin: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.tab-content h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.tab-content div {
+  font-size: 1.2rem;
+  color: #555;
+}
+
+.custom-tab-link.mat-tab-link-active {
+  font-weight: bold; /* Make active tab bold */
+  color: #ff6f61; /* Active tab text color */
+}
+
+/* Adjust spacing between logo and tabs */
+.navbar-logo {
+  margin-right: auto; /* Push tabs to the right */
+}
+
+/* Main Content Area */
+.tab-content {
+  position: relative;
+  flex: 1; /* Takes up remaining height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
+  margin: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.tab-content h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.tab-content div {
+  font-size: 1.2rem;
+  color: #555;
+}
+
+/* Footer */
+footer.tab-content--dark {
+  width: 100%; /* Ensure it spans the entire width */
+  margin: 0; /* Remove any margins */
+  padding: 0; /* Remove any padding that adds space */
+  height: 10vh; /* Footer height */
+  background-color: #333; /* Dark gray background */
+  color: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+footer a {
+  color: #f8d030; /* Gold links */
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+footer a:hover {
+  color: #ff6f61; /* Light red on hover */
+}

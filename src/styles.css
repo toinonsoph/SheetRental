@@ -1,1 +1,78 @@
-/* You can add global styles to this file, and also import other style files */
+html, body { height: 100%; }
+body 
+{ 
+    margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; 
+}
+
+/* Always white text for all tabs */
+.mdc-tab__text-label {
+    color: #ffffff !important; /* White text for all tabs */
+}
+
+/* Underline only for the active tab */
+.mat-tab-link.mdc-tab--active .mdc-tab-indicator__content--underline {
+    border-bottom: 2px solid #ffffff; /* White underline for active tab */
+}
+
+/* Remove underline for inactive tabs */
+.mdc-tab-indicator__content--underline {
+    border-bottom: none; /* No underline for inactive tabs */
+}
+
+.mdc-tab__text-label {
+    font-family: 'Roboto', sans-serif;
+}
+
+.tab-content {
+    display: block !important; 
+  }
+  
+  .tab-content h3 {
+    margin-left: 3vw; /* 3% of the viewport width */
+    text-align: left;
+    font-family: 'Roboto', Arial, sans-serif;
+    font-weight: 500;
+    color: darkred !important;
+  }
+
+  .mat-typography .tab-content h2 {
+    text-align: left !important;
+  }
+
+  body.mat-typography {
+    text-align: initial; 
+  }
+  
+  
+/* Remove the line completely */
+.mdc-tab-indicator, .mdc-tab-indicator::before, .mdc-tab-indicator::after {
+  border: none !important;
+  box-shadow: none !important;
+  background: none !important;
+}
+
+.mat-tab-label.mat-tab-label-active {
+  border-bottom: none !important;
+  box-shadow: none !important;
+  background: none !important;
+}
+
+.mat-ink-bar {
+  display: none !important; /* Hides the active indicator */
+}
+
+/* Remove all bottom borders from active tabs */
+.mdc-tab__content, .mdc-tab-bar {
+  border-bottom: none !important;
+}
+
+.mdc-tab-bar, .mdc-tab__content, * {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+*::before, *::after {
+  content: none !important;
+  border: none !important;
+  background: none !important;
+}
