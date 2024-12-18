@@ -154,3 +154,16 @@ footer a {
 footer a:hover {
   color: #ff6f61; /* Light red on hover */
 }
+
+.content-container {
+  display: flex;
+  align-items: center; 
+  gap: 50px; 
+  margin-left: 100px; 
+}
+
+h3 {
+  margin: 0; /* Remove default margin for better alignment */
+  font-size: 1.5em;
+  color: #8b0000; /* Dark red */
+}

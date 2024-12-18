@@ -33,6 +33,7 @@ body
     font-family: 'Roboto', Arial, sans-serif;
     font-weight: 500;
     color: darkred !important;
+    margin-bottom: 3vw;
   }
 
   .mat-typography .tab-content h2 {

@@ -1,0 +1,67 @@
+/* Container for cards */
+.card-container {
+    display: grid; /* Use grid layout */
+    grid-template-columns: repeat(2, 1fr); /* Two equal-width columns */
+    gap: 20px; /* Space between cards */
+    justify-items: center; /* Center cards within the grid cells */
+    padding: 20px; /* Space around the container */
+    max-width: 1000px; /* Limit the maximum width of the grid */
+    margin: 0 auto; /* Center the container */
+  }
+  
+  /* Individual card styling */
+  .card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 15px; /* Smaller padding */
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 90%; /* Smaller width */
+    max-width: 500px; /* Ensure cards are not too wide */
+    box-sizing: border-box;
+    background-color: lightgrey;
+  }
+  
+  .price-circle {
+    width: 50px;
+    height: 50px;
+    background-color: darkred;
+    color: white;
+    font-weight: bold;
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-bottom: 10px;
+  }
+  
+  .card-content .title {
+    font-size: 1em; /* Slightly smaller font size */
+    font-weight: bold;
+    color: black;
+    margin-bottom: 8px;
+  }
+  
+  .card-content .info {
+    font-size: 0.85em;
+    color: #333;
+    line-height: 1.4;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 480px) {
+    .card-container {
+      grid-template-columns: 1fr; /* Single column on smaller screens */
+    }
+  
+    .card {
+      width: 100%;
+    }
+  }
+  

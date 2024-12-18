@@ -1,1 +1,11 @@
-<p>lakens works!</p>
+<div class="card-container">
+<div *ngFor="let card of cards" class="card">
+    <div class="price-circle">€{{ card.price }}</div>
+    <div class="card-content">
+      <p class="title">{{ card.name_dutch }} / {{ card.name_french }} / {{ card.name_german }}</p>
+      <p class="info">{{ card.information_dutch }} </p>
+      <p class="info">{{ card.information_french }} </p>
+      <p class="info">{{ card.information_german }} </p>
+    </div>
+  </div>
+</div>
