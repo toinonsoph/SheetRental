@@ -23,12 +23,15 @@
 <div class="tab-content">
   <!-- Content for 'Lakens' Tab -->
   <div *ngIf="activeLink === 'lakens'">
-    <h3>Lakens / Draps / Bettwäsche</h3>
+    <div class="header-container">
+      <h3>Lakens / Draps / Bettwäsche</h3>
+      <button (click)="openLakensPopup()" class="btn btn-primary">Aanvraag/Commande/Bestellung</button>
+    </div>
     <app-lakens></app-lakens>
   </div>
 
   <!-- Content for 'Vakantiewoningen' Tab -->
-  <div *ngIf="activeLink === 'verhuur'">
+  <div *ngIf="activeLink === 'verhuur'" class="verhuur-container">
     <h3>Vakantiewoningen / Location de maisons de vacances / Vermietung von Ferienhäuser</h3>
     <app-verhuur></app-verhuur>
   </div>

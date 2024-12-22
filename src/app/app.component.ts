@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
@@ -29,4 +29,10 @@ export class AppComponent {
   ];
 
   activeLink = this.links[0].id;
+
+  @ViewChild(LakensComponent) lakensComponent!: LakensComponent;
+
+  openLakensPopup() {
+    this.lakensComponent.openPopup();
+  }
 }

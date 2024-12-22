@@ -1,5 +1,5 @@
 <div class="card-container">
-<div *ngFor="let card of cards" class="card">
+  <div *ngFor="let card of cards" class="card">
     <div class="price-circle">€{{ card.price }}</div>
     <div class="card-content">
       <p class="title">{{ card.name_dutch }} / {{ card.name_french }} / {{ card.name_german }}</p>
@@ -7,5 +7,94 @@
       <p class="info">{{ card.information_french }} </p>
       <p class="info">{{ card.information_german }} </p>
     </div>
+  </div>
+</div>
+
+<div *ngIf="isPopupOpen" class="popup-overlay">
+  <div class="popup">
+    <h4>Aanvraag/Commande/Bestellung</h4>
+    <form (ngSubmit)="submitForm()">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="firstName">Voornaam/Prénom/Vorname:</label>
+          <input
+            id="firstName"
+            type="text"
+            [(ngModel)]="formData.firstName"
+            name="firstName"
+            placeholder="Enter first name"
+            required
+          />
+          <small *ngIf="formSubmitted && !formData.firstName" class="error-text">
+            First Name is required
+          </small>
+        </div>
+
+        <div class="form-group">
+          <label for="lastName">Achternaam/Nom de famille/Nachname:</label>
+          <input
+            id="lastName"
+            type="text"
+            [(ngModel)]="formData.lastName"
+            name="lastName"
+            placeholder="Enter last name"
+            required
+          />
+          <small *ngIf="formSubmitted && !formData.lastName" class="error-text">
+            Last Name is required
+          </small>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="mail">Emailadres/Addresse de courriel/e-Mail-Adresse:</label>
+          <input
+            id="mail"
+            type="email"
+            [(ngModel)]="formData.mail"
+            name="mail"
+            placeholder="Enter email"
+            required
+          />
+          <small *ngIf="formSubmitted && !formData.mail" class="error-text">
+            Email is required
+          </small>
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Telefoonnummer/Numéro de téléphone/Telefonnummer:</label>
+          <input
+            id="phone"
+            type="tel"
+            [(ngModel)]="formData.phone"
+            name="phone"
+            placeholder="Enter phone number"
+            required
+          />
+          <small *ngIf="formSubmitted && !formData.phone" class="error-text">
+            Phone is required
+          </small>
+        </div>
+      </div>
+      <br>
+      <div class="form-group">
+        <div *ngFor="let card of cards" class="quantity-group form-group-horizontal">
+          <label>{{ card.name_dutch }} / {{ card.name_french }} / {{ card.name_german }}:</label>
+          <input
+            type="number"
+            [(ngModel)]="quantities[card.name_dutch]"
+            name="{{ 'quantity_' + card.name_dutch }}"
+            min="0"
+            placeholder="Enter quantity"
+          />
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button type="submit" class="btn btn-red">Verzenden/Envoyer/Senden</button>
+        <button type="button" class="btn btn-red" (click)="closePopup()">Cancel</button>
+      </div>
+    </form>
   </div>
 </div>

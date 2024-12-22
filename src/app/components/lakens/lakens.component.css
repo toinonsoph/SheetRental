@@ -64,4 +64,119 @@
       width: 100%;
     }
   }
-  
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 50%;
+  height: 60%;
+  overflow-y: auto;
+}
+
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.form-group {
+  width: 48%;
+}
+
+.form-group label {
+  font-size: 12px;
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 8px;
+  font-size: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.quantity-group {
+  display: flex; /* Flexbox for horizontal alignment */
+  justify-content: space-between; /* Space between label and input */
+  align-items: center; /* Vertically align label and input */
+  margin-bottom: 15px; /* Add spacing between rows */
+}
+
+.quantity-group label {
+  font-size: 14px; /* Adjust label font size */
+  flex-shrink: 0; /* Prevent label from shrinking */
+}
+
+.quantity-group input {
+  width: 150px; /* Fixed width for inputs */
+  font-size: 14px; /* Adjust input font size */
+  padding: 5px;
+  border: 1px solid #ccc; /* Add border styling */
+  border-radius: 4px; /* Optional: Rounded corners */
+  text-align: right; /* Optional: Align text inside the input */
+}
+
+.form-group-horizontal {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px; /* Add spacing between form groups */
+}
+
+.form-group-horizontal label {
+  flex: 1;
+  margin-right: 20px; /* Adjust the spacing as needed */
+  white-space: nowrap; /* Prevent label from wrapping */
+}
+
+.form-group-horizontal input {
+  flex: 2;
+}
+
+.error-text {
+  color: darkred;
+  font-size: 10px;
+  margin-top: 5px;
+}
+
+.button-group {
+  display: flex; 
+  justify-content: center; 
+  gap: 10px; 
+  margin-top: 40px;
+}
+
+.button-group button {
+  padding: 8px 20px;
+  font-size: 14px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-red {
+  background-color: darkred;
+  color: white;
+}
+
+.btn-red:hover {
+  background-color: #cc0000;
+}
