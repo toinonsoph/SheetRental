@@ -7,7 +7,6 @@ import { LakensComponent } from './components/lakens/lakens.component';
 import { VerhuurComponent } from './components/verhuur/verhuur.component';
 import { AdditionalInfoComponent } from './components/additional-info/additional-info.component';
 
-
 @Component({
   selector: 'app-root',
   standalone: true,

@@ -111,40 +111,45 @@
   font-size: 12px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  text-align: center;
+  padding-right: 20px;
 }
 
 .quantity-group {
-  display: flex; /* Flexbox for horizontal alignment */
-  justify-content: space-between; /* Space between label and input */
-  align-items: center; /* Vertically align label and input */
-  margin-bottom: 15px; /* Add spacing between rows */
+  display: flex; 
+  align-items: center; 
+  margin-bottom: 15px; 
+  justify-content: space-between;
+  width: 100%;
 }
 
 .quantity-group label {
-  font-size: 14px; /* Adjust label font size */
-  flex-shrink: 0; /* Prevent label from shrinking */
+  font-size: 14px;
+  white-space: nowrap;
+  text-align: left;
 }
 
 .quantity-group input {
-  width: 150px; /* Fixed width for inputs */
-  font-size: 14px; /* Adjust input font size */
+  width: 150px; 
+  font-size: 14px; 
   padding: 5px;
-  border: 1px solid #ccc; /* Add border styling */
-  border-radius: 4px; /* Optional: Rounded corners */
-  text-align: right; /* Optional: Align text inside the input */
+  border: 1px solid #ccc; 
+  border-radius: 4px;
+  text-align: center;
+  margin-left: auto;
 }
 
 .form-group-horizontal {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 10px; /* Add spacing between form groups */
+  margin-bottom: 10px; 
 }
 
 .form-group-horizontal label {
   flex: 1;
-  margin-right: 20px; /* Adjust the spacing as needed */
-  white-space: nowrap; /* Prevent label from wrapping */
+  margin-right: 20px; 
+  white-space: nowrap; 
 }
 
 .form-group-horizontal input {
@@ -179,4 +184,18 @@
 
 .btn-red:hover {
   background-color: #cc0000;
+}
+
+.success-message {
+  color: green;
+  font-size: 16px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.error-message {
+  color: red;
+  font-size: 16px;
+  margin-bottom: 20px;
+  text-align: center;
 }

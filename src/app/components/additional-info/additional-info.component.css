@@ -117,4 +117,15 @@
       margin-top: auto;
     }
   }
+
+  .footer-section.contact-info .custom-map-link {
+    text-decoration: none !important;
+    color: inherit !important;
+    display: block !important;
+  }
+  
+  .footer-section.contact-info .custom-map-link:hover {
+    text-decoration: underline !important;
+    color: darkred !important;
+  }
   

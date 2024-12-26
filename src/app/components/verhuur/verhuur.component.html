@@ -1,1 +1,44 @@
-<p>verhuur works!</p>
+<div class="card-container">
+    <div class="card" *ngFor="let card of cards">      
+      <div class="card-content">
+        <h3 class="card-title">{{ card.name }}</h3>
+        <p class="card-type">{{ card.propertyType }}</p>
+        <br>
+        <img 
+          [src]="card.image" 
+          alt="Card image" 
+          class="card-image" 
+          (click)="openImageModal(card.image)" 
+        />
+        <br>
+        <p class="card-address">{{ card.address }}</p>
+        <br>
+        <div class="card-footer">
+          <div class="card-icon">
+            <img src="pictures/people.png" alt="People icon" />
+            <span>{{ card.totalpersons }}</span>
+          </div>
+          <br>
+          <div class="equipment-icons">
+            <img
+              *ngFor="let icon of card.equipmentIcons"
+              [src]="icon"
+              alt="Equipment icon"
+              class="equipment-icon"
+            />
+          </div>
+          <br>
+          <br>
+          <!-- <a [href]="card.link" class="more-info-link">Meer info/Plus d'info/Mehr info</a> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Part to see the picture bigger when clicking on it-->
+  <div *ngIf="selectedImage" class="image-modal">
+    <div class="modal-content">
+      <button class="close-button" (click)="closeImageModal()">×</button>
+      <img [src]="selectedImage" class="modal-image" />
+    </div>
+  </div>
