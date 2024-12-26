@@ -65,10 +65,14 @@ export class LakensComponent implements OnInit {
   }
 
   submitForm() {
+    console.log('Form submitted!'); 
+    console.log(this.isFormValid());
+
     this.formSubmitted = true;
 
     if (this.isFormValid()) {
-      const templateId = 'd-89a05b23f6b146c4a2243e7c485e2260';
+      const templateIdRequest = 'd-b4eb9feefbde4aa4a3ead2460c8c973d';
+      const templateIdReceived = 'd-89a05b23f6b146c4a2243e7c485e2260';
       const dynamicData: any = {
         first_name: this.formData.firstName,
         last_name: this.formData.lastName,
@@ -82,7 +86,7 @@ export class LakensComponent implements OnInit {
         dynamicData[`quantity_${cardKey}`] = this.quantities[card.name_dutch] || 0;
       });
 
-      this.sendGridService.sendEmailWithTemplate(this.formData.mail, templateId, dynamicData).subscribe({
+      this.sendGridService.sendEmailWithTemplate(this.formData.mail, templateIdRequest, dynamicData).subscribe({
         next: () => {
           this.successMessage = 'Message has been sent successfully!';
           this.resetForm();
@@ -90,9 +94,18 @@ export class LakensComponent implements OnInit {
         },
         error: (error) => {
           this.errorMessage = 'An error occured while sending the message. Please try again. {error}';
-          console.error('Error sending email:', error);
+          console.log('Error sending email:', error);
         }
       });
+
+      this.sendGridService.sendEmailWithTemplateWithoutDynamicData('sup.toinon@outlook.com', templateIdReceived).subscribe(
+        (response) => {
+          console.log('Email sent successfully:', response);
+        },
+        (error) => {
+          console.log('Error sending email:', error);
+        }
+      );
     }
   }
 

@@ -110,13 +110,14 @@
   width: 100%;
   padding: 8px;
   font-size: 12px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
   border: 1px solid #ccc;
   border-radius: 4px;
   text-align: center;
   padding-right: 20px;
   border: 1px solid black;
   border-radius: 8px;
-  background-color: #f9f9f9;
+  background-color: #F0F0F0;
   box-sizing: border-box;
 }
 
@@ -132,16 +133,6 @@
   font-size: 14px;
   white-space: nowrap;
   text-align: left;
-}
-
-.quantity-group input {
-  width: 150px; 
-  font-size: 14px; 
-  padding: 5px;
-  border: 1px solid #ccc; 
-  border-radius: 4px;
-  text-align: center;
-  margin-left: auto;
 }
 
 .form-group-horizontal {
@@ -226,8 +217,10 @@ textarea {
   padding: 10px; 
   font-size: 14px; 
   resize: vertical; 
-  background-color: #f9f9f9; 
+  background-color: #F0F0F0; 
   box-sizing: border-box; 
+  font-size: 12px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 h4{
@@ -260,11 +253,24 @@ h4{
   margin-right: 10px; 
 }
 
+.quantity-group input,
 .quantity-box input {
-  width: 200px; 
-  padding: 8px; 
-  font-size: 14px; 
-  border: 1px solid #ccc; 
-  border-radius: 4px; 
-  text-align: center; 
+  width: 150px; /* Adjust as needed */
+  padding: 8px;
+  font-size: 12px !important; /* Ensure font-size is applied */
+  font-family: Verdana, Geneva, Tahoma, sans-serif !important;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-align: center;
+  background-color: #F0F0F0;
+  box-sizing: border-box;
+}
+
+ .quantity-section {
+  border: 2px solid darkred !important; 
+  border-radius: 8px !important; 
+  padding: 15px !important; 
+  margin-bottom: 20px !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+  background-color: #fff !important; 
 }

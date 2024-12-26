@@ -62,7 +62,30 @@ export class SendGridService {
           dynamic_template_data: dynamicData,
         },
       ],
-      from: { email: 'sup.toinon@outlook.com' }, // Replace with a verified sender email
+      from: { email: 'sup.toinon@outlook.com' }, 
+      template_id: templateId, 
+    };
+
+    return this.http.post(this.apiUrl, body, { headers });
+  }
+
+  /**
+   * Sends an email using a predefined SendGrid template without dynamic data.
+   * Requires only recipient email and template ID.
+   */
+  sendEmailWithTemplateWithoutDynamicData(to: string, templateId: string) {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${environment.sendgridApiKey}`, 
+      'Content-Type': 'application/json',
+    });
+
+    const body = {
+      personalizations: [
+        {
+          to: [{ email: to }],
+        },
+      ],
+      from: { email: 'sup.toinon@outlook.com' }, 
       template_id: templateId, 
     };
 
