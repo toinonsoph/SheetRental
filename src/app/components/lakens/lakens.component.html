@@ -18,7 +18,7 @@
     </div>
 </div>
 
-
+<!-- PopUp view -->
 <div *ngIf="isPopupOpen" class="popup-overlay">
   <div class="popup">
     <h4>Aanvraag/Commande/Bestellung</h4>
@@ -87,30 +87,35 @@
         </div>
       </div>
       <br>
-      <div class="form-group">
-        <div *ngFor="let card of cards" class="quantity-group form-group-horizontal">
-          <label>{{ card.name_dutch }} / {{ card.name_french }} / {{ card.name_german }}:</label>        
-          <input
-            type="number"
-            [(ngModel)]="quantities[card.name_dutch]"
-            name="{{ 'quantity_' + card.name_dutch }}"
-            min="0"
-            placeholder="Enter quantity"
-          />
+      <div class="quantity-box">
+        <div class="form-group">
+          <div *ngFor="let card of cards" class="quantity-group form-group-horizontal">
+            <label>{{ card.name_dutch }} / {{ card.name_french }} / {{ card.name_german }}:</label>        
+            <input
+              type="number"
+              [(ngModel)]="quantities[card.name_dutch]"
+              name="{{ 'quantity_' + card.name_dutch }}"
+              min="0"
+              placeholder="Enter quantity"
+            />
+          </div>
         </div>
       </div>
-
-      <div class="form-group">
-        <label for="remark">Opmerking/Remarque/Bemerkung:</label>
-        <input
-          id="remark"
-          type="text"
-          [(ngModel)]="formData.remark"
-          name="remark"
-          placeholder="Enter remark"
-        />
+      <br>
+      <div class="remark-container">
+        <form (ngSubmit)="submitForm()">
+          <div class="form-group">
+            <label for="remark">Opmerking/Remarque/Bemerkung:</label>
+            <textarea
+              id="remark"
+              [(ngModel)]="formData.remark"
+              name="remark"
+              placeholder="Enter remark"
+              rows="3"
+            ></textarea>
+          </div>
+        </form>
       </div>
-
       <div class="button-group">
         <button type="submit" class="btn btn-red">Verzenden/Envoyer/Senden</button>
         <button type="button" class="btn btn-red" (click)="closePopup()">Cancel</button>
