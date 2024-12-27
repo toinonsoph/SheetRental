@@ -1,0 +1,15 @@
+# Angular frontend
+angular-frontend/node_modules/
+angular-frontend/dist/
+angular-frontend/.angular/
+
+# .NET backend
+dotnet-backend/DotNetBackend/bin/
+dotnet-backend/DotNetBackend/obj/
+dotnet-backend/DotNetBackend/*.user
+dotnet-backend/DotNetBackend/*.vs
+
+# System files
+.DS_Store
+*.log
+.vscode/
