@@ -14,8 +14,7 @@ This project includes:
    dotnet build
    dotnet run
 
-
-##Frontend (Angular)
+### Frontend (Angular)
 1. Navigate to angular-frontend.
 2. Install dependencies:
    ```bash
