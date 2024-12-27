@@ -1,6 +1,4 @@
-<div *ngIf="successMessage" class="success-message">
-  {{ successMessage }}
-</div>
+<div *ngIf="successMessage" class="success-message" [innerHTML]="successMessage"></div>
 <div *ngIf="errorMessage" class="error-message">
   {{ errorMessage }}
 </div>
@@ -34,8 +32,8 @@
             placeholder="Enter first name"
             required
           />
-          <small *ngIf="formSubmitted && !formData.firstName" class="error-text">
-            First Name is required
+          <small *ngIf="formSubmitted && !formData.firstName" class="error-text">           
+            Voornaam is verplicht/ Le prénom est obligatoire/ Vorname ist erforderlich
           </small>
         </div>
 
@@ -50,7 +48,7 @@
             required
           />
           <small *ngIf="formSubmitted && !formData.lastName" class="error-text">
-            Last Name is required
+              Achternaam is verplicht/ Le nom de famille est obligatoire/ Nachname ist erforderlich
           </small>
         </div>
       </div>
@@ -67,7 +65,7 @@
             required
           />
           <small *ngIf="formSubmitted && !formData.mail" class="error-text">
-            Email is required
+            Email is verplicht/ L'email est obligatoire/ E-Mail ist erforderlich
           </small>
         </div>
 
@@ -82,7 +80,7 @@
             required
           />
           <small *ngIf="formSubmitted && !formData.phone" class="error-text">
-            Phone is required
+            Telefoonnummer is verplicht/ Le numéro de téléphone est obligatoire/ Telefonnummer ist erforderlich
           </small>
         </div>
       </div>
@@ -105,18 +103,16 @@
       <br>
 
       <div class="remark-container">
-        <form (ngSubmit)="submitForm()">
-          <div class="form-group">
-            <label for="remark">Opmerking/Remarque/Bemerkung:</label>
-            <textarea
-              id="remark"
-              [(ngModel)]="formData.remark"
-              name="remark"
-              placeholder="Enter remark"
-              rows="3"
-            ></textarea>
-          </div>
-        </form>
+        <div class="form-group">
+          <label for="remark">Opmerking/Remarque/Bemerkung:</label>
+          <textarea
+            id="remark"
+            [(ngModel)]="formData.remark"
+            name="remark"
+            placeholder="Enter remark"
+            rows="3"
+          ></textarea>
+        </div>
       </div>
       <div class="button-group">
         <button type="submit" class="btn btn-red">Verzenden/Envoyer/Senden</button>
