@@ -2,7 +2,9 @@ using DotNetBackend.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.WebHost.UseUrls("http://localhost:5200");
+// Use the port from the environment variable "PORT" or default to 5200
+var port = Environment.GetEnvironmentVariable("PORT") ?? "5200";
+builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -33,6 +35,7 @@ var app = builder.Build();
 
 app.UseCors("AllowAngularApp");
 
+// Uncomment HTTPS redirection if you use HTTPS
 // app.UseHttpsRedirection();
 
 app.MapControllers();
