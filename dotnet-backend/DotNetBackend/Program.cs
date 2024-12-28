@@ -22,13 +22,16 @@ builder.Services.AddSingleton(provider =>
     return new SendGridEmailService(apiKey);
 });
 
-// Add CORS for Angular
+// Add CORS for Angular and GitHub Pages
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngularApp", policy =>
-        policy.WithOrigins("http://localhost:4200")
-              .AllowAnyHeader()
-              .AllowAnyMethod());
+        policy.WithOrigins(
+            "http://localhost:4200",                      // Local development
+            "https://toinonsoph.github.io"                // GitHub Pages deployment
+        )
+        .AllowAnyHeader()
+        .AllowAnyMethod());
 });
 
 var app = builder.Build();
