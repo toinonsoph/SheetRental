@@ -1,7 +1,5 @@
 using DotNetBackend.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 
 namespace DotNetBackend.Controllers
 {

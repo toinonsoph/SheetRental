@@ -1,7 +1,5 @@
 using SendGrid;
 using SendGrid.Helpers.Mail;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace DotNetBackend.Services
 {
