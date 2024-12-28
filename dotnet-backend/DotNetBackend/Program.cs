@@ -10,16 +10,8 @@ builder.Services.AddControllers();
 // Add SendGridEmailService with environment variable
 builder.Services.AddSingleton(provider =>
 {
-    // First try to load the API key from the environment variable
     var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
 
-    // If it's not in the environment variable, try to load it from appsettings.json
-    if (string.IsNullOrEmpty(apiKey))
-    {
-        apiKey = builder.Configuration["SendGrid:ApiKey"];
-    }
-
-    // Throw an exception if the key is missing
     if (string.IsNullOrEmpty(apiKey))
     {
         throw new ArgumentNullException(nameof(apiKey), "SendGrid API key is not configured.");

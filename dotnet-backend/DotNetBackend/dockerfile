@@ -1,0 +1,17 @@
+# Use the official .NET runtime as a base image
+FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
+WORKDIR /app
+
+# Use the SDK image to build the app
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+WORKDIR /src
+COPY . .
+WORKDIR /src
+RUN dotnet restore "DotNetBackend.csproj"
+RUN dotnet publish "DotNetBackend.csproj" -c Release -o /app/publish
+
+# Use the runtime image for the final stage
+FROM base AS final
+WORKDIR /app
+COPY --from=build /app/publish .
+ENTRYPOINT ["dotnet", "DotNetBackend.dll"]
