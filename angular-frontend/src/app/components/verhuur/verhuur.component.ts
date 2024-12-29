@@ -92,7 +92,7 @@ export class VerhuurComponent {
             ? this.getImageUrl(matchingImage.name)
             : defaultImageUrl,
           equipmentIcons: equipments.map((equipment: string) =>
-            `assets/pictures/${equipment.replace(/\s+/g, '_').toLowerCase()}.png`
+            `public/pictures/${equipment.replace(/\s+/g, '_').toLowerCase()}.png`
           ),
         };
       });
