@@ -96,11 +96,12 @@ export class VerhuurComponent {
             const iconUrl = this.getIconUrl(iconFileName);
       
             return {
-              name: equipment.replace(/_/g, ' '), 
-              url: iconUrl, 
+              name: equipment.replace(/_/g, ' '),
+              url: iconUrl,
             };
           }),
-      });  
+        }; // Properly close the object returned by `map`
+      }); 
       // Sort cards alphabetically by name
       this.cards.sort((a, b) => a.name.localeCompare(b.name));
     } catch (err) {
