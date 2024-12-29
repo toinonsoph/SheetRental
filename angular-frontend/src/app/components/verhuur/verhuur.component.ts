@@ -152,7 +152,7 @@ export class VerhuurComponent {
   
     // Encode the file name for the URL
     const encodedFileName = encodeURIComponent(fileName);
-  
+    console.log("Generated Icon URL:", url); // Log the URL
     return `${baseUrl}/storage/v1/object/public/${iconBucket}/${encodedFileName}`;
   }
 
