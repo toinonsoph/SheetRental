@@ -31,7 +31,16 @@ jobs:
       run: npm install
 
     - name: Build application
-      run: ng build --prod --output-path=docs --base-href=/
+      run: ng build --configuration production --output-path=docs --base-href=/
       env:
         SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
         SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+
+    - name: Add .nojekyll file
+      run: echo '' > docs/.nojekyll
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: docs
