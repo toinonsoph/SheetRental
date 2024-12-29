@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root', 
 })
 export class SendGridService {
-  private apiUrl = 'https://sheetrentalbackend.onrender.com/api/email'; // Backend API endpoint
+  private apiUrl = 'sheetrentalbackend.onrender.com/api/email'; // Backend API endpoint
 
   constructor(private http: HttpClient) {}
 
