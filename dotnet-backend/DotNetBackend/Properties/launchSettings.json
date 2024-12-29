@@ -5,7 +5,7 @@
     "commandName": "Project",
     "dotnetRunMessages": true,
     "launchBrowser": false,
-    "applicationUrl": "https://sheetrentalbackend.onrender.com",
+    "applicationUrl": "https://sheetrentalbackend.onrender.com/api/email",
     "environmentVariables": {
       "ASPNETCORE_ENVIRONMENT": "Development"
     }
