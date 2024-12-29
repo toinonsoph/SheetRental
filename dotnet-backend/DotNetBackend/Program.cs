@@ -26,9 +26,14 @@ builder.Services.AddSingleton(provider =>
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngularApp", policy =>
-        policy.WithOrigins("http://localhost:4200")
-              .AllowAnyHeader()
-              .AllowAnyMethod());
+    {
+        policy.WithOrigins(
+            "http://localhost:4200", 
+            "https://toinonsoph.github.io" 
+        )
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+    });
 });
 
 var app = builder.Build();
