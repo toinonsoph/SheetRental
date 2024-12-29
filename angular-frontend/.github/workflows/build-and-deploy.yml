@@ -23,11 +23,10 @@ jobs:
       run: npm install
 
     - name: Build Angular app
-      run: ng build --configuration production --output-path=docs --base-href=/
-      # Replace `docs` with `root` if using `/root`
+      run: ng build --configuration production --output-path=root --base-href=/
 
     - name: Add .nojekyll file
-      run: echo '' > docs/.nojekyll # Replace `docs` with `root` if using `/root`
+      run: echo '' > root/.nojekyll # Replace `docs` with `root` if using `/root`
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
