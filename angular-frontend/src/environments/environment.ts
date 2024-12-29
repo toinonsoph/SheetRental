@@ -5,6 +5,6 @@ export const environment = {
     sendgridApiKey: '',
     supabaseStorage: {
       bucket: 'villas_and_apartments',
-      folder: '',
+      iconsBucket: 'icons'
     }
   };

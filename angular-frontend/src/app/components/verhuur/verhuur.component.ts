@@ -75,12 +75,12 @@ export class VerhuurComponent {
             house.name.replace(/\s+/g, '_').toLowerCase()
           )
         );
-  
+      
         // Get equipment for this house
         const equipments = houseEquipments
           .filter((equipment: any) => equipment.housingid === house.id)
           .map((equipment: any) => equipment.equipmentid.name);
-  
+      
         return {
           name: house.name,
           totalpersons: house.totalpersons,
@@ -91,12 +91,16 @@ export class VerhuurComponent {
           image: matchingImage
             ? this.getImageUrl(matchingImage.name)
             : defaultImageUrl,
-          equipmentIcons: equipments.map((equipment: string) =>
-            `/media/pictures/${equipment.replace(/\s+/g, '_').toLowerCase()}.png`
-          ),
-        };
-      });
-  
+          equipmentIcons: equipments.map((equipment: string) => {
+            const iconFileName = `${equipment.replace(/\s+/g, '_').toLowerCase()}.png`;
+            const iconUrl = this.getIconUrl(iconFileName);
+      
+            return {
+              name: equipment.replace(/_/g, ' '), 
+              url: iconUrl, 
+            };
+          }),
+      });  
       // Sort cards alphabetically by name
       this.cards.sort((a, b) => a.name.localeCompare(b.name));
     } catch (err) {
@@ -139,6 +143,29 @@ export class VerhuurComponent {
     const baseUrl = environment.supabaseUrl;
   
     return `${baseUrl}/storage/v1/object/public/${bucket}/default.png`;
+  }
+
+  getIconUrl(fileName: string): string {
+    const iconBucket = environment.supabaseStorage.iconsBucket; // Add your icons bucket name to the environment
+    const baseUrl = environment.supabaseUrl;
+  
+    // Encode the file name for the URL
+    const encodedFileName = encodeURIComponent(fileName);
+  
+    return `${baseUrl}/storage/v1/object/public/${iconBucket}/${encodedFileName}`;
+  }
+
+  onIconError(event: Event, fallbackName: string): void {
+    const target = event.target as HTMLImageElement;
+    if (target) {
+      target.style.display = 'none'; 
+      const parent = target.parentElement;
+      if (parent) {
+        const span = document.createElement('span');
+        span.textContent = fallbackName;
+        parent.appendChild(span);
+      }
+    }
   }
 
   openImageModal(image: string): void {

@@ -20,12 +20,14 @@
           </div>
           <br>
           <div class="equipment-icons">
-            <img
-              *ngFor="let icon of card.equipmentIcons"
-              [src]="icon"
-              alt="Equipment icon"
-              class="equipment-icon"
-            />
+            <div *ngFor="let icon of card.equipmentIcons" class="equipment-icon">
+              <img
+                [src]="icon.url"
+                [alt]="icon.name"
+                (error)="onIconError($event, icon.name)"
+              />
+              <span *ngIf="icon.textVisible">{{ icon.name }}</span>
+            </div>
           </div>
           <br>
           <br>
