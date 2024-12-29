@@ -36,6 +36,7 @@ jobs:
       env:
         SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
         SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+        
 
     - name: Add .nojekyll file
       run: echo '' > docs/.nojekyll
