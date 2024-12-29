@@ -94,6 +94,9 @@ export class VerhuurComponent {
           equipmentIcons: equipments.map((equipment: string) => {
             const iconFileName = `${equipment.replace(/\s+/g, '_').toLowerCase()}.png`;
             const iconUrl = this.getIconUrl(iconFileName);
+
+            console.log("Icon File Name:", iconFileName);
+            console.log("Generated Icon URL:", iconUrl);
       
             return {
               name: equipment.replace(/_/g, ' '),
@@ -147,13 +150,13 @@ export class VerhuurComponent {
   }
 
   getIconUrl(fileName: string): string {
-    const iconBucket = environment.supabaseStorage.iconsBucket; // Add your icons bucket name to the environment
+    const iconBucket = environment.supabaseStorage.iconsBucket; // Icons bucket name
     const baseUrl = environment.supabaseUrl;
   
-    // Encode the file name for the URL
     const encodedFileName = encodeURIComponent(fileName);
+    const url = `${baseUrl}/storage/v1/object/public/${iconBucket}/${encodedFileName}`; // Declare url explicitly
     console.log("Generated Icon URL:", url); // Log the URL
-    return `${baseUrl}/storage/v1/object/public/${iconBucket}/${encodedFileName}`;
+    return url;
   }
 
   onIconError(event: Event, fallbackName: string): void {

@@ -24,7 +24,7 @@
               <img
                 [src]="icon.url"
                 [alt]="icon.name"
-                (error)="onIconError($event, icon.name)"
+                (error)="icon.textVisible = true"
               />
               <span *ngIf="icon.textVisible">{{ icon.name }}</span>
             </div>
