@@ -23,8 +23,7 @@
             "assets": [],
             "styles": [
               "@angular/material/prebuilt-themes/rose-red.css",
-              "src/styles.css",
-              "src/assets/css/style.scss"
+              "src/styles.css"
             ],
             "scripts": []
           },
