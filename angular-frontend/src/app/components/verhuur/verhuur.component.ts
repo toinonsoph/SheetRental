@@ -150,13 +150,7 @@ export class VerhuurComponent {
   }
 
   getIconUrl(fileName: string): string {
-    const bucket = environment.supabaseStorage.iconsBucket; 
-    const baseUrl = environment.supabaseUrl;
-  
-    // Encode file name for use in a URL
-    const encodedFileName = encodeURIComponent(fileName);
-  
-    return `${baseUrl}/storage/v1/object/public/${bucket}/${encodedFileName}`;
+    return `./pictures/${fileName}`;
   }
 
   onIconError(event: Event, fallbackName: string): void {
