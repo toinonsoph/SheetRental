@@ -1,10 +1,9 @@
-name: Build and Deploy Angular App
+name: Build and Deploy
 
 on:
   push:
     branches:
       - main
-  workflow_dispatch:
 
 jobs:
   build:
@@ -19,17 +18,31 @@ jobs:
       with:
         node-version: 16
 
+    - name: Cache Node.js modules
+      uses: actions/cache@v3
+      with:
+        path: |
+          node_modules
+          ~/.npm
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+
     - name: Install dependencies
       run: npm install
 
     - name: Build Angular app
-      run: ng build --configuration production --output-path=root --base-href=/
+      run: ng build --configuration production --output-path=docs --base-href=/
+      env:
+        SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+        SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+        
 
     - name: Add .nojekyll file
-      run: echo '' > root/.nojekyll # Replace `docs` with `root` if using `/root`
+      run: echo '' > docs/.nojekyll
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: root 
+        publish_dir: docs
