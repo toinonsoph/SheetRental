@@ -29,6 +29,7 @@ export class VerhuurComponent {
           id,
           name,
           totalpersons,
+          price,
           typebase: typeid (name),
           address: addressid (street, number, postbox, zipcode, city)
         `);
@@ -91,6 +92,7 @@ export class VerhuurComponent {
           address: `${house.address.street} ${house.address.number}, ${
             house.address.postbox ? `Postbox: ${house.address.postbox}, ` : ''
           }${house.address.zipcode} ${house.address.city}`,
+          price: house.price,
           image: matchingImage
             ? this.getImageUrl(environment.supabaseStorage.bucket, matchingImage.name)
             : defaultImageUrl,
