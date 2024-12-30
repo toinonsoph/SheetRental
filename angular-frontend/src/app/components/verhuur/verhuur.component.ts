@@ -96,24 +96,26 @@ export class VerhuurComponent {
           image: matchingImage
             ? this.getImageUrl(environment.supabaseStorage.bucket, matchingImage.name)
             : defaultImageUrl,
-          equipmentIcons: equipments.map((equipment: string) => {
-            const iconFileName = `${equipment.replace(/\s+/g, '_').toLowerCase()}.png`;
-            const matchingIcon = iconFiles?.find((file) => file.name === iconFileName);
+          equipmentIcons: equipments
+            .map((equipment: string) => {
+              const iconFileName = `${equipment.replace(/\s+/g, '_').toLowerCase()}.png`;
+              const matchingIcon = iconFiles?.find((file) => file.name === iconFileName);
 
-            if (matchingIcon) {
-              return {
-                name: equipment.replace(/_/g, ' '),
-                url: this.getImageUrl(environment.supabaseStorage.iconBucket, matchingIcon.name),
-                hasIcon: true,
-              };
-            } else {
-              return {
-                name: equipment.replace(/_/g, ' '),
-                url: null,
-                hasIcon: false,
-              };
-            }
-          }),
+              if (matchingIcon) {
+                return {
+                  name: equipment.replace(/_/g, ' '),
+                  url: this.getImageUrl(environment.supabaseStorage.iconBucket, matchingIcon.name),
+                  hasIcon: true,
+                };
+              } else {
+                return {
+                  name: equipment.replace(/_/g, ' '),
+                  url: null,
+                  hasIcon: false,
+                };
+              }
+            })
+            .sort((a, b) => a.name.localeCompare(b.name)), // Sort icons alphabetically
         };
       });
 
