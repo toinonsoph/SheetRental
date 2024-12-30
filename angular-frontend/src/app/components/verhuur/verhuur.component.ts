@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Import CommonModule for *ngFor
+import { CommonModule } from '@angular/common'; 
 
 import { SupabaseService } from '../../supabase.service';
 import { environment } from '../../../environments/environment';
