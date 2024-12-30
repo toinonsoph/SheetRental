@@ -71,7 +71,7 @@ export class VerhuurComponent {
           image: this.getDefaultImageUrl(), // Default image for housing
           equipmentIcons: equipments.map((equipment: string) => {
             const iconFileName = `${equipment.replace(/\s+/g, '_').toLowerCase()}.png`;
-            const iconUrl = `/assets/pictures/${iconFileName}`;
+            const iconUrl = `/pictures/${iconFileName}`;
   
             console.log('Icon File Name:', iconFileName);
             console.log('Generated Icon URL:', iconUrl);

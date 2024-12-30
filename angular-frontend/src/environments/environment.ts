@@ -4,7 +4,6 @@ export const environment = {
   supabaseKey: process.env.SUPABASE_KEY || '',
   sendgridApiKey: process.env.SENDGRID_API_KEY || '',
   supabaseStorage: {
-    bucket: 'villas_and_apartments',
-    iconsBucket: 'icons'
+    bucket: 'villas_and_apartments'
   }
 };
