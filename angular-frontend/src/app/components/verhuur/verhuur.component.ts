@@ -41,7 +41,7 @@ export class VerhuurComponent {
         return;
       }
   
-      // Fetch equipment data for each house
+      //Get all equipments for each house
       const { data: houseEquipments, error: equipmentError } = await this.supabaseService.client
         .from('housingequipment')
         .select(`
@@ -54,13 +54,33 @@ export class VerhuurComponent {
         return;
       }
   
+      // Fetch image files from the bucket
+      const { data: imageFiles, error: imageError } = await this.supabaseService.client
+        .storage
+        .from(environment.supabaseStorage.bucket)
+        .list('');
+  
+      if (imageError) {
+        console.error('Error fetching images:', imageError);
+        return;
+      }
+  
+      const defaultImageUrl = this.getDefaultImageUrl(); // Default image
+  
       // Map housing data to cards
       this.cards = (housingData || []).map((house: any) => {
+        // Find matching image file
+        const matchingImage = imageFiles?.find((file) =>
+          file.name.toLowerCase().includes(
+            house.name.replace(/\s+/g, '_').toLowerCase()
+          )
+        );
+      
         // Get equipment for this house
         const equipments = houseEquipments
           .filter((equipment: any) => equipment.housingid === house.id)
           .map((equipment: any) => equipment.equipmentid.name);
-  
+      
         return {
           name: house.name,
           totalpersons: house.totalpersons,
@@ -68,22 +88,23 @@ export class VerhuurComponent {
           address: `${house.address.street} ${house.address.number}, ${
             house.address.postbox ? `Postbox: ${house.address.postbox}, ` : ''
           }${house.address.zipcode} ${house.address.city}`,
-          image: this.getDefaultImageUrl(), // Default image for housing
+          image: matchingImage
+            ? this.getImageUrl(matchingImage.name)
+            : defaultImageUrl,
           equipmentIcons: equipments.map((equipment: string) => {
             const iconFileName = `${equipment.replace(/\s+/g, '_').toLowerCase()}.png`;
-            const iconUrl = `/assets/pictures/${iconFileName}`;
-  
-            console.log('Icon File Name:', iconFileName);
-            console.log('Generated Icon URL:', iconUrl);
-  
+            const iconUrl = this.getIconUrl(iconFileName);
+
+            console.log("Icon File Name:", iconFileName);
+            console.log("Generated Icon URL:", iconUrl);
+      
             return {
               name: equipment.replace(/_/g, ' '),
               url: iconUrl,
             };
           }),
-        };
-      });
-  
+        }; // Properly close the object returned by `map`
+      }); 
       // Sort cards alphabetically by name
       this.cards.sort((a, b) => a.name.localeCompare(b.name));
     } catch (err) {
@@ -91,6 +112,7 @@ export class VerhuurComponent {
     }
   }
   
+
   //Get a list of all the images in the bucket
   async fetchImagesFromBucket(): Promise<void> {
     try {
@@ -125,6 +147,10 @@ export class VerhuurComponent {
     const baseUrl = environment.supabaseUrl;
   
     return `${baseUrl}/storage/v1/object/public/${bucket}/default.png`;
+  }
+
+  getIconUrl(fileName: string): string {
+    return `./pictures/${fileName}`;
   }
 
   onIconError(event: Event, fallbackName: string): void {
