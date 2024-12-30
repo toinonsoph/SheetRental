@@ -13,5 +13,3 @@ dotnet-backend/DotNetBackend/*.vs
 .DS_Store
 *.log
 .vscode/
-
-.scss
