@@ -14,11 +14,15 @@ import { environment } from '../../../environments/environment';
 export class VerhuurComponent {
   cards: any[] = [];
   selectedImage: string | null = null;
+  peopleIconUrl: string | null = null; // URL for the People Icon
 
   constructor(private supabaseService: SupabaseService) {}
 
   async ngOnInit(): Promise<void> {
     try {
+      // Fetch People Icon URL
+      await this.fetchPeopleIcon();
+
       const { data: housingData, error: housingError } = await this.supabaseService.client
         .from('housing')
         .select(`
@@ -48,7 +52,7 @@ export class VerhuurComponent {
 
       const { data: imageFiles, error: imageError } = await this.supabaseService.client
         .storage
-        .from(environment.supabaseStorage.bucket) // Ensure this is the bucket for villas/apartments
+        .from(environment.supabaseStorage.bucket)
         .list('');
 
       if (imageError) {
@@ -58,7 +62,7 @@ export class VerhuurComponent {
 
       const { data: iconFiles, error: iconError } = await this.supabaseService.client
         .storage
-        .from(environment.supabaseStorage.iconBucket) 
+        .from(environment.supabaseStorage.iconBucket)
         .list('');
 
       if (iconError) {
@@ -114,6 +118,30 @@ export class VerhuurComponent {
       this.cards.sort((a, b) => a.name.localeCompare(b.name));
     } catch (err) {
       console.error('Unexpected error:', err);
+    }
+  }
+
+  // Fetch the People Icon URL
+  async fetchPeopleIcon(): Promise<void> {
+    try {
+      const { data, error } = await this.supabaseService.client
+        .storage
+        .from(environment.supabaseStorage.iconBucket)
+        .list('', { search: 'people.png' });
+
+      if (error) {
+        console.error('Error fetching People icon:', error);
+        return;
+      }
+
+      const matchingIcon = data?.find((file) => file.name === 'people.png');
+      if (matchingIcon) {
+        this.peopleIconUrl = this.getImageUrl(environment.supabaseStorage.iconBucket, matchingIcon.name);
+      } else {
+        console.warn('People icon not found.');
+      }
+    } catch (err) {
+      console.error('Unexpected error fetching People icon:', err);
     }
   }
 
