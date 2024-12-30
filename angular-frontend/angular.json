@@ -26,6 +26,11 @@
                 "glob": "**/*",
                 "input": "docs/media/pictures",
                 "output": "/media/pictures"
+              },
+              {
+                "glob": "**/*",
+                "input": "public",
+                "output": "/public"
               }
             ],
             "styles": [
