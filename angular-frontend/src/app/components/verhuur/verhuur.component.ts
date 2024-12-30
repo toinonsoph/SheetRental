@@ -91,15 +91,18 @@ export class VerhuurComponent {
           image: matchingImage
             ? this.getImageUrl(matchingImage.name)
             : defaultImageUrl,
-            equipmentIcons: equipments.map((equipment: string) => {
-              const iconFileName = `${equipment.replace(/\s+/g, '_').toLowerCase()}.png`;
-              const iconUrl = `./pictures/${iconFileName}`; 
-            
-              return {
-                name: equipment.replace(/_/g, ' '),
-                url: iconUrl,
-              };
-            }),
+          equipmentIcons: equipments.map((equipment: string) => {
+            const iconFileName = `${equipment.replace(/\s+/g, '_').toLowerCase()}.png`;
+            const iconUrl = this.getIconUrl(iconFileName);
+
+            console.log("Icon File Name:", iconFileName);
+            console.log("Generated Icon URL:", iconUrl);
+      
+            return {
+              name: equipment.replace(/_/g, ' '),
+              url: iconUrl,
+            };
+          }),
         }; // Properly close the object returned by `map`
       }); 
       // Sort cards alphabetically by name
@@ -145,7 +148,11 @@ export class VerhuurComponent {
   
     return `${baseUrl}/storage/v1/object/public/${bucket}/default.png`;
   }
-  
+
+  getIconUrl(fileName: string): string {
+    return `./pictures/${fileName}`;
+  }
+
   onIconError(event: Event, fallbackName: string): void {
     const target = event.target as HTMLImageElement;
     if (target) {
