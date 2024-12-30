@@ -150,7 +150,7 @@ export class VerhuurComponent {
   }
 
   getIconUrl(fileName: string): string {
-    return `./pictures/${fileName}`;
+    return `pictures/${fileName}`;
   }
 
   onIconError(event: Event, fallbackName: string): void {
