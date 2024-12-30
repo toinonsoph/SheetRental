@@ -1,0 +1,47 @@
+name: Deploy Angular App to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # Triggers the workflow when changes are pushed to the main branch
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Check out the code
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    # Step 2: Set up Node.js
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+
+    # Step 3: Install dependencies
+    - name: Install Dependencies
+      run: npm install
+
+    # Step 4: Inject environment variables
+    - name: Inject Environment Variables
+      env:
+        SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+        SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+      run: |
+        echo "Injecting environment variables..."
+        sed -i "s|__SUPABASE_URL__|$SUPABASE_URL|g" src/environments/environment.prod.ts
+        sed -i "s|__SUPABASE_KEY__|$SUPABASE_KEY|g" src/environments/environment.prod.ts
+
+    # Step 5: Build the Angular app
+    - name: Build Angular App
+      run: |
+        npm run build -- --prod --output-path=dist --base-href /SheetRental/
+
+    # Step 6: Deploy to GitHub Pages
+    - name: Deploy to GitHub Pages
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        branch: gh-pages
+        folder: dist
