@@ -1,8 +1,7 @@
 export const environment = {
   production: false,
-  supabaseUrl: process.env.SUPABASE_URL || '',
-  supabaseKey: process.env.SUPABASE_KEY || '',
-  sendgridApiKey: process.env.SENDGRID_API_KEY || '',
+  supabaseUrl: '__SUPABASE_URL__',
+  supabaseKey: '__SUPABASE_KEY__',
   supabaseStorage: {
     bucket: 'villas_and_apartments',
     iconsBucket: 'icons'
