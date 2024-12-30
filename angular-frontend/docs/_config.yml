@@ -1,5 +1,2 @@
 exclude:
-  - assets
-  - *.scss
-  - node_modules
-  - .nojekyll
+  - assets/css/style.scss
