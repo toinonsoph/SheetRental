@@ -46,9 +46,19 @@ export class VerhuurComponent {
         return;
       }
 
+      const { data: imageFiles, error: imageError } = await this.supabaseService.client
+        .storage
+        .from(environment.supabaseStorage.bucket) // Ensure this is the bucket for villas/apartments
+        .list('');
+
+      if (imageError) {
+        console.error('Error fetching image files:', imageError);
+        return;
+      }
+
       const { data: iconFiles, error: iconError } = await this.supabaseService.client
         .storage
-        .from(environment.supabaseStorage.iconBucket) // Replace with your icon bucket name
+        .from(environment.supabaseStorage.iconBucket) 
         .list('');
 
       if (iconError) {
@@ -59,6 +69,13 @@ export class VerhuurComponent {
       const defaultImageUrl = this.getDefaultImageUrl();
 
       this.cards = (housingData || []).map((house: any) => {
+        // Match house images by name
+        const matchingImage = imageFiles?.find((file) =>
+          file.name.toLowerCase().includes(
+            house.name.replace(/\s+/g, '_').toLowerCase()
+          )
+        );
+
         const equipments = houseEquipments
           .filter((equipment: any) => equipment.housingid === house.id)
           .map((equipment: any) => equipment.equipmentid.name);
@@ -70,7 +87,9 @@ export class VerhuurComponent {
           address: `${house.address.street} ${house.address.number}, ${
             house.address.postbox ? `Postbox: ${house.address.postbox}, ` : ''
           }${house.address.zipcode} ${house.address.city}`,
-          image: defaultImageUrl,
+          image: matchingImage
+            ? this.getImageUrl(environment.supabaseStorage.bucket, matchingImage.name)
+            : defaultImageUrl,
           equipmentIcons: equipments.map((equipment: string) => {
             const iconFileName = `${equipment.replace(/\s+/g, '_').toLowerCase()}.png`;
             const matchingIcon = iconFiles?.find((file) => file.name === iconFileName);
@@ -84,7 +103,7 @@ export class VerhuurComponent {
             } else {
               return {
                 name: equipment.replace(/_/g, ' '),
-                url: null, // No icon URL
+                url: null,
                 hasIcon: false,
               };
             }
@@ -107,5 +126,13 @@ export class VerhuurComponent {
   getDefaultImageUrl(): string {
     const baseUrl = environment.supabaseUrl;
     return `${baseUrl}/storage/v1/object/public/images/default.png`; // Replace with your default image path
+  }
+
+  openImageModal(image: string): void {
+    this.selectedImage = image;
+  }
+
+  closeImageModal(): void {
+    this.selectedImage = null;
   }
 }
