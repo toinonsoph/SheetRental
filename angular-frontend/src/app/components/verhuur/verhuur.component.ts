@@ -101,10 +101,12 @@ export class VerhuurComponent {
           image: matchingImage
             ? this.getImageUrl(environment.supabaseStorage.bucket, matchingImage.name)
             : defaultImageUrl,
-          equipmentIcons: equipments
+            equipmentIcons: equipments
             .map((equipment: string) => {
-              const iconFileName = `${equipment.replace(/\s+/g, '_').toLowerCase()}.png`;
-              const matchingIcon = iconFiles?.find((file) => file.name === iconFileName);
+              const iconFileName = `${this.normalizeString(equipment.replace(/\s+/g, '_'))}.png`;
+              const matchingIcon = iconFiles?.find(
+                (file) => this.normalizeString(file.name) === iconFileName
+              );
 
               return matchingIcon
                 ? {
@@ -200,5 +202,12 @@ export class VerhuurComponent {
 
   closeImageModal(): void {
     this.selectedImage = null;
+  }
+
+  normalizeString(str: string): string {
+    return str
+      .normalize('NFD') // Decompose diacritics (e.g., ë -> e + diacritic)
+      .replace(/[\u0300-\u036f]/g, '') // Remove diacritic marks
+      .toLowerCase(); // Convert to lowercase for consistent comparison
   }
 }
