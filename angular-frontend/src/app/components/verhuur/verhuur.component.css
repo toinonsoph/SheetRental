@@ -198,7 +198,6 @@
   background-color: rgba(255, 255, 255, 0.9);
   padding: 10px;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .modal-image {
@@ -206,35 +205,24 @@
   height: auto;
   max-width: 100%;
   max-height: 100%;
-  border-radius: 5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  animation: zoomIn 0.3s ease-in-out;
 }
 
-/* Close Button */
+/* Close button */
 .close-button {
   position: absolute;
   top: 10px;
   right: 10px;
   background: rgba(255, 255, 255, 0.5);
-  border: 2px solid rgba(0, 0, 0, 0.3);
+  border: none;
   color: black;
   font-size: 1.5rem;
   cursor: pointer;
   padding: 5px;
-  width: 30px;
-  height: 30px;
   border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1100;
-  transition: all 0.3s ease-in-out;
+  transition: transform 0.2s;
 }
 
 .close-button:hover {
-  background: darkred;
-  color: white;
   transform: scale(1.2);
 }
 
@@ -273,7 +261,6 @@
   border: none;
   border-radius: 3px;
   font-size: 0.9em; 
-  font-weight: bold;
   text-align: center;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
@@ -281,6 +268,8 @@
 }
 
 .button-style:hover {
+  background-color: #660000; 
+  color: white; 
   transform: scale(1.05); 
 }
 

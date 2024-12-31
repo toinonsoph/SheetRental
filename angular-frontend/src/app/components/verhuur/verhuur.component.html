@@ -48,3 +48,14 @@
     </div>
   </div>
 </div>
+
+<div
+  *ngIf="selectedImage"
+  class="image-modal"
+  (click)="closeImageModal()"
+>
+  <div class="modal-content">
+    <img [src]="selectedImage" alt="Expanded image" class="modal-image" />
+    <button class="close-button" (click)="closeImageModal(); $event.stopPropagation()">×</button>
+  </div>
+</div>
