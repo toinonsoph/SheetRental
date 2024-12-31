@@ -74,10 +74,10 @@
 }
 
 .card-image {
-  width: 100%;
+  width: 100%; 
   height: auto;
-  max-height: 200px;
-  object-fit: cover;
+  max-height: none; 
+  object-fit: contain; 
   border-radius: 5px;
 }
 
@@ -259,7 +259,7 @@
   color: white;
   text-decoration: none;
   border: none;
-  border-radius: 3px;
+  border-radius: 50%;
   font-size: 0.9em; 
   text-align: center;
   cursor: pointer;
