@@ -88,8 +88,6 @@ export class LakensComponent implements OnInit {
         dynamicData[`quantity_${cardKey}`] = (this.quantities[card.name_dutch] || 0).toString();
       });
   
-      console.log('Dynamic Data:', dynamicData);
-  
       // Reset messages before sending emails
       this.successMessage = null;
       this.errorMessage = null;
