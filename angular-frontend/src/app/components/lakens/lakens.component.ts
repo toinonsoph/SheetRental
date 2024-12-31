@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { SupabaseService } from '../../supabase.service';
-import { SendGridService } from '../../sendgrid.service';
+import { SupabaseService } from '../../services/supabase.service';
+import { SendGridService } from '../../services/sendgrid.service';
 
 @Component({
   standalone: true,
