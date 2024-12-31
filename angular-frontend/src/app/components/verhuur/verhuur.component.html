@@ -34,7 +34,7 @@
         <br>
         <div class="equipment-icons">
           <div *ngFor="let icon of card.equipmentIcons">
-            <img *ngIf="icon.url" [src]="icon.url" alt="{{ icon.name }}" />
+            <img [ngStyle]="equipmentIconsStyle" *ngIf="icon.url" [src]="icon.url" alt="{{ icon.name }}" />
             <span *ngIf="!icon.url">{{ icon.name }}</span>
           </div>
         </div>

@@ -175,15 +175,6 @@
   .card-type {
     font-size: 0.8em;
   }
-
-  .equipment-icon {
-    width: 25px;
-    height: 25px;
-  }
-
-  .equipment-icon span {
-    font-size: 0.6em;
-  }
 }
 
 /* Modal Styles */

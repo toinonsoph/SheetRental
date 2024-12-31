@@ -94,7 +94,7 @@ export class VerhuurComponent {
           totalpersons: house.totalpersons,
           totalrooms: house.totalrooms,
           propertyType: house.typebase?.name || '',
-          address: `${house.address.street} ${house.address.number} ${
+          address: `${house.address.street} ${house.address.number}${
             house.address.postbox ? `/${house.address.postbox}, ` : ''
           }${house.address.zipcode} ${house.address.city}`,
           price: house.price,
@@ -210,4 +210,9 @@ export class VerhuurComponent {
       .replace(/[\u0300-\u036f]/g, '') // Remove diacritic marks
       .toLowerCase(); // Convert to lowercase for consistent comparison
   }
+
+  equipmentIconsStyle = {
+    width: '15px',
+    height: '15px'
+  };
 }
