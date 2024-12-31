@@ -1,51 +1,34 @@
+<div class="header-container">
+  <button (click)="setFilter('all')" class="btn btn-primary">All</button>
+  <button (click)="setFilter('apartment')" class="btn btn-primary">Apartments</button>
+  <button (click)="setFilter('villa')" class="btn btn-primary">Villas</button>
+</div>
+
 <div class="card-container">
-  <div class="card" *ngFor="let card of cards">
+  <div class="card" *ngFor="let card of filteredCards">
     <div class="card-content">
       <h3 class="card-title">{{ card.name }}</h3>
       <p class="card-type">{{ card.propertyType }}</p>
-      <br />
       <img
         [src]="card.image"
         alt="Card image"
         class="card-image"
         (click)="openImageModal(card.image)"
       />
-      <br />
       <p class="card-address">{{ card.address }}</p>
-      <br />
       <div class="card-footer">
         <div class="card-icon">
           <img [src]="peopleIconUrl" alt="People icon" />
           <span>{{ card.totalpersons }}</span>
         </div>
-        <br />
         <div class="equipment-icons">
-          <div *ngFor="let icon of card.equipmentIcons" class="equipment-icon">
-            <!-- Show icon image if available -->
-            <img
-              *ngIf="icon.url"
-              [src]="icon.url"
-              [alt]="icon.name"
-              (error)="icon.textVisible = true"
-            />
-            <!-- Show name if no icon is found or image fails to load -->
-            <span *ngIf="!icon.url || icon.textVisible">{{ icon.name }}</span>
+          <div *ngFor="let icon of card.equipmentIcons">
+            <img *ngIf="icon.url" [src]="icon.url" alt="{{ icon.name }}" />
+            <span *ngIf="!icon.url">{{ icon.name }}</span>
           </div>
         </div>
-        <br />
-        <br />
-        <!-- Uncomment this when a link is provided -->
-        <!-- <a [href]="card.link" class="more-info-link">Meer info/Plus d'info/Mehr info</a> -->
-        <p class="card-price">Prijs vanaf/Prix à partir de/Preis ab: €{{ card.price }}</p>
+        <p class="card-price">€{{ card.price }}</p>
       </div>
     </div>
-  </div>
-</div>
-
-<!-- Modal to display larger image when clicked -->
-<div *ngIf="selectedImage" class="image-modal">
-  <div class="modal-content">
-    <button class="close-button" (click)="closeImageModal()">×</button>
-    <img [src]="selectedImage" class="modal-image" />
   </div>
 </div>

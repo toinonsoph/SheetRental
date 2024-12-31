@@ -11,8 +11,11 @@ import { environment } from '../../../environments/environment';
   templateUrl: './verhuur.component.html',
   styleUrls: ['./verhuur.component.css'],
 })
+
 export class VerhuurComponent {
   cards: any[] = [];
+  filteredCards: any[] = []; // Array for filtered cards
+  selectedFilter: string = 'all'; // Default filter
   selectedImage: string | null = null;
   peopleIconUrl: string | null = null; // URL for the People Icon
 
@@ -20,7 +23,6 @@ export class VerhuurComponent {
 
   async ngOnInit(): Promise<void> {
     try {
-      // Fetch People Icon URL
       await this.fetchPeopleIcon();
 
       const { data: housingData, error: housingError } = await this.supabaseService.client
@@ -74,7 +76,6 @@ export class VerhuurComponent {
       const defaultImageUrl = this.getDefaultImageUrl();
 
       this.cards = (housingData || []).map((house: any) => {
-        // Match house images by name
         const matchingImage = imageFiles?.find((file) =>
           file.name.toLowerCase().includes(
             house.name.replace(/\s+/g, '_').toLowerCase()
@@ -101,28 +102,34 @@ export class VerhuurComponent {
               const iconFileName = `${equipment.replace(/\s+/g, '_').toLowerCase()}.png`;
               const matchingIcon = iconFiles?.find((file) => file.name === iconFileName);
 
-              if (matchingIcon) {
-                return {
-                  name: equipment.replace(/_/g, ' '),
-                  url: this.getImageUrl(environment.supabaseStorage.iconBucket, matchingIcon.name),
-                  hasIcon: true,
-                };
-              } else {
-                return {
-                  name: equipment.replace(/_/g, ' '),
-                  url: null,
-                  hasIcon: false,
-                };
-              }
+              return matchingIcon
+                ? {
+                    name: equipment.replace(/_/g, ' '),
+                    url: this.getImageUrl(environment.supabaseStorage.iconBucket, matchingIcon.name),
+                    hasIcon: true,
+                  }
+                : {
+                    name: equipment.replace(/_/g, ' '),
+                    url: null,
+                    hasIcon: false,
+                  };
             })
-            .sort((a, b) => a.name.localeCompare(b.name)), // Sort icons alphabetically
+            .sort((a, b) => a.name.localeCompare(b.name)), 
         };
       });
 
       this.cards.sort((a, b) => a.name.localeCompare(b.name));
+      this.filteredCards = [...this.cards]; 
     } catch (err) {
       console.error('Unexpected error:', err);
     }
+  }
+  
+  setFilter(filter: string): void {
+    this.selectedFilter = filter;
+    this.filteredCards = this.selectedFilter === 'all'
+      ? this.cards
+      : this.cards.filter((card) => card.propertyType.toLowerCase() === filter.toLowerCase());
   }
 
   // Fetch the People Icon URL
@@ -157,7 +164,8 @@ export class VerhuurComponent {
 
   getDefaultImageUrl(): string {
     const baseUrl = environment.supabaseUrl;
-    return `${baseUrl}/storage/v1/object/public/images/default.png`; // Replace with your default image path
+    const bucket = environment.supabaseStorage.bucket;
+    return `${baseUrl}/storage/v1/object/public/${bucket}/default.png`;
   }
 
   openImageModal(image: string): void {

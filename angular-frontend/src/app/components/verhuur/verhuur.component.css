@@ -248,3 +248,18 @@
     opacity: 1;
   }
 }
+
+.header-container .btn-primary {
+  padding: 10px 15px;
+  font-size: 14px;
+  background-color: darkred;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 5px; 
+}
+
+.header-container .btn-primary:hover {
+  background-color: #660000;
+}
