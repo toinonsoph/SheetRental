@@ -79,12 +79,21 @@ export class VerhuurComponent {
 
       const defaultImageUrl = this.getDefaultImageUrl();
 
+      // Normalize function for matching
+      const normalizeString = (str: string): string =>
+        str
+          .normalize('NFD') // Decompose diacritics
+          .replace(/[\u0300-\u036f]/g, '') // Remove diacritic marks
+          .replace(/\s+/g, '_') // Replace spaces with underscores
+          .toLowerCase();
+
       this.cards = (housingData || []).map((house: any) => {
+        const normalizedHousingName = normalizeString(house.name);
+
+        // Find matching image by normalized name
         const matchingImage = imageFiles?.find((file) =>
-          file.name.toLowerCase().includes(
-            house.name.replace(/\s+/g, '_').toLowerCase()
-          )
-        );
+          normalizeString(file.name).includes(normalizedHousingName)
+      );
 
         const equipments = houseEquipments
           .filter((equipment: any) => equipment.housingid === house.id)
