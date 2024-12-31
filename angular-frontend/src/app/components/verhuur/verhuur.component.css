@@ -62,8 +62,8 @@
 }
 
 .card-icon img {
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   margin-right: 8px;
 }
 
@@ -109,19 +109,20 @@
   justify-content: center;
   gap: 6px; 
   margin-top: 10px; 
+  margin: 3px;
 }
 
 .equipment-icon {
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .equipment-icon img {
-  width: 20px; 
-  height: 20px;
+  width: 15px; 
+  height: 15px;
   object-fit: contain;
   border-radius: 4px;
 }

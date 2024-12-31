@@ -11,6 +11,7 @@
     <div class="card-content">
       <h3 class="card-title">{{ card.name }}</h3>
       <p class="card-type">{{ card.propertyType }}</p>
+      <br>
       <img
         [src]="card.image"
         alt="Card image"
@@ -26,7 +27,6 @@
           <img [src]="peopleIconUrl" alt="People icon" />
           <span>{{ card.totalpersons }}</span>
         </div>
-        <br>
         <div class="card-icon">
           <img [src]="roomIconUrl" alt="Room icon" />
           <span>{{ card.totalrooms }}</span>
@@ -44,8 +44,7 @@
           Prijs vanaf/Prix à partir de/Preis ab: €{{ card.price }}
         </p>
         <br>
-        <!-- Uncomment this when a link is provided -->
-        <!-- <a [href]="card.link" class="more-info-link">Meer info/Plus d'info/Mehr info</a> -->
+        <a [href]="card.link" class="more-info-link">Meer info/Plus d'info/Mehr info</a>
       </div>
     </div>
   </div>
