@@ -17,14 +17,14 @@ html, body {
 body {
   display: flex;
   flex-direction: column;
-  background-color: #f9f9f9; /* Light background */
+  background-color: #f9f9f9; 
 }
 
 /* Background Image Section */
 .image-section {
   position: relative;
   width: 100%;
-  height: 10vh; /* Match the navbar height */
+  height: 10vh; 
   background-image: url('../../public/pictures/DeHaan.jpg'); 
   background-size: cover;
   background-position: center;
@@ -40,8 +40,8 @@ body {
   align-items: center;
   height: 10vh; 
   padding: 0 20px;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-  z-index: 10; /* Ensure it sits above the image */
+  background-color: rgba(0, 0, 0, 0.5); 
+  z-index: 10; 
   color: white;
   display: flex;
   justify-content: flex-end;
@@ -50,14 +50,14 @@ body {
 
 /* Navbar Logo */
 .navbar-logo img {
-  height: 40px; /* Adjust logo size */
+  height: 40px; 
   width: auto;
 }
 
 /* Navigation Links */
 .custom-tab-bar {
   display: flex;
-  gap: 20px; /* Space between tabs */
+  gap: 20px; 
 }
 
 .custom-tab-link {
@@ -69,19 +69,19 @@ body {
 }
 
 .custom-tab-link:hover {
-  background-color: rgba(255, 255, 255, 0.8); /* White background on hover */
+  background-color: rgba(255, 255, 255, 0.8); 
   color: #800020; 
 }
 
 /* Main Content Area */
 .tab-content {
   position: relative;
-  flex: 1; /* Takes up remaining height */
+  flex: 1; 
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-  background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
+  background-color: rgba(255, 255, 255, 0.9); 
   margin: 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
@@ -175,10 +175,11 @@ h3 {
   position: relative; 
   margin-bottom: 20px; 
   margin-top: 40px; 
+  flex-wrap: wrap; 
 }
 
 .header-container h3 {
-  font-size: 1.5em; 
+  font-size: clamp(1.2rem, 2.5vw, 1.5rem);
   color: darkred; 
   margin: 0; 
   position: absolute;
@@ -216,4 +217,76 @@ h3 {
   font-size: 1.5em;  
   color: darkred;
   margin: 0; 
+}
+
+/* Medium screens (tablets, small laptops) */
+@media (max-width: 1024px) {
+  .navbar {
+    height: 8vh; /* Adjust height for medium screens */
+    padding-right: 1vw;
+  }
+  
+  .custom-tab-link {
+    font-size: 0.9rem;
+    padding: 8px 12px; /* Smaller padding */
+  }
+
+  .header-container h3 {
+    font-size: 1.2em; /* Reduce size */
+  }
+
+  .header-container .btn-primary {
+    font-size: 12px;
+    padding: 8px 12px; /* Smaller button */
+  }
+
+  .verhuur-container h3 {
+    font-size: 1.2em;
+  }
+}
+
+/* Small screens (mobile phones) */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    height: auto; /* Allow navbar to grow */
+    text-align: center;
+  }
+
+  .image-section {
+    height: 15vh; 
+    background-size: cover; 
+    background-position: center;
+  }
+
+  .custom-tab-link {
+    font-size: 0.8rem;
+    padding: 5px 8px;
+  }
+
+  .header-container h3 {
+    font-size: 1em;
+    margin-top: 10px;
+  }
+
+  .header-container .btn-primary {
+    font-size: 10px;
+    padding: 6px 10px;
+  }
+
+  .tab-content {
+    margin: 10px;
+    padding: 10px;
+    box-shadow: none; 
+  }
+
+  .verhuur-container {
+    padding: 10px;
+    margin: 20px 0;
+  }
+
+  footer {
+    font-size: 0.8rem;
+    padding: 10px;
+  }
 }
