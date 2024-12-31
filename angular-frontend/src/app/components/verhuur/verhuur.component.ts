@@ -25,6 +25,7 @@ export class VerhuurComponent {
   async ngOnInit(): Promise<void> {
     try {
       await this.fetchPeopleIcon();
+      await this.fetchRoomIcon();
 
       const { data: housingData, error: housingError } = await this.supabaseService.client
         .from('housing')
