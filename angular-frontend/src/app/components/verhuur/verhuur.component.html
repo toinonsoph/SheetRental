@@ -21,7 +21,6 @@
       <br>
       <p class="card-address">{{ card.address }}</p>
       <br>
-      <br>
       <div class="card-footer">
         <div class="card-icon">
           <img [src]="peopleIconUrl" alt="People icon" />
@@ -39,12 +38,12 @@
           </div>
         </div>
         <br>
-        <br>
         <p class="card-price" *ngIf="card.price !== null">
           Prijs vanaf/Prix à partir de/Preis ab: €{{ card.price }}
         </p>
         <br>
-        <a [href]="card.link" class="more-info-link">Meer info/Plus d'info/Mehr info</a>
+        <a [href]="card.link" target="_blank" class="more-info-link button-style">Meer info/Plus d'info/Mehr info</a>
+        <br>
       </div>
     </div>
   </div>

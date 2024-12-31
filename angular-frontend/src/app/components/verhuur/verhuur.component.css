@@ -263,3 +263,28 @@
 .header-container .btn-primary:hover {
   background-color: #660000;
 }
+
+.button-style {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: darkred;
+  color: white;
+  text-decoration: none;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.button-style:hover {
+  background-color: #660000; 
+  transform: scale(1.05); 
+}
+
+.button-style:active {
+  background-color: #550000; 
+  transform: scale(0.95); 
+}
