@@ -25,29 +25,18 @@ export class AuthService {
   
     if (error || !user) {
       console.error('Login failed: User not found');
-      return false; 
+      return false;
     }
   
     const isPasswordValid = bcrypt.compareSync(password, user.password);
     if (!isPasswordValid) {
       console.error('Login failed: Invalid password');
-      return false; 
+      return false;
     }
   
-    const { data: sessionData, error: sessionError } = await this.supabase.auth.signInWithPassword({
-      email: username, 
-      password, 
-    });
-  
-    if (sessionError) {
-      console.error('Session creation failed:', sessionError.message);
-      return false; 
-    }
-  
-    localStorage.setItem('supabaseToken', sessionData.session?.access_token || '');
-    return true; 
-  }
-  
+    localStorage.setItem('supabaseToken', username); 
+    return true;
+  }  
 
   async logout(): Promise<void> {
     await this.supabase.auth.signOut();
