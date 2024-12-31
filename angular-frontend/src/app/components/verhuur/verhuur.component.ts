@@ -14,10 +14,11 @@ import { environment } from '../../../environments/environment';
 
 export class VerhuurComponent {
   cards: any[] = [];
-  filteredCards: any[] = []; // Array for filtered cards
-  selectedFilter: string = 'all'; // Default filter
+  filteredCards: any[] = []; 
+  selectedFilter: string = 'all'; 
   selectedImage: string | null = null;
-  peopleIconUrl: string | null = null; // URL for the People Icon
+  peopleIconUrl: string | null = null; 
+  roomIconUrl: string | null = null; 
 
   constructor(private supabaseService: SupabaseService) {}
 
@@ -31,6 +32,7 @@ export class VerhuurComponent {
           id,
           name,
           totalpersons,
+          totalrooms,
           price,
           typebase: typeid (name),
           address: addressid (street, number, postbox, zipcode, city)
@@ -89,9 +91,10 @@ export class VerhuurComponent {
         return {
           name: house.name,
           totalpersons: house.totalpersons,
+          totalrooms: house.totalrooms,
           propertyType: house.typebase?.name || '',
-          address: `${house.address.street} ${house.address.number}, ${
-            house.address.postbox ? `Postbox: ${house.address.postbox}, ` : ''
+          address: `${house.address.street} ${house.address.number} ${
+            house.address.postbox ? `/${house.address.postbox}, ` : ''
           }${house.address.zipcode} ${house.address.city}`,
           price: house.price,
           image: matchingImage
@@ -131,8 +134,7 @@ export class VerhuurComponent {
       ? this.cards
       : this.cards.filter((card) => card.propertyType.toLowerCase() === filter.toLowerCase());
   }
-
-  // Fetch the People Icon URL
+  
   async fetchPeopleIcon(): Promise<void> {
     try {
       const { data, error } = await this.supabaseService.client
@@ -153,6 +155,29 @@ export class VerhuurComponent {
       }
     } catch (err) {
       console.error('Unexpected error fetching People icon:', err);
+    }
+  }
+
+  async fetchRoomIcon(): Promise<void> {
+    try {
+      const { data, error } = await this.supabaseService.client
+        .storage
+        .from(environment.supabaseStorage.iconBucket)
+        .list('', { search: 'room.png' });
+
+      if (error) {
+        console.error('Error fetching Room icon:', error);
+        return;
+      }
+
+      const matchingIcon = data?.find((file) => file.name === 'room.png');
+      if (matchingIcon) {
+        this.roomIconUrl = this.getImageUrl(environment.supabaseStorage.iconBucket, matchingIcon.name);
+      } else {
+        console.warn('Room icon not found.');
+      }
+    } catch (err) {
+      console.error('Unexpected error fetching Room icon:', err);
     }
   }
 

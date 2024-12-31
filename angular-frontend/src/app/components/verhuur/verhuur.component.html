@@ -1,3 +1,5 @@
+<br>
+<br>
 <div class="header-container">
   <button (click)="setFilter('all')" class="btn btn-primary">All</button>
   <button (click)="setFilter('apartment')" class="btn btn-primary">Apartments</button>
@@ -15,19 +17,35 @@
         class="card-image"
         (click)="openImageModal(card.image)"
       />
+      <br>
       <p class="card-address">{{ card.address }}</p>
+      <br>
+      <br>
       <div class="card-footer">
         <div class="card-icon">
           <img [src]="peopleIconUrl" alt="People icon" />
           <span>{{ card.totalpersons }}</span>
         </div>
+        <br>
+        <div class="card-icon">
+          <img [src]="roomIconUrl" alt="Room icon" />
+          <span>{{ card.totalrooms }}</span>
+        </div>
+        <br>
         <div class="equipment-icons">
           <div *ngFor="let icon of card.equipmentIcons">
             <img *ngIf="icon.url" [src]="icon.url" alt="{{ icon.name }}" />
             <span *ngIf="!icon.url">{{ icon.name }}</span>
           </div>
         </div>
-        <p class="card-price">€{{ card.price }}</p>
+        <br>
+        <br>
+        <p class="card-price" *ngIf="card.price !== null">
+          Prijs vanaf/Prix à partir de/Preis ab: €{{ card.price }}
+        </p>
+        <br>
+        <!-- Uncomment this when a link is provided -->
+        <!-- <a [href]="card.link" class="more-info-link">Meer info/Plus d'info/Mehr info</a> -->
       </div>
     </div>
   </div>
