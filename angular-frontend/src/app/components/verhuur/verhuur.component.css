@@ -54,9 +54,17 @@
   line-height: 1.4;
 }
 
+.card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px; 
+}
+
 .card-icon img {
   width: 20px;
-  height: auto;
+  height: 20px;
+  margin-right: 8px;
 }
 
 .card-icon span {
@@ -97,10 +105,10 @@
 
 .equipment-icons {
   display: flex;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 10px;
   flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px; 
+  margin-top: 10px; 
 }
 
 .equipment-icon {
@@ -112,8 +120,8 @@
 }
 
 .equipment-icon img {
-  max-width: 50%;
-  max-height: 50%;
+  width: 20px; 
+  height: 20px;
   object-fit: contain;
   border-radius: 4px;
 }
