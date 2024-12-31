@@ -212,7 +212,7 @@ export class VerhuurComponent {
   }
 
   equipmentIconsStyle = {
-    width: '15px',
-    height: '15px'
+    width: '25px',
+    height: '25px'
   };
 }
