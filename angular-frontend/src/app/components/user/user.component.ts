@@ -12,7 +12,7 @@ import { CambreServicesComponent } from '../backoffice/cambre-services/cambre-se
     CambreServicesComponent
   ],
 })
-export class TabsComponent {
+export class UserComponent {
 
   message: string | null = '';
 
