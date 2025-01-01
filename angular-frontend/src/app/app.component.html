@@ -3,14 +3,14 @@
   <div class="navbar-logo">
   </div>
   <nav mat-tab-nav-bar [tabPanel]="tabPanel" class="custom-tab-bar">
+    <!-- Tabs generated dynamically from links array -->
     <a
       *ngFor="let link of links"
       mat-tab-link
-      routerLink="{{ link.id }}" 
-      [routerLinkActiveOptions]="{ exact: true }"
-      routerLinkActive="active"
+      (click)="activeLink = link.id"
+      [active]="activeLink === link.id"
       class="custom-tab-link">
-      {{ link.label }
+      {{ link.label }}
     </a>
   </nav>
   <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
