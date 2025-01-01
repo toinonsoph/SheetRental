@@ -20,6 +20,7 @@ export class LakensComponent implements OnInit {
   cards: any[] = [];
   quantities: { [key: string]: number } = {};
   isPopupOpen = false;
+  isLoading = false;
   formSubmitted = false;
   successMessage: string | null = null; // Add success message variable
   errorMessage: string | null = null;
@@ -65,6 +66,7 @@ export class LakensComponent implements OnInit {
 
   closePopup() {
     this.isPopupOpen = false;
+    this.isLoading = false;
     this.resetForm();
   }
 
@@ -72,6 +74,7 @@ export class LakensComponent implements OnInit {
     this.formSubmitted = true;
   
     if (this.isFormValid()) {
+      this.isLoading = true;
       const templateIdRequest = 'd-b4eb9feefbde4aa4a3ead2460c8c973d';
       const templateIdReceived = 'd-89a05b23f6b146c4a2243e7c485e2260';
       const dynamicData: any = {
@@ -82,24 +85,20 @@ export class LakensComponent implements OnInit {
         remark: this.formData.remark,
       };
   
-      // Add quantities dynamically
       this.cards.forEach((card) => {
         const cardKey = card.name_dutch.replace(/\s+/g, '').toLowerCase();
         dynamicData[`quantity_${cardKey}`] = (this.quantities[card.name_dutch] || 0).toString();
       });
   
-      // Reset messages before sending emails
       this.successMessage = null;
       this.errorMessage = null;
   
-      // Send the first email
       this.sendGridService
         .sendEmailWithTemplate('tnsn@axi.be', templateIdRequest, dynamicData)
         .subscribe({
           next: () => {  
-            // Send the second email after the first one succeeds
             this.sendGridService
-              .sendEmailWithTemplateWithoutDynamicData(this.formData.mail, templateIdReceived) // Send to the filled email
+              .sendEmailWithTemplateWithoutDynamicData(this.formData.mail, templateIdReceived) 
               .subscribe({
                 next: () => {
                   this.successMessage = 
@@ -107,18 +106,22 @@ export class LakensComponent implements OnInit {
                     'L\'e-mail a été envoyé avec succès! Vérifiez votre courrier électronique pour une confirmation d\'expédition. Vérifiez le dossier spam si nécessaire.<br>' +
                     'E-Mail wurde erfolgreich gesendet! Überprüfen Sie Ihre E-Mail auf eine Versandbestätigung. Überprüfen Sie ggf. den Spam-Ordner.';
                   this.resetForm(); 
+                  this.isLoading = false;
                 },
                 error: () => {
                   this.errorMessage = 'The first email was sent to Cambre Services, but there was an issue with sending a received message to you. Please try again.';
+                  this.isLoading = false;
                 },
               });
           },
           error: () => {            
             this.errorMessage = 'There was an issue with sending the email. Please try again.';
+            this.isLoading = false;
           },
         });
     } else {
       this.errorMessage = 'The form is not valid. Please fill in all required fields.';
+      this.isLoading = false;
       this.isPopupOpen = true;
     }
   }  

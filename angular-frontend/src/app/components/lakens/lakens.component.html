@@ -19,6 +19,10 @@
     </div>
 </div>
 
+<div *ngIf="isLoading" class="spinner-overlay">
+  <div class="spinner"></div>
+</div>
+
 <!-- PopUp view -->
 <div *ngIf="isPopupOpen" class="popup-overlay">
   <div class="popup">
