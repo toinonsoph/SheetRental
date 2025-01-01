@@ -3,7 +3,7 @@ import { AgenceCambreComponent } from '../backoffice/agence-cambre/agence-cambre
 import { CambreServicesComponent } from '../backoffice/cambre-services/cambre-services.component';
 
 @Component({
-  selector: 'app-tabs',
+  selector: 'app-users',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css'],
   imports: 
@@ -19,7 +19,7 @@ export class UserComponent {
 
   tabs = [
     { title: 'Cambre Services' },
-    { title: 'Agence Cambre' },
+    { title: 'Agence Cambre' }
   ];
 
   activeTab: number = 0;
