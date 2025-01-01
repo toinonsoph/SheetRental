@@ -5,9 +5,6 @@
 <br>
 <br>
 <div *ngIf="successMessage" class="success-message" [innerHTML]="successMessage"></div>
-<div *ngIf="errorMessage" class="error-message">
-  {{ errorMessage }}
-</div>
 
 <div class="card-container">
   <!-- Check if cards exist -->
@@ -25,7 +22,11 @@
 <!-- PopUp view -->
 <div *ngIf="isPopupOpen" class="popup-overlay">
   <div class="popup">
-    <h4>Aanvraag/Commande/Bestellung</h4>
+    <h4>Aanvraag/Commande/Bestellung</h4><br>
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+    <br>
     <form (ngSubmit)="submitForm()">
       <div class="form-row">
         <div class="form-group">

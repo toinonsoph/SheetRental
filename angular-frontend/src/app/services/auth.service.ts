@@ -24,8 +24,6 @@ export class AuthService {
         .eq('username', username)
         .single();
 
-      console.log('user', user);
-
       if (error || !user) {
         console.error('Login failed: User not found');
         return false;

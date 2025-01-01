@@ -1,28 +1,33 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core';
+import { AgenceCambreComponent } from '../backoffice/agence-cambre/agence-cambre.component';
+import { CambreServicesComponent } from '../backoffice/cambre-services/cambre-services.component';
 
 @Component({
-  selector: 'app-user',
+  selector: 'app-tabs',
   templateUrl: './user.component.html',
-  styleUrls: ['./user.component.css'], 
+  styleUrls: ['./user.component.css'],
+  imports: 
+  [
+    AgenceCambreComponent, 
+    CambreServicesComponent
+  ],
 })
-export class UserComponent implements OnInit {
-  message: string | null = null;
+export class TabsComponent {
 
-  constructor(private router: Router) {}
+  message: string | null = '';
 
-  ngOnInit(): void {
-    const navigation = this.router.getCurrentNavigation();
-    const state = navigation?.extras.state as { message?: string };
+  tabs = [
+    { title: 'Cambre Services' },
+    { title: 'Agence Cambre' },
+  ];
 
-    if (state?.message) {
-      this.message = state.message; 
+  activeTab: number = 0;
 
-      setTimeout(() => this.clearMessage(), 5000);
-    }
+  clearMessage() {
+    this.message = null;
   }
 
-  clearMessage(): void {
-    this.message = null;
+  selectTab(index: number) {
+    this.activeTab = index;
   }
 }

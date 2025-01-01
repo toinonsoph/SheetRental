@@ -1,4 +1,24 @@
-<div *ngIf="message" class="alert alert-warning">
+<div *ngIf="message && message.trim()" class="alert alert-warning">
     {{ message }}
     <button (click)="clearMessage()" class="close-btn">✖</button>
-  </div>
+</div>
+  
+<div class="tabs">
+    <div class="tab-buttons">
+      <button
+        *ngFor="let tab of tabs; let i = index"
+        [class.active]="activeTab === i"
+        (click)="selectTab(i)">
+        {{ tab.title }}
+      </button>
+    </div>
+  
+    <div class="tab-content">
+      <ng-container *ngIf="activeTab === 0">
+        <app-cambre-services></app-cambre-services>
+      </ng-container>
+      <ng-container *ngIf="activeTab === 1">
+        <app-agence-cambre></app-agence-cambre>
+      </ng-container>
+    </div>
+</div>  
