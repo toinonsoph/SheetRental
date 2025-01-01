@@ -1,3 +1,9 @@
+<div class="header-container">
+  <h3>Lakens / Draps / Bettwäsche</h3>
+  <button (click)="openPopup()" class="btn btn-primary">Aanvraag/Commande/Bestellung</button>
+</div>
+<br>
+<br>
 <div *ngIf="successMessage" class="success-message" [innerHTML]="successMessage"></div>
 <div *ngIf="errorMessage" class="error-message">
   {{ errorMessage }}
