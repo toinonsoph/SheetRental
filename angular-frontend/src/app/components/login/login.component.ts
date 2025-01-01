@@ -10,7 +10,8 @@ import { FormsModule } from '@angular/forms';
   imports: 
   [
     FormsModule
-  ]
+  ],
+  standalone: true
 })
 
 export class LoginComponent {

@@ -3,8 +3,6 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 
-import { LakensComponent } from './components/lakens/lakens.component';
-import { VerhuurComponent } from './components/verhuur/verhuur.component';
 import { AdditionalInfoComponent } from './components/additional-info/additional-info.component';
 import { RouterModule } from '@angular/router';
 

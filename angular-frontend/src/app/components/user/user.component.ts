@@ -11,6 +11,7 @@ import { CambreServicesComponent } from '../backoffice/cambre-services/cambre-se
     AgenceCambreComponent, 
     CambreServicesComponent
   ],
+  standalone: true
 })
 export class UserComponent {
 
