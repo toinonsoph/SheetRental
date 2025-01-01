@@ -15,6 +15,11 @@ import { CambreServicesComponent } from '../backoffice/cambre-services/cambre-se
 })
 export class UserComponent {
 
+    constructor() {
+      console.log('UserComponent initialized');
+    }
+  
+
   message: string | null = '';
 
   tabs = [
