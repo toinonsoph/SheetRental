@@ -1,0 +1,91 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; 
+    background-color: #f9f9f9;
+  }
+  
+  .login-form {
+    background-color: lightgrey; 
+    padding: 20px 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    width: 300px; 
+    display: flex;
+    flex-direction: column;
+    gap: 15px; 
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px; 
+  }
+  
+  .form-label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .form-input {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .login-button {
+    padding: 10px;
+    font-size: 14px;
+    background-color: darkred;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .login-button:hover {
+    background-color: #800020; 
+    transform: scale(1.05); 
+  }
+  
+  .login-button:active {
+    transform: scale(0.95);
+  }
+
+  .cancel-button {
+    padding: 10px;
+    font-size: 14px;
+    background-color: lightgrey;
+    color: darkred;
+    border: 1px solid darkred;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    margin-left: 10px; 
+  }
+  
+  .cancel-button:hover {
+    background-color: darkred;
+    color: white; 
+    transform: scale(1.05); 
+  }
+  
+  .cancel-button:active {
+    transform: scale(0.95); 
+  }
+  .button-group {
+    display: flex;
+    justify-content: space-between; 
+    gap: 10px; 
+  }
+
+  
+  @media (max-width: 480px) {
+    .login-form {
+      width: 90%; 
+    }
+  }  

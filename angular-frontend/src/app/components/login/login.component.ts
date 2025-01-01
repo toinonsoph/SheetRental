@@ -6,8 +6,11 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  imports: [FormsModule],
-  standalone: true
+  styleUrls: ['./login.component.css'], 
+  imports: 
+  [
+    FormsModule
+  ]
 })
 
 export class LoginComponent {
@@ -33,7 +36,7 @@ export class LoginComponent {
     }
   }
 
-  ngOnInit() {
-    console.log('LoginComponent loaded');
+  navigateToHome(): void {
+    this.router.navigate(['/sheets']); 
   }
 }
