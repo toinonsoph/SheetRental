@@ -3,7 +3,7 @@ import { AgenceCambreComponent } from '../backoffice/agence-cambre/agence-cambre
 import { CambreServicesComponent } from '../backoffice/cambre-services/cambre-services.component';
 
 @Component({
-  selector: 'app-users',
+  selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css'],
   imports: 
