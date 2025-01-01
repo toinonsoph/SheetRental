@@ -278,3 +278,18 @@
 .button-style:active {
   transform: scale(0.95); 
 }
+
+h3 {
+  font-size: clamp(1.2rem, 2.5vw, 1.5rem); 
+  color: darkred;
+  text-align: center; 
+  margin: 20px 0; 
+}
+
+.header-container {
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  gap: 10px; 
+  margin: 20px 0; 
+}
