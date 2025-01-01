@@ -17,8 +17,6 @@ import { RouterModule } from '@angular/router';
     CommonModule,
     MatTabsModule,
     MatButtonModule,
-    LakensComponent,
-    VerhuurComponent,
     AdditionalInfoComponent,
     RouterModule
   ],
