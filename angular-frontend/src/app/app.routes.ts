@@ -9,11 +9,9 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent }, 
   { path: 'user', component: UserComponent, canActivate: [AuthGuard] }, 
 
-  // Unprotected routes
-  { path: 'verhuur', component: VerhuurComponent }, 
-  { path: 'lakens', component: LakensComponent }, 
+  { path: 'rental', component: VerhuurComponent }, 
+  { path: 'sheets', component: LakensComponent }, 
 
-  // Default and fallback routes
-  { path: '', redirectTo: '/lakens', pathMatch: 'full' }, 
-  { path: '**', redirectTo: '/lakens' }, 
+  { path: '', redirectTo: '/sheets', pathMatch: 'full' }, 
+  { path: '**', redirectTo: '/sheets' }, 
 ];
