@@ -24,6 +24,8 @@ export class AuthService {
         .eq('username', username)
         .single();
 
+      console.log('user', user);
+
       if (error || !user) {
         console.error('Login failed: User not found');
         return false;
@@ -34,7 +36,7 @@ export class AuthService {
         console.error('Login failed: Invalid password');
         return false;
       }
-      
+
       localStorage.setItem('supabaseToken', username);
       return true;
     } catch (err) {
