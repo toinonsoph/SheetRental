@@ -22,18 +22,18 @@ export class UserComponent {
 
   message: string | null = '';
 
-  tabs = [
-    { title: 'Cambre Services' },
-    { title: 'Agence Cambre' }
-  ];
+  // tabs = [
+  //   { title: 'Cambre Services' },
+  //   { title: 'Agence Cambre' }
+  // ];
 
-  activeTab: number = 0;
+  // activeTab: number = 0;
 
   clearMessage() {
     this.message = null;
   }
 
-  selectTab(index: number) {
-    this.activeTab = index;
-  }
+  // selectTab(index: number) {
+  //   this.activeTab = index;
+  // }
 }
