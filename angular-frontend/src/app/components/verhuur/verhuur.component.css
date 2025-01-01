@@ -296,6 +296,34 @@ h3 {
   max-width: 100%;
 }
 
+.filter-buttons-container {
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  gap: 15px; 
+  margin: 20px auto; 
+}
+
+.filter-button {
+  padding: 10px 20px;
+  font-size: 14px;
+  background-color: darkred;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.filter-button:hover {
+  background-color: #660000;
+  transform: scale(1.05); 
+}
+
+.filter-button.active {
+  background-color: #800020; 
+}
+
 @media (max-width: 768px) {
   .header-container {
     flex-direction: column;; 
@@ -305,5 +333,15 @@ h3 {
   .header-container .btn-primary {
     width: 100%; 
     max-width: 300px; 
+  }
+
+  .filter-buttons-container {
+    flex-wrap: wrap; 
+    gap: 10px;
+  }
+
+  .filter-button {
+    width: 100%; /* Buttons take full width */
+    max-width: 300px; /* Set a max width for better control */
   }
 }
