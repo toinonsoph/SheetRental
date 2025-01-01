@@ -6,7 +6,8 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  imports: [FormsModule]
+  imports: [FormsModule],
+  standalone: true
 })
 
 export class LoginComponent {
@@ -30,5 +31,9 @@ export class LoginComponent {
     } else {
       this.message = 'Invalid username or password';
     }
+  }
+
+  ngOnInit() {
+    console.log('LoginComponent loaded');
   }
 }

@@ -37,7 +37,7 @@ jobs:
     # Step 5: Build the Angular app
     - name: Build Angular App
       run: |
-        npm run build -- --prod --output-path=dist --base-href /SheetRental/
+        npm run build -- --prod --output-path=dist --base-href /CambreServices/
 
     # Step 6: Deploy to GitHub Pages
     - name: Deploy to GitHub Pages
