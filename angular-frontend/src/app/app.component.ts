@@ -23,8 +23,8 @@ import { AdditionalInfoComponent } from './components/additional-info/additional
 })
 export class AppComponent {
   links = [
-    { id: 'sheets', label: 'Lakens / Draps / Bettwâsche' },
-    { id: 'rental', label: 'Vakantiewoningen / Location de maisons de vacances / Vermietung von Ferienhäuser' },
+    { id: '/sheets', label: 'Lakens / Draps / Bettwâsche' },
+    { id: '/rental', label: 'Vakantiewoningen / Location de maisons de vacances / Vermietung von Ferienhäuser' },
   ];
 
   activeLink = this.links[0].id;
