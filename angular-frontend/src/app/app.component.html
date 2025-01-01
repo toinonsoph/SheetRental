@@ -1,20 +1,25 @@
 <!-- Navigation Bar -->
 <nav class="navbar">
-  <div class="navbar-logo"></div>
-  <nav mat-tab-nav-bar class="custom-tab-bar">
+  <div class="navbar-logo">
+  </div>
+  <nav mat-tab-nav-bar [tabPanel]="tabPanel" class="custom-tab-bar">
+    <!-- Generate tabs dynamically using routerLink -->
     <a
       *ngFor="let link of links"
       mat-tab-link
-      [routerLink]="link.id"
+      [routerLink]="link.id" 
       [routerLinkActiveOptions]="{ exact: true }"
       routerLinkActive="active"
       class="custom-tab-link">
       {{ link.label }}
     </a>
   </nav>
+  <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
 </nav>
 
-<!-- Router Outlet for Dynamic Content -->
+<!-- Image Section -->
+<div class="image-section"></div>
+
 <router-outlet></router-outlet>
 
 <footer class="tab-content tab-content--dark">
