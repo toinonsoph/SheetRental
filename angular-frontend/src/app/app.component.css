@@ -1,4 +1,3 @@
-
 /* General Reset */
 * {
   margin: 0;
@@ -13,11 +12,10 @@ html, body {
   overflow: hidden; /* Prevent scrollbars */
 }
 
-/* Body Layout */
 body {
   display: flex;
   flex-direction: column;
-  background-color: #f9f9f9; 
+  background-color: #f9f9f9;
 }
 
 /* Background Image Section */
@@ -25,119 +23,66 @@ body {
   position: relative;
   width: 100%;
   height: 10vh; 
-  background-image: url('../../public/pictures/DeHaan.jpg'); 
+  background-image: url('../../public/pictures/DeHaan.jpg');
   background-size: cover;
   background-position: center;
 }
 
 /* Transparent Navbar */
 .navbar {
-  position: absolute; 
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  justify-content: space-between;
-  align-items: center;
-  height: 10vh; 
+  height: 10vh;
   padding: 0 20px;
-  background-color: rgba(0, 0, 0, 0.5); 
-  z-index: 10; 
+  background-color: rgba(0, 0, 0, 0.5);
   color: white;
   display: flex;
   justify-content: flex-end;
-  padding-right: 2vw; 
+  align-items: center;
+  padding-right: 2vw;
 }
 
-/* Navbar Logo */
 .navbar-logo img {
-  height: 40px; 
+  height: 40px;
   width: auto;
 }
 
 /* Navigation Links */
 .custom-tab-bar {
   display: flex;
-  gap: 20px; 
+  gap: 20px;
 }
 
 .custom-tab-link {
   text-decoration: none;
-  color: white; 
+  color: white;
   font-size: 1rem;
   padding: 10px 15px;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .custom-tab-link:hover {
-  background-color: rgba(255, 255, 255, 0.8); 
-  color: #800020; 
-}
-
-/* Main Content Area */
-.tab-content {
-  position: relative;
-  flex: 1; 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  background-color: rgba(255, 255, 255, 0.9); 
-  margin: 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-}
-
-.tab-content h2 {
-  font-size: 2rem;
-  margin-bottom: 20px;
-  color: #333;
-}
-
-.tab-content div {
-  font-size: 1.2rem;
-  color: #555;
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #800020;
 }
 
 .custom-tab-link.mat-tab-link-active {
-  font-weight: bold; /* Make active tab bold */
+  font-weight: bold;
   color: #ff6f61; /* Active tab text color */
 }
 
 /* Adjust spacing between logo and tabs */
 .navbar-logo {
-  margin-right: auto; /* Push tabs to the right */
-}
-
-/* Main Content Area */
-.tab-content {
-  position: relative;
-  flex: 1; /* Takes up remaining height */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
-  margin: 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-}
-
-.tab-content h2 {
-  font-size: 2rem;
-  margin-bottom: 20px;
-  color: #333;
-}
-
-.tab-content div {
-  font-size: 1.2rem;
-  color: #555;
+  margin-right: auto;
 }
 
 /* Footer */
 footer.tab-content--dark {
-  width: 100%; /* Ensure it spans the entire width */
-  margin: 0; /* Remove any margins */
-  padding: 0; /* Remove any padding that adds space */
-  height: 10vh; /* Footer height */
-  background-color: #333; /* Dark gray background */
+  width: 100%;
+  height: 10vh;
+  background-color: #333;
   color: #f0f0f0;
   display: flex;
   justify-content: center;
@@ -146,106 +91,29 @@ footer.tab-content--dark {
 }
 
 footer a {
-  color: #f8d030; /* Gold links */
+  color: #f8d030;
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
 footer a:hover {
-  color: #ff6f61; /* Light red on hover */
+  color: #ff6f61;
 }
 
-.content-container {
-  display: flex;
-  align-items: center; 
-  gap: 50px; 
-  margin-left: 100px; 
-}
-
-h3 {
-  margin: 0; 
-  font-size: 1.5em;
-  color: darkred; 
-}
-
-.header-container {
-  display: flex;
-  justify-content: center; 
-  align-items: center; 
-  position: relative; 
-  margin-bottom: 20px; 
-  margin-top: 40px; 
-  flex-wrap: wrap; 
-}
-
-.header-container h3 {
-  font-size: clamp(1.2rem, 2.5vw, 1.5rem);
-  color: darkred; 
-  margin: 0; 
-  position: absolute;
-  left: 50%; 
-  transform: translateX(-50%); 
-}
-
-.header-container .btn-primary {
-  padding: 10px 15px;
-  font-size: 14px;
-  background-color: darkred;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  position: absolute; 
-  right: 0; 
-}
-
-.header-container .btn-primary:hover {
-  background-color: #660000; 
-}
-
-.verhuur-container {
-  display: flex; 
-  flex-direction: column; 
-  justify-content: center;
-  align-items: center; 
-  text-align: center; 
-  margin-top: 20px; 
-  margin-bottom: 40px;
-}
-
-.verhuur-container h3 {
-  font-size: 1.5em;  
-  color: darkred;
-  margin: 0; 
-}
-
-/* Medium screens (tablets, small laptops) */
+/* Medium Screens (Tablets, Small Laptops) */
 @media (max-width: 1024px) {
   .navbar {
-    height: 8vh; /* Adjust height for medium screens */
+    height: 8vh;
     padding-right: 1vw;
   }
-  
+
   .custom-tab-link {
     font-size: 0.9rem;
-    padding: 8px 12px; /* Smaller padding */
-  }
-
-  .header-container h3 {
-    font-size: 1.2em; /* Reduce size */
-  }
-
-  .header-container .btn-primary {
-    font-size: 12px;
-    padding: 8px 12px; /* Smaller button */
-  }
-
-  .verhuur-container h3 {
-    font-size: 1.2em;
+    padding: 8px 12px;
   }
 }
 
-/* Small screens (mobile phones) */
+/* Small Screens (Mobile Phones) */
 @media (max-width: 768px) {
   .navbar {
     flex-direction: column;
@@ -254,35 +122,14 @@ h3 {
   }
 
   .image-section {
-    height: 15vh; 
-    background-size: cover; 
+    height: 15vh;
+    background-size: cover;
     background-position: center;
   }
 
   .custom-tab-link {
     font-size: 0.8rem;
     padding: 5px 8px;
-  }
-
-  .header-container h3 {
-    font-size: 1em;
-    margin-top: 10px;
-  }
-
-  .header-container .btn-primary {
-    font-size: 10px;
-    padding: 6px 10px;
-  }
-
-  .tab-content {
-    margin: 10px;
-    padding: 10px;
-    box-shadow: none; 
-  }
-
-  .verhuur-container {
-    padding: 10px;
-    margin: 20px 0;
   }
 
   footer {
