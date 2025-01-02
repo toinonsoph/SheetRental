@@ -20,8 +20,6 @@ export class UserComponent {
   selectTab(tab: string) {
     this.selectedTab = tab;
   }
-  
-
 
   clearMessage() {
     this.message = null;

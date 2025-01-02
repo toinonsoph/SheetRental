@@ -13,8 +13,9 @@
 }
 
 .tabs button.active {
-  border-bottom: 2px solid #007bff;
+  border-bottom: 2px solid darkred;
   font-weight: bold;
+  color: darkred; 
 }
 
 .tabs button:hover {
