@@ -58,3 +58,34 @@
   line-height: 1;
   color: #721c24;
 }
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tabs-container {
+  flex-grow: 1;
+}
+
+.logout-btn {
+  background-color: lightcoral; 
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-left: 16px;
+  align-self: center;
+}
+
+.logout-btn:hover {
+  background-color: crimson; 
+}
+
+.logout-btn:focus {
+  outline: none;
+  box-shadow: 0 0 4px rgba(255, 0, 0, 0.5);
+}
