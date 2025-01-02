@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { SupabaseService } from '../../../services/supabase.service';
+import { SupabaseService } from '../../services/supabase.service';
 
 @Component({
   selector: 'app-cambre-services',

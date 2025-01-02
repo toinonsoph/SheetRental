@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { AgenceCambreComponent } from '../backoffice/agence-cambre/agence-cambre.component';
-import { CambreServicesComponent } from '../backoffice/cambre-services/cambre-services.component';
+import { AgenceCambreComponent } from '../agence-cambre/agence-cambre.component';
+import { CambreServicesComponent } from '../cambre-services/cambre-services.component';
 import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
