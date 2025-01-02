@@ -3,19 +3,22 @@
   <button (click)="clearMessage()" class="close-btn">✖</button>
 </div>
 
-<div class="tabs">
-  <button
-    [class.active]="selectedTab === 'services'"
-    (click)="selectTab('services')"
-  >
-    Cambre Services
-  </button>
-  <button
-    [class.active]="selectedTab === 'agence'"
-    (click)="selectTab('agence')"
-  >
-    Agence Cambre
-  </button>
+<div class="tabs-container">
+  <div class="tabs">
+    <!-- Tab Buttons -->
+    <button
+      [class.active]="selectedTab === 'services'"
+      (click)="selectTab('services')"
+    >
+      Cambre Services
+    </button>
+    <button
+      [class.active]="selectedTab === 'agence'"
+      (click)="selectTab('agence')"
+    >
+      Agence Cambre
+    </button>
+  </div>
 </div>
 
 <div class="tab-content">

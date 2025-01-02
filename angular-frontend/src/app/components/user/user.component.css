@@ -1,29 +1,42 @@
+.tabs-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px auto;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  width: 60%; /* Adjust as needed */
+  background-color: #f9f9f9; /* Light background for the box */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Optional shadow for aesthetics */
+}
+
 .tabs {
   display: flex;
-  border-bottom: 1px solid #ddd;
-  margin-bottom: 1rem;
+  justify-content: center;
+  gap: 20px; /* Spacing between tabs */
 }
 
 .tabs button {
   padding: 10px 20px;
-  background: none;
   border: none;
-  border-bottom: 2px solid transparent;
+  border-radius: 5px;
   cursor: pointer;
+  background-color: white;
+  color: #333;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .tabs button.active {
-  border-bottom: 2px solid darkred;
-  font-weight: bold;
-  color: darkred; 
+  background-color: darkred;
+  color: white;
+  border: 1px solid darkred;
 }
 
 .tabs button:hover {
-  background-color: #f8f9fa;
-}
-
-.tab-content {
-  margin-top: 1rem;
+  background-color: #ffcccc;
+  color: darkred;
 }
 
 .alert {

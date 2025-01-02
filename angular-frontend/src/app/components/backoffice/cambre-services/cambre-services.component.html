@@ -1,1 +1,106 @@
-<p>cambre-services works!</p>
+<div class="center-container">
+    <!-- Information Box -->
+    <div class="info-box">
+      <h3>Information</h3>
+      <p>
+        Please ensure that all names and information fields are no longer than 
+        <strong>500 characters</strong>. The price field must be a positive number.
+      </p>
+      <p>
+        You can edit existing materials or add new ones using the buttons provided.
+      </p>
+    </div>
+  
+    <!-- Add Material Button -->
+    <button (click)="openAddDialog()">Add Material</button>
+  
+    <!-- Table for Materials -->
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th>Name Dutch</th>
+          <th>Name French</th>
+          <th>Name German</th>
+          <th>Information Dutch</th>
+          <th>Information French</th>
+          <th>Information German</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let material of materials">
+          <td>{{ material.name_dutch }}</td>
+          <td>{{ material.name_french }}</td>
+          <td>{{ material.name_german }}</td>
+          <td>{{ material.information_dutch }}</td>
+          <td>{{ material.information_french }}</td>
+          <td>{{ material.information_german }}</td>
+          <td>{{ material.price | currency }}</td>
+          <td>
+            <button (click)="openEditDialog(material)">Edit</button>
+            <button (click)="deleteMaterial(material.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <!-- Add/Edit Dialog -->
+  <div *ngIf="isFormVisible" class="form-container">
+    <form [formGroup]="materialForm" (ngSubmit)="submitForm()">
+        <label>
+            Name Dutch
+            <input formControlName="name_dutch" />
+            <small *ngIf="materialForm.controls['name_dutch'].invalid && materialForm.controls['name_dutch'].touched">
+              <span *ngIf="materialForm.controls['name_dutch'].errors?.['required']">Name Dutch is required.</span>
+              <span *ngIf="materialForm.controls['name_dutch'].errors?.['maxlength']">Name Dutch cannot exceed 500 characters.</span>
+            </small>
+          </label>
+          <label>
+            Name French
+            <input formControlName="name_french" />
+            <small *ngIf="materialForm.controls['name_french'].invalid && materialForm.controls['name_french'].touched">
+              <span *ngIf="materialForm.controls['name_french'].errors?.['required']">Name French is required.</span>
+              <span *ngIf="materialForm.controls['name_french'].errors?.['maxlength']">Name French cannot exceed 500 characters.</span>
+            </small>
+          </label>
+          <label>
+            Name German
+            <input formControlName="name_german" />
+            <small *ngIf="materialForm.controls['name_german'].invalid && materialForm.controls['name_german'].touched">
+              <span *ngIf="materialForm.controls['name_german'].errors?.['required']">Name German is required.</span>
+              <span *ngIf="materialForm.controls['name_german'].errors?.['maxlength']">Name German cannot exceed 500 characters.</span>
+            </small>
+          </label>
+          <label>
+            Information Dutch
+            <textarea formControlName="information_dutch"></textarea>
+            <small *ngIf="materialForm.controls['information_dutch'].invalid && materialForm.controls['information_dutch'].touched">
+              Information Dutch cannot exceed 500 characters.
+            </small>
+          </label>
+          <label>
+            Information French
+            <textarea formControlName="information_french"></textarea>
+            <small *ngIf="materialForm.controls['information_french'].invalid && materialForm.controls['information_french'].touched">
+              Information French cannot exceed 500 characters.
+            </small>
+          </label>
+          <label>
+            Information German
+            <textarea formControlName="information_german"></textarea>
+            <small *ngIf="materialForm.controls['information_german'].invalid && materialForm.controls['information_german'].touched">
+              Information German cannot exceed 500 characters.
+            </small>
+          </label>
+      <label>
+        Price
+        <input type="number" formControlName="price" />
+        <small *ngIf="materialForm.controls['price'].invalid && materialForm.controls['price'].touched">
+          Price must be a positive number.
+        </small>
+      </label>
+      <button type="submit">{{ isEditing ? 'Update' : 'Add' }}</button>
+      <button type="button" (click)="cancelForm()">Cancel</button>
+    </form>
+  </div>  

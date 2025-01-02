@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-agence-cambre',
   imports: [],
-  template: `<p>Agence Cambre Works!</p>`,
+  templateUrl:'./agence-cambre.component.html',
   styleUrls: ['./agence-cambre.component.css'],
   standalone: true
 })
