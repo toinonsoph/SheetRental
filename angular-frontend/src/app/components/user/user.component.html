@@ -3,5 +3,23 @@
     <button (click)="clearMessage()" class="close-btn">✖</button>
 </div>
 
-<app-agence-cambre></app-agence-cambre>
-<app-cambre-services></app-cambre-services>
+<div class="tabs">
+  <!-- Tab Buttons -->
+  <button
+    [class.active]="selectedTab === 'services'"
+    (click)="selectTab('agence')"
+  >
+    Cambre Services
+  </button>
+  <button
+    [class.active]="selectedTab === 'services'"
+    (click)="selectTab('services')"
+  >
+    Agence Cambre
+  </button>
+</div>
+
+<div class="tab-content">  
+  <app-cambre-services *ngIf="selectedTab === 'services'"></app-cambre-services>
+  <app-agence-cambre *ngIf="selectedTab === 'agence'"></app-agence-cambre>
+</div>

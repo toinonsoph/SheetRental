@@ -14,26 +14,16 @@ import { CambreServicesComponent } from '../backoffice/cambre-services/cambre-se
   standalone: true
 })
 export class UserComponent {
+  message: string | null = '';
+  selectedTab: string = 'services';
 
-    constructor() {
-      console.log('UserComponent initialized');
-    }
+  selectTab(tab: string) {
+    this.selectedTab = tab;
+  }
   
 
-  message: string | null = '';
-
-  // tabs = [
-  //   { title: 'Cambre Services' },
-  //   { title: 'Agence Cambre' }
-  // ];
-
-  // activeTab: number = 0;
 
   clearMessage() {
     this.message = null;
   }
-
-  // selectTab(index: number) {
-  //   this.activeTab = index;
-  // }
 }

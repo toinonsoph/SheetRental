@@ -1,52 +1,46 @@
+.tabs {
+  display: flex;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 1rem;
+}
+
+.tabs button {
+  padding: 10px 20px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+}
+
+.tabs button.active {
+  border-bottom: 2px solid #007bff;
+  font-weight: bold;
+}
+
+.tabs button:hover {
+  background-color: #f8f9fa;
+}
+
+.tab-content {
+  margin-top: 1rem;
+}
+
 .alert {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f8d7da;
   padding: 10px;
-  margin-bottom: 20px;
-  background-color: #ffc107;
-  color: #333;
-  border: 1px solid #ffc107;
-  border-radius: 5px;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+  margin-bottom: 1rem;
 }
 
 .close-btn {
   background: none;
   border: none;
-  font-size: 18px;
   cursor: pointer;
-  float: right;
-}
-
-.tabs {
-  margin-top: 20px;
-}
-
-.tab-buttons {
-  display: flex;
-  margin-bottom: 1em;
-}
-
-.tab-buttons button {
-  flex: 1;
-  padding: 10px 15px;
-  cursor: pointer;
-  background-color: #8b0000; 
-  color: white;
-  border: 1px solid #600000; 
-  text-align: center;
-  transition: background-color 0.3s ease;
-}
-
-.tab-buttons button:hover {
-  background-color: #600000; 
-}
-
-.tab-buttons button.active {
-  background-color: #b22222; 
-  color: white;
-  border-bottom: 1px solid white;
-}
-
-.tab-content {
-  padding: 15px;
-  border: 1px solid #ccc;
-  background-color: #fff;
+  font-size: 1.2rem;
+  line-height: 1;
+  color: #721c24;
 }
