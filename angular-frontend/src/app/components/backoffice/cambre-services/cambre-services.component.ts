@@ -36,6 +36,7 @@ export class CambreServicesComponent implements OnInit {
       this.materials = await this.supabase.getMaterials();
     } catch (error) {
       console.error('Error loading materials:', error);
+      this.materials = [];
     }
   }
 

@@ -15,7 +15,7 @@
     <button (click)="openAddDialog()">Add Material</button>
   
     <!-- Table for Materials -->
-    <table class="styled-table">
+    <table *ngIf="materials?.length; else noData" class="styled-table" class="styled-table">
       <thead>
         <tr>
           <th>Name Dutch</th>
@@ -43,6 +43,9 @@
         </tr>
       </tbody>
     </table>
+    <ng-template #noData>
+        <p>No materials available.</p>
+    </ng-template>
   </div>
   
   <!-- Add/Edit Dialog -->
