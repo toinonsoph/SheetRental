@@ -1,3 +1,4 @@
+<p>Testing</p>
 <div class="center-container">
     <!-- Information Box -->
     <div class="info-box">
@@ -9,13 +10,13 @@
       <p>
         You can edit existing materials or add new ones using the buttons provided.
       </p>
-    </div>
+</div>
   
-    <!-- Add Material Button -->
-    <button (click)="openAddDialog()">Add Material</button>
+<!-- Add Material Button -->
+<button (click)="openAddDialog()">Add Material</button>
   
-    <!-- Table for Materials -->
-    <table *ngIf="materials?.length; else noData" class="styled-table" class="styled-table">
+<!-- Table for Materials -->
+<table *ngIf="materials?.length; else noData" class="styled-table" class="styled-table">
       <thead>
         <tr>
           <th>Name Dutch</th>
@@ -42,14 +43,14 @@
           </td>
         </tr>
       </tbody>
-    </table>
-    <ng-template #noData>
+</table>
+<ng-template #noData>
         <p>No materials available.</p>
     </ng-template>
-  </div>
+</div>
   
-  <!-- Add/Edit Dialog -->
-  <div *ngIf="isFormVisible" class="form-container">
+<!-- Add/Edit Dialog -->
+<div *ngIf="isFormVisible" class="form-container">
     <form [formGroup]="materialForm" (ngSubmit)="submitForm()">
         <label>
             Name Dutch
@@ -106,4 +107,4 @@
       <button type="submit">{{ isEditing ? 'Update' : 'Add' }}</button>
       <button type="button" (click)="cancelForm()">Cancel</button>
     </form>
-  </div>  
+</div>  
