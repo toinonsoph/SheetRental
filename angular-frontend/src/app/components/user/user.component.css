@@ -61,24 +61,31 @@
 
 .header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  padding: 10px 20px;
 }
 
 .tabs-container {
-  flex-grow: 1;
+  flex-grow: 1; 
+}
+
+.tabs button {
+  margin-right: 10px;
+}
+
+.logout-container {
+  display: flex;
+  justify-content: flex-end;
 }
 
 .logout-btn {
-  background-color: lightcoral; 
+  background-color: lightcoral;
   color: white;
   border: none;
   padding: 8px 16px;
   border-radius: 4px;
   cursor: pointer;
   font-size: 14px;
-  margin-left: 16px;
-  align-self: center;
 }
 
 .logout-btn:hover {
