@@ -1,38 +1,19 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, FormsModule, FormGroup, Validators } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { SupabaseService } from '../../services/supabase.service';
-import { MatTableModule } from '@angular/material/table';
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { EditMaterialsComponent } from '../edit-materials/edit-materials.component';
 
 @Component({
   selector: 'app-cambre-services',
   templateUrl: './cambre-services.component.html',
   styleUrls: ['./cambre-services.component.css'],
-  standalone: true,
-  imports: 
-  [
-    CommonModule, 
-    ReactiveFormsModule, 
-    FormsModule,
-    MatTableModule,
-    MatButtonModule,
-    MatInputModule,
-    MatFormFieldModule,
-  ], 
-  providers: [SupabaseService], 
+  providers: [SupabaseService],
 })
-
 export class CambreServicesComponent implements OnInit {
   @Input() selectedTab!: string;
 
   materials: any[] = [];
-  materialForm: FormGroup;
-  isFormVisible = false;
-  isEditing = false;
-  editingMaterialId: string | null = null;
   isLoading = false;
 
   displayedColumns: string[] = [
@@ -46,17 +27,10 @@ export class CambreServicesComponent implements OnInit {
     'actions',
   ];
 
-  constructor(private supabase: SupabaseService, private fb: FormBuilder) {
-    this.materialForm = this.fb.group({
-      name_dutch: ['', [Validators.required, Validators.maxLength(500)]],
-      name_french: ['', [Validators.required, Validators.maxLength(500)]],
-      name_german: ['', [Validators.required, Validators.maxLength(500)]],
-      information_dutch: ['', [Validators.maxLength(500)]],
-      information_french: ['', [Validators.maxLength(500)]],
-      information_german: ['', [Validators.maxLength(500)]],
-      price: [null, [Validators.required, Validators.min(0)]],
-    });
-  }
+  constructor(
+    private supabase: SupabaseService,
+    private dialog: MatDialog
+  ) {}
 
   async ngOnInit() {
     await this.loadMaterials();
@@ -75,37 +49,25 @@ export class CambreServicesComponent implements OnInit {
   }
 
   openAddDialog() {
-    this.isFormVisible = true;
-    this.isEditing = false;
-    this.materialForm.reset();
+    const dialogRef = this.dialog.open(EditMaterialsComponent, {
+      width: '600px',
+      data: { material: null },
+    });
+
+    dialogRef.afterClosed().subscribe(async (result) => {
+      if (result) await this.loadMaterials();
+    });
   }
 
   openEditDialog(material: any) {
-    this.isFormVisible = true;
-    this.isEditing = true;
-    this.editingMaterialId = material.id.toString();
-    this.materialForm.patchValue(material);
-  }
+    const dialogRef = this.dialog.open(EditMaterialsComponent, {
+      width: '600px',
+      data: { material },
+    });
 
-  async submitForm() {
-    if (this.materialForm.invalid) {
-      console.error('Form is invalid');
-      return;
-    }
-
-    const material = this.materialForm.value;
-
-    try {
-      if (this.isEditing && this.editingMaterialId) {
-        await this.supabase.updateMaterial(this.editingMaterialId, material);
-      } else {
-        await this.supabase.addMaterial(material);
-      }
-      this.isFormVisible = false;
-      await this.loadMaterials();
-    } catch (error) {
-      console.error('Error saving material:', error);
-    }
+    dialogRef.afterClosed().subscribe(async (result) => {
+      if (result) await this.loadMaterials();
+    });
   }
 
   async deleteMaterial(id: string) {
@@ -115,10 +77,5 @@ export class CambreServicesComponent implements OnInit {
     } catch (error) {
       console.error('Error deleting material:', error);
     }
-  }
-
-  cancelForm() {
-    this.isFormVisible = false;
-    this.materialForm.reset();
   }
 }

@@ -1,0 +1,19 @@
+<h2 mat-dialog-title>{{ isEditing ? 'Edit Material' : 'Add Material' }}</h2>
+<div mat-dialog-content>
+  <form [formGroup]="materialForm">
+    <label>Name Dutch</label>
+    <input formControlName="name_dutch" />
+    <small *ngIf="materialForm.controls['name_dutch'].invalid && materialForm.controls['name_dutch'].touched">
+      <span *ngIf="materialForm.controls['name_dutch'].errors?.['required']">Required.</span>
+      <span *ngIf="materialForm.controls['name_dutch'].errors?.['maxlength']">Max 500 characters.</span>
+    </small>
+
+    <!-- Repeat similar inputs for other fields -->
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="cancel()">Cancel</button>
+  <button mat-button color="primary" (click)="submitForm()" [disabled]="materialForm.invalid">
+    {{ isEditing ? 'Update' : 'Add' }}
+  </button>
+</div>

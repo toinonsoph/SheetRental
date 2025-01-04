@@ -1,0 +1,15 @@
+mat-dialog-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  mat-dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+  
+  button {
+    padding: 8px 16px;
+  }  
