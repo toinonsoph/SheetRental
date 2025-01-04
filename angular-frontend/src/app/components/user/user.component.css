@@ -208,6 +208,10 @@ button:hover {
   color: darkred;
 }
 
+.mdc-tab .text-label{
+  color: black !important;
+}
+
 @media (max-width: 768px) {
   .tabs-container {
     padding: 20px;
