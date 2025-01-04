@@ -1,3 +1,10 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+}
+
 .center-container {
   display: flex;
   flex-direction: column;
@@ -32,32 +39,44 @@
 .styled-table {
   width: 100%;
   border-collapse: collapse;
-  background-color: darkred;
+  background-color: #f4f4f4; /* Matches the rest of the background */
   text-align: center;
 }
 
 .styled-table th,
 .styled-table td {
   padding: 10px;
-  border: 1px solid #ddd;
   color: black;
 }
 
 .styled-table th {
   font-weight: bold;
+  background-color: #ffffff;
+  border-bottom: 2px solid #ddd;
+}
+
+.styled-table tr {
+  border-bottom: 1px solid #ddd;
+}
+
+.styled-table tr:last-child {
+  border-bottom: none;
 }
 
 .styled-table td button {
-  background-color: transparent;
-  border: 1px solid black;
-  padding: 5px 10px;
+  background-color: darkred !important;
+  color: white !important;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 15px;
   cursor: pointer;
-  color: black;
+  margin-right: 10px;
+  display: inline-block;
+  white-space: nowrap;
 }
 
 .styled-table td button:hover {
-  background-color: black;
-  color: white;
+  background-color: #a50000 !important;
 }
 
 button {
@@ -82,71 +101,128 @@ button:hover {
   color: darkred;
 }
 
-.mat-elevation-z8 {
-  margin: 16px;
-  border-radius: 8px;
-}
-
-.mat-header-cell, .mat-cell {
-  padding: 10px;
-  text-align: left;
-  border: 1px solid #ddd;
-}
-
-.mat-header-cell {
-  font-weight: bold;
+.tabs-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  align-items: stretch;
+  justify-content: flex-start;
+  padding: 20px;
   background-color: #f4f4f4;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin: 20px auto;
+  width: 90%;
+  max-width: 1400px;
+  height: auto;
+  min-height: 80vh;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.mat-cell button {
-  background-color: darkred !important;
-  color: white !important;
-  border: none;
-  border-radius: 5px;
-  padding: 5px 15px;
-  cursor: pointer;
-  margin-right: 10px;
-  display: inline-block;
-}
-
-.mat-cell button:hover {
-  background-color: #a50000;
-}
-
-.mat-tab-label {
-  color: darkred;
-  font-weight: bold;
-}
-
-.mat-tab-label-active {
-  color: #a50000;
+.mat-tab-group {
+  width: 100%;
+  background-color: #f4f4f4;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  overflow: hidden;
 }
 
 .mat-tab-header {
-  justify-content: center;
+  background-color: #f4f4f4;
+  border-bottom: 1px solid #ddd;
 }
 
-::ng-deep .mat-tab-label {
+.mat-tab-label {
+  font-weight: bold;
+  font-size: 16px;
+  color: #333 !important;
+  padding: 12px 20px;
+  background-color: #f4f4f4 !important;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.mat-tab-label-active {
+  color: white !important;
+  background-color: darkred !important;
+  border-radius: 4px 4px 0 0;
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.mat-tab-label:hover {
+  background-color: #ffe6e6 !important;
   color: darkred !important;
-  font-weight: bold !important;
+  cursor: pointer;
 }
 
-::ng-deep .mat-tab-label-active {
-  color: #a50000 !important;
-}
-
-.openDialog {
-  float: right;
+.logout-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
   padding: 10px 20px;
   font-size: 16px;
   color: white;
-  background-color: darkred;
+  background-color: coral;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  margin: 10px 0;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.openDialog:hover {
-  background-color: #a50000;
+.logout-btn:hover {
+  background-color: darkred;
+}
+
+.logout-btn:active {
+  background-color: red;
+  transform: scale(0.95);
+}
+
+.alert {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f8d7da;
+  padding: 15px;
+  border: 1px solid darkred;
+  border-radius: 8px;
+  margin: 20px auto;
+  max-width: 1000px;
+  color: #721c24;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: #721c24;
+  transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+  color: darkred;
+}
+
+@media (max-width: 768px) {
+  .tabs-container {
+    padding: 15px;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .logout-btn {
+    width: auto;
+    text-align: center;
+    position: static;
+    margin-top: 20px;
+  }
+
+  .alert {
+    padding: 15px;
+    font-size: 12px;
+  }
 }

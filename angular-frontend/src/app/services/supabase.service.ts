@@ -20,7 +20,8 @@ export class SupabaseService {
   async getMaterials() {
     const { data, error } = await this.supabase
       .from('material')
-      .select('*'); 
+      .select('*')
+      .order('name_dutch', {ascending: true}); 
     if (error) throw error;
     return data;
   }
