@@ -208,7 +208,7 @@ button:hover {
   color: darkred;
 }
 
-.mdc-tab .text-label{
+::ng-deep .mdc-tab:not(.mdc-tab--active) .mdc-tab__text-label {
   color: black !important;
 }
 
