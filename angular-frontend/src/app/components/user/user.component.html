@@ -24,7 +24,12 @@
 </div>
 
 <div class="tab-content">
-  console.log(this.selectedTab)
-  <app-cambre-services *ngIf="selectedTab === 'services'"></app-cambre-services>
-  <app-agence-cambre *ngIf="selectedTab === 'agence'"></app-agence-cambre>
+  <app-cambre-services
+  *ngIf="selectedTab === 'services'"
+  [selectedTab]="selectedTab"
+></app-cambre-services>
+<app-agence-cambre
+  *ngIf="selectedTab === 'agence'"
+  [selectedTab]="selectedTab"
+></app-agence-cambre>
 </div>

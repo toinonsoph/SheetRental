@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, FormsModule, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SupabaseService } from '../../services/supabase.service';
@@ -13,6 +13,8 @@ import { SupabaseService } from '../../services/supabase.service';
 })
 
 export class CambreServicesComponent implements OnInit {
+  @Input() selectedTab!: string;
+
   materials: any[] = [];
   materialForm: FormGroup;
   isFormVisible = false;
@@ -32,6 +34,7 @@ export class CambreServicesComponent implements OnInit {
   }
 
   async ngOnInit() {
+    console.log('Selected Tab in CambreServicesComponent:', this.selectedTab);
     await this.loadMaterials();
   }
 
