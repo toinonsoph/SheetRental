@@ -1,15 +1,16 @@
+<div class="tabs-container">
+  <mat-tab-group>
+    <mat-tab label="Cambre Services">
+      <app-cambre-services></app-cambre-services>
+    </mat-tab>
+    <mat-tab label="Agence Cambre">
+      <app-agence-cambre></app-agence-cambre>
+    </mat-tab>
+  </mat-tab-group>
+  <button (click)="logout()" class="logout-btn">Logout</button>
+</div>
+
 <div *ngIf="message && message.trim()" class="alert alert-warning">
   {{ message }}
   <button (click)="clearMessage()" class="close-btn">✖</button>
 </div>
-
-<mat-tab-group>
-  <mat-tab label="Cambre Services">
-    <app-cambre-services></app-cambre-services>
-  </mat-tab>
-  <mat-tab label="Agence Cambre">
-    <app-agence-cambre></app-agence-cambre>
-  </mat-tab>
-</mat-tab-group>
-
-<button (click)="logout()" class="logout-btn"></button>

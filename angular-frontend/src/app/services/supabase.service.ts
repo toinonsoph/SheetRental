@@ -18,7 +18,9 @@ export class SupabaseService {
 
   // Material table methods
   async getMaterials() {
-    const { data, error } = await this.supabase.from('materials').select('*');
+    const { data, error } = await this.supabase
+      .from('materials')
+      .select('*'); 
     if (error) throw error;
     return data;
   }
@@ -27,7 +29,7 @@ export class SupabaseService {
     const timestamp = new Date().toISOString();
     const { data, error } = await this.supabase.from('materials').insert([
       {
-        ...material,
+        ...material, 
         createdOn: timestamp,
         lastUpdateOn: timestamp,
       },
@@ -36,7 +38,7 @@ export class SupabaseService {
     return data;
   }
 
-  async updateMaterial(id: number, updates: any) {
+  async updateMaterial(id: string, updates: any) {
     const timestamp = new Date().toISOString();
     const { data, error } = await this.supabase
       .from('materials')
@@ -44,13 +46,16 @@ export class SupabaseService {
         ...updates,
         lastUpdateOn: timestamp,
       })
-      .eq('id', id);
+      .eq('id', id); 
     if (error) throw error;
     return data;
   }
 
-  async deleteMaterial(id: number) {
-    const { data, error } = await this.supabase.from('materials').delete().eq('id', id);
+  async deleteMaterial(id: string) {
+    const { data, error } = await this.supabase
+      .from('materials')
+      .delete()
+      .eq('id', id); 
     if (error) throw error;
     return data;
   }

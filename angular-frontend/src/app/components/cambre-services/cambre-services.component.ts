@@ -19,7 +19,8 @@ export class CambreServicesComponent implements OnInit {
   materialForm: FormGroup;
   isFormVisible = false;
   isEditing = false;
-  editingMaterialId: number | null = null;
+  editingMaterialId: string | null = null;
+  isLoading = false;
 
   constructor(private supabase: SupabaseService, private fb: FormBuilder) {
     this.materialForm = this.fb.group({
@@ -34,16 +35,18 @@ export class CambreServicesComponent implements OnInit {
   }
 
   async ngOnInit() {
-    console.log('Selected Tab in CambreServicesComponent:', this.selectedTab);
     await this.loadMaterials();
-  }
+  }  
 
   async loadMaterials() {
+    this.isLoading = true;
     try {
       this.materials = await this.supabase.getMaterials();
     } catch (error) {
       console.error('Error loading materials:', error);
       this.materials = [];
+    } finally {
+      this.isLoading = false;
     }
   }
 
@@ -56,20 +59,20 @@ export class CambreServicesComponent implements OnInit {
   openEditDialog(material: any) {
     this.isFormVisible = true;
     this.isEditing = true;
-    this.editingMaterialId = material.id;
+    this.editingMaterialId = material.id.toString(); 
     this.materialForm.patchValue(material);
   }
-
+  
   async submitForm() {
     if (this.materialForm.invalid) {
       console.error('Form is invalid');
       return;
     }
-
+  
     const material = this.materialForm.value;
-
+  
     try {
-      if (this.isEditing && this.editingMaterialId !== null) {
+      if (this.isEditing && this.editingMaterialId) {
         await this.supabase.updateMaterial(this.editingMaterialId, material);
       } else {
         await this.supabase.addMaterial(material);
@@ -80,13 +83,8 @@ export class CambreServicesComponent implements OnInit {
       console.error('Error saving material:', error);
     }
   }
-
-  cancelForm() {
-    this.isFormVisible = false;
-    this.materialForm.reset();
-  }
-
-  async deleteMaterial(id: number) {
+  
+  async deleteMaterial(id: string) {
     try {
       await this.supabase.deleteMaterial(id);
       await this.loadMaterials();
@@ -94,4 +92,9 @@ export class CambreServicesComponent implements OnInit {
       console.error('Error deleting material:', error);
     }
   }
+
+  cancelForm() {
+    this.isFormVisible = false;
+    this.materialForm.reset();
+  }  
 }

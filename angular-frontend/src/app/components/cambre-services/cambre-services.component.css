@@ -69,3 +69,10 @@
   button:hover {
     background-color: darkred;
   }  
+
+  .loading-spinner {
+    text-align: center;
+    font-size: 18px;
+    margin: 20px 0;
+    color: darkred;
+  }  

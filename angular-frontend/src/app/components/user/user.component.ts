@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { AgenceCambreComponent } from '../agence-cambre/agence-cambre.component';
 import { CambreServicesComponent } from '../cambre-services/cambre-services.component';
-import { ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -24,7 +23,6 @@ export class UserComponent {
   links: string[] = ['services', 'agence'];
 
   constructor(
-    private cdr: ChangeDetectorRef,
     private http: HttpClient,
     private router: Router 
   ) {}
