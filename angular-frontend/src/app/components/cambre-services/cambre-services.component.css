@@ -1,92 +1,139 @@
 .center-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh; 
-    background-color: #f4f4f4;
-  }
-  
-  .info-box {
-    background-color: #f9f9f9;
-    border: 1px solid darkred;
-    border-radius: 5px;
-    padding: 15px;
-    margin: 20px 0;
-    text-align: center; 
-    font-family: Arial, sans-serif;
-    color: #333;
-    width: 80%; 
-  }
-  
-  .info-box h3 {
-    margin-top: 0;
-    font-size: 18px;
-  }
-  
-  .styled-table {
-    width: 80%; 
-    border-collapse: collapse;
-    background-color: darkred; 
-    text-align: center;
-  }
-  
-  .styled-table th,
-  .styled-table td {
-    padding: 10px;
-    border: 1px solid #ddd;
-    color: black; 
-  }
-  
-  .styled-table th {
-    font-weight: bold;
-  }
-  
-  .styled-table td button {
-    background-color: transparent;
-    border: 1px solid black;
-    padding: 5px 10px;
-    cursor: pointer;
-    color: black;
-  }
-  
-  .styled-table td button:hover {
-    background-color: black;
-    color: white;
-  }
-  
-  button {
-    padding: 10px 20px;
-    font-size: 16px;
-    color: white;
-    background-color: darkred;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin: 10px 0;
-  }
-  
-  button:hover {
-    background-color: darkred;
-  }  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 1200px; 
+  margin: 0 auto;
+  padding: 20px; 
+  background-color: #f4f4f4;
+  position: relative; /* For positioning the Logout button */
+}
 
-  .loading-spinner {
-    text-align: center;
-    font-size: 18px;
-    margin: 20px 0;
-    color: darkred;
-  }  
+.info-box {
+  background-color: #f9f9f9;
+  border: 1px solid darkred;
+  border-radius: 5px;
+  padding: 15px;
+  margin: 20px 0;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  color: #333;
+  width: 100%; 
+  max-width: 800px; 
+}
 
-  .mat-elevation-z8 {
+.info-box h3 {
+  margin-top: 0;
+  font-size: 18px;
+}
+
+.styled-table {
+  width: 80%; 
+  border-collapse: collapse;
+  background-color: darkred; 
+  text-align: center;
+}
+
+.styled-table th,
+.styled-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  color: black; 
+}
+
+.styled-table th {
+  font-weight: bold;
+}
+
+.styled-table td button {
+  background-color: transparent;
+  border: 1px solid black;
+  padding: 5px 10px;
+  cursor: pointer;
+  color: black;
+}
+
+.styled-table td button:hover {
+  background-color: black;
+  color: white;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: white;
+  background-color: darkred;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 10px 0;
+}
+
+button:hover {
+  background-color: #a50000; /* Slightly darker red on hover */
+}
+
+.loading-spinner {
+  text-align: center;
+  font-size: 18px;
+  margin: 20px 0;
+  color: darkred;
+}
+
+.mat-elevation-z8 {
   margin: 16px;
   border-radius: 8px;
 }
 
+/* Mat Header and Cell Styling */
 .mat-header-cell, .mat-cell {
-  padding: 8px;
+  padding: 10px;
   text-align: left;
+  border: 1px solid #ddd;
 }
 
-button {
-  margin: 0 4px;
+.mat-header-cell {
+  font-weight: bold;
+  background-color: #f4f4f4; /* Light gray header background */
+}
+
+/* Action Buttons in Material Table */
+.mat-cell button {
+  background-color: darkred;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-left: 5px; /* Space between buttons */
+  display: inline-block;
+}
+
+.mat-cell button:hover {
+  background-color: #a50000; /* Darker red on hover */
+}
+
+/* Tab Styling */
+.mat-tab-label {
+  color: darkred;
+  font-weight: bold;
+}
+
+.mat-tab-label-active {
+  color: #a50000; /* Slightly darker red for active tab */
+}
+
+.mat-tab-header {
+  justify-content: center;
+}
+
+::ng-deep .mat-tab-label {
+  color: darkred !important;
+  font-weight: bold !important;
+}
+
+::ng-deep .mat-tab-label-active {
+  color: #a50000 !important;
 }
