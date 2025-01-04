@@ -3,33 +3,13 @@
   <button (click)="clearMessage()" class="close-btn">✖</button>
 </div>
 
-<div class="header">
-  <div class="tabs-container">
-    <div class="tabs">
-      <button
-        [class.active]="selectedTab === 'services'"
-        (click)="selectTab('services')"
-      >
-        Cambre Services
-      </button>
-      <button
-        [class.active]="selectedTab === 'agence'"
-        (click)="selectTab('agence')"
-      >
-        Agence Cambre
-      </button>
-    </div>
-    <button (click)="logout()" class="logout-btn">Logout</button>
-  </div>
-</div>
+<mat-tab-group>
+  <mat-tab label="Cambre Services">
+    <app-cambre-services></app-cambre-services>
+  </mat-tab>
+  <mat-tab label="Agence Cambre">
+    <app-agence-cambre></app-agence-cambre>
+  </mat-tab>
+</mat-tab-group>
 
-<div class="tab-content">
-  <app-cambre-services
-  *ngIf="selectedTab === 'services'"
-  [selectedTab]="selectedTab"
-></app-cambre-services>
-<app-agence-cambre
-  *ngIf="selectedTab === 'agence'"
-  [selectedTab]="selectedTab"
-></app-agence-cambre>
-</div>
+<button (click)="logout()" class="logout-btn"></button>

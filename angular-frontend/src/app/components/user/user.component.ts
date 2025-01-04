@@ -4,6 +4,7 @@ import { CambreServicesComponent } from '../cambre-services/cambre-services.comp
 import { ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-user',
@@ -12,29 +13,21 @@ import { HttpClient } from '@angular/common/http';
   imports: 
   [
     AgenceCambreComponent, 
-    CambreServicesComponent
+    CambreServicesComponent,
+    MatTabsModule
   ],
   standalone: true
 })
 export class UserComponent {
   message: string | null = '';
-  selectedTab: string = 'services';
+
+  links: string[] = ['services', 'agence'];
 
   constructor(
     private cdr: ChangeDetectorRef,
     private http: HttpClient,
     private router: Router 
   ) {}
-
-  ngOnInit() {
-    this.selectedTab = 'services';
-  }
-
-  selectTab(tab: string) {
-    this.selectedTab = tab;
-    console.log('Selected tab:', this.selectedTab);
-    this.cdr.detectChanges();
-  }
 
   clearMessage() {
     this.message = null;
