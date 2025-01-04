@@ -73,4 +73,26 @@ export class CambreServicesComponent implements OnInit {
       if (result) await this.loadMaterials();
     });
   }
+
+  openEditDialog(material: any) {
+    const dialogRef = this.dialog.open(EditMaterialsComponent, {
+      width: '600px',
+      data: { material },
+    });
+  
+    dialogRef.afterClosed().subscribe(async (result) => {
+      if (result) {
+        await this.loadMaterials();
+      }
+    });
+  }
+  
+  async deleteMaterial(id: string) {
+    try {
+      await this.supabase.deleteMaterial(id);
+      await this.loadMaterials();
+    } catch (error) {
+      console.error('Error deleting material:', error);
+    }
+  }
 }
