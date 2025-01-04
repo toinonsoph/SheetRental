@@ -1,19 +1,33 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { SupabaseService } from '../../services/supabase.service';
 import { EditMaterialsComponent } from '../edit-materials/edit-materials.component';
+import { NgModule } from '@angular/core';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-cambre-services',
   templateUrl: './cambre-services.component.html',
   styleUrls: ['./cambre-services.component.css'],
   providers: [SupabaseService],
+  imports: [
+    MatDialogModule,
+    MatTableModule,
+    MatButtonModule,
+    MatInputModule,
+    BrowserAnimationsModule, 
+  ]
 })
+
 export class CambreServicesComponent implements OnInit {
   @Input() selectedTab!: string;
 
-  materials: any[] = [];
+  materials: MatTableDataSource<any> = new MatTableDataSource();
   isLoading = false;
 
   displayedColumns: string[] = [
@@ -39,43 +53,13 @@ export class CambreServicesComponent implements OnInit {
   async loadMaterials() {
     this.isLoading = true;
     try {
-      this.materials = await this.supabase.getMaterials();
+      const data = await this.supabase.getMaterials();
+      this.materials.data = data; 
     } catch (error) {
       console.error('Error loading materials:', error);
-      this.materials = [];
+      this.materials.data = [];
     } finally {
       this.isLoading = false;
-    }
-  }
-
-  openAddDialog() {
-    const dialogRef = this.dialog.open(EditMaterialsComponent, {
-      width: '600px',
-      data: { material: null },
-    });
-
-    dialogRef.afterClosed().subscribe(async (result) => {
-      if (result) await this.loadMaterials();
-    });
-  }
-
-  openEditDialog(material: any) {
-    const dialogRef = this.dialog.open(EditMaterialsComponent, {
-      width: '600px',
-      data: { material },
-    });
-
-    dialogRef.afterClosed().subscribe(async (result) => {
-      if (result) await this.loadMaterials();
-    });
-  }
-
-  async deleteMaterial(id: string) {
-    try {
-      await this.supabase.deleteMaterial(id);
-      await this.loadMaterials();
-    } catch (error) {
-      console.error('Error deleting material:', error);
     }
   }
 }
