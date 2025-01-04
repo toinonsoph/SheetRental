@@ -65,7 +65,6 @@ body {
   font-family: Arial, sans-serif;
 }
 
-/* General Styling for the Header */
 .header {
   background-color: white;
   padding: 10px 20px;
@@ -74,20 +73,20 @@ body {
 
 .tabs-container {
   display: flex;
-  justify-content: space-between; /* Ensures tabs on the left and logout on the right */
+  justify-content: space-between; 
   align-items: center;
 }
 
 .tabs {
-  display: flex; /* Ensures the buttons inside are aligned horizontally */
+  display: flex; 
 }
 
 .tabs button {
-  margin-right: 10px; /* Adds spacing between the buttons */
+  margin-right: 10px; 
 }
 
 .logout-btn {
-  background-color: lightcoral; /* Light red color */
+  background-color: lightcoral; 
   color: white;
   border: none;
   padding: 8px 16px;
@@ -97,7 +96,7 @@ body {
 }
 
 .logout-btn:hover {
-  background-color: crimson; /* Slightly darker red for hover effect */
+  background-color: crimson; 
 }
 
 .logout-btn:focus {
