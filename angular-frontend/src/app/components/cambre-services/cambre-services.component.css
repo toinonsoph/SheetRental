@@ -9,7 +9,7 @@
   
   .info-box {
     background-color: #f9f9f9;
-    border: 1px solid #ddd;
+    border: 1px solid darkred;
     border-radius: 5px;
     padding: 15px;
     margin: 20px 0;
@@ -22,7 +22,6 @@
   .info-box h3 {
     margin-top: 0;
     font-size: 18px;
-    color: #0056b3;
   }
   
   .styled-table {
