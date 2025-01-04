@@ -54,7 +54,7 @@
     <form [formGroup]="materialForm" (ngSubmit)="submitForm()">
         <label>
             Name Dutch
-            <input formControlName="name_dutch" />
+            <input formControlName="name_dutch" autocomplete="off"/>
             <small *ngIf="materialForm.controls['name_dutch'].invalid && materialForm.controls['name_dutch'].touched">
               <span *ngIf="materialForm.controls['name_dutch'].errors?.['required']">Name Dutch is required.</span>
               <span *ngIf="materialForm.controls['name_dutch'].errors?.['maxlength']">Name Dutch cannot exceed 500 characters.</span>
@@ -62,7 +62,7 @@
           </label>
           <label>
             Name French
-            <input formControlName="name_french" />
+            <input formControlName="name_french"  autocomplete="off"/>
             <small *ngIf="materialForm.controls['name_french'].invalid && materialForm.controls['name_french'].touched">
               <span *ngIf="materialForm.controls['name_french'].errors?.['required']">Name French is required.</span>
               <span *ngIf="materialForm.controls['name_french'].errors?.['maxlength']">Name French cannot exceed 500 characters.</span>
@@ -70,7 +70,7 @@
           </label>
           <label>
             Name German
-            <input formControlName="name_german" />
+            <input formControlName="name_german" autocomplete="off"/>
             <small *ngIf="materialForm.controls['name_german'].invalid && materialForm.controls['name_german'].touched">
               <span *ngIf="materialForm.controls['name_german'].errors?.['required']">Name German is required.</span>
               <span *ngIf="materialForm.controls['name_german'].errors?.['maxlength']">Name German cannot exceed 500 characters.</span>
@@ -78,28 +78,28 @@
           </label>
           <label>
             Information Dutch
-            <textarea formControlName="information_dutch"></textarea>
+            <textarea formControlName="information_dutch" autocomplete="off"></textarea>
             <small *ngIf="materialForm.controls['information_dutch'].invalid && materialForm.controls['information_dutch'].touched">
               Information Dutch cannot exceed 500 characters.
             </small>
           </label>
           <label>
             Information French
-            <textarea formControlName="information_french"></textarea>
+            <textarea formControlName="information_french" autocomplete="off"></textarea>
             <small *ngIf="materialForm.controls['information_french'].invalid && materialForm.controls['information_french'].touched">
               Information French cannot exceed 500 characters.
             </small>
           </label>
           <label>
             Information German
-            <textarea formControlName="information_german"></textarea>
+            <textarea formControlName="information_german" autocomplete="off"></textarea>
             <small *ngIf="materialForm.controls['information_german'].invalid && materialForm.controls['information_german'].touched">
               Information German cannot exceed 500 characters.
             </small>
           </label>
       <label>
         Price
-        <input type="number" formControlName="price" />
+        <input type="number" formControlName="price" autocomplete="off"/>
         <small *ngIf="materialForm.controls['price'].invalid && materialForm.controls['price'].touched">
           Price must be a positive number.
         </small>
