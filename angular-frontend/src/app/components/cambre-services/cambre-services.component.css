@@ -219,10 +219,9 @@ button:hover {
   color: darkred;
 }
 
-/* Specific style for the "Edit" button label */
-button.mat-button .mdc-button__label {
-  color: black !important; /* Revert to black text for Edit */
-  font-weight: bold; /* Keep bold for emphasis */
+.mdc-button__label {
+  color: black !important; 
+  font-weight: bold; 
 }
 
 @media (max-width: 768px) {

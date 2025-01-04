@@ -223,6 +223,15 @@ button:hover {
   color: darkred;
 }
 
+.inactive-tab-label {
+  color: black; 
+}
+
+.mdc-tab--active .inactive-tab-label {
+  color: white !important; 
+}
+
+
 @media (max-width: 768px) {
   .tabs-container {
     padding: 20px;
