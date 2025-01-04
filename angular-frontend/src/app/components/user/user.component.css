@@ -81,14 +81,14 @@ body {
 }
 
 button {
-  padding: 12px 25px;
-  font-size: 18px;
+  padding: 10px 20px;
+  font-size: 14px;
   color: white;
   background-color: darkred;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  margin: 15px 0;
+  margin: 10px 0;
 }
 
 button:hover {
@@ -102,6 +102,29 @@ button:hover {
   color: darkred;
 }
 
+.logout-btn {
+  display: block;
+  margin: 0 auto 20px auto;
+  padding: 8px 15px;
+  font-size: 14px;
+  color: white;
+  background-color: lightcoral;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.logout-btn:hover {
+  background-color: red;
+}
+
+.logout-btn:active {
+  background-color: red;
+  transform: scale(0.95);
+}
+
 .tabs-container {
   display: flex;
   flex-direction: column;
@@ -112,7 +135,7 @@ button:hover {
   background-color: #f4f4f4;
   border: 1px solid #ddd;
   border-radius: 8px;
-  margin: 30px auto;
+  margin: 0 auto;
   width: 90%;
   max-width: 1600px;
   height: auto;
@@ -120,64 +143,56 @@ button:hover {
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-::ng-deep .mat-tab-label {
-  color: black !important;
-  font-size: 14px;
+/* Tabs Styling */
+::ng-deep .user-component-tabs .mdc-tab {
   font-weight: normal;
-  text-align: center;
-  background-color: white;
-  border: 1px solid #ddd;
+  font-size: 14px;
+  color: white !important; /* White text for inactive tabs */
   padding: 10px 15px;
+  text-align: center;
+  background-color: black;
+  border: 1px solid #ddd;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
 }
 
-::ng-deep .mat-tab-label.mat-tab-label-active {
-  color: white !important;
-  background-color: darkred !important;
+::ng-deep .user-component-tabs .mdc-tab--active {
+  color: black !important; /* Black text for active tab */
+  background-color: white !important;
   border: 1px solid darkred;
   border-radius: 6px 6px 0 0;
 }
 
-::ng-deep .mat-tab-label:hover {
+::ng-deep .user-component-tabs .mdc-tab:hover {
   background-color: #ffe6e6 !important;
   color: darkred !important;
   cursor: pointer;
 }
 
-::ng-deep .mat-tab-indicator .mat-tab-indicator-content {
+::ng-deep .user-component-tabs .mdc-tab-indicator .mdc-tab-indicator__content {
   background-color: darkred;
   height: 5px;
 }
 
-::ng-deep .mat-tab-header {
+::ng-deep .user-component-tabs .mat-tab-header {
   background-color: #ffffff;
   border-bottom: 2px solid darkred;
 }
 
-.logout-btn {
-  position: relative;
-  margin: 10px 20px;
-  padding: 8px 15px;
-  font-size: 14px;
-  color: white;
-  background-color: coral;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  text-align: center;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+::ng-deep .user-component-tabs .mat-tab-label-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.logout-btn:hover {
-  background-color: darkred;
-}
-
-.logout-btn:active {
-  background-color: red;
-  transform: scale(0.95);
+::ng-deep .user-component-tabs .mat-tab-body {
+  background-color: #f4f4f4;
+  padding: 30px;
+  border: 1px solid #ddd;
+  border-radius: 0 0 8px 8px;
+  font-size: 18px;
 }
 
 .alert {
@@ -208,10 +223,6 @@ button:hover {
   color: darkred;
 }
 
-::ng-deep .mdc-tab:not(.mdc-tab--active) .mdc-tab__text-label {
-  color: black !important;
-}
-
 @media (max-width: 768px) {
   .tabs-container {
     padding: 20px;
@@ -238,7 +249,7 @@ button:hover {
     font-size: 14px;
   }
 
-  ::ng-deep .mat-tab-label {
+  ::ng-deep .user-component-tabs .mdc-tab {
     font-size: 12px;
     padding: 8px 10px;
   }
