@@ -2,70 +2,72 @@ body {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
-  background-color: #f9f9f9; 
+  background-color: #f9f9f9;
 }
 
 .tabs-container {
   display: flex;
-  align-items: center; 
-  justify-content: space-between;
+  flex-direction: column;
+  position: relative; /* For logout button positioning */
+  align-items: center;
   padding: 20px;
-  background-color: #ffffff; 
+  background-color: #ffffff;
   border: 1px solid #ddd;
   border-radius: 8px;
-  margin: 20px auto; 
-  max-width: 1000px; 
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+  margin: 20px auto;
+  max-width: 1200px; /* Increased width for larger layout */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .mat-tab-group {
-  flex: 1; 
-  background-color: white; 
-  border-radius: 8px; 
+  width: 100%; /* Full width */
+  background-color: white;
+  border-radius: 8px;
 }
 
 .mat-tab-label {
   font-weight: bold;
   font-size: 16px;
   color: black;
-  padding: 10px 20px; 
-  background-color: white; 
-  border: 1px solid #ddd; 
+  padding: 10px 20px;
+  background-color: white;
+  border: 1px solid #ddd;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .mat-tab-label-active {
   color: white;
-  background-color: darkred; 
+  background-color: darkred;
   border: 1px solid darkred;
-  border-radius: 4px 4px 0 0; 
+  border-radius: 4px 4px 0 0;
 }
 
 .mat-tab-label:hover {
-  background-color: #ffe6e6; 
-  color: darkred; 
-  cursor: pointer; 
-}
-
-.logout-button {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  padding: 10px 20px;
-  font-size: 16px;
-  color: white;
-  background-color: #f44336;
-  border: none;
-  border-radius: 5px;
+  background-color: #ffe6e6;
+  color: darkred;
   cursor: pointer;
 }
 
-.logout-button:hover {
-  background-color: darkred; 
+.logout-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: white;
+  background-color: #f44336; /* Red background */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.logout-btn:hover {
+  background-color: darkred;
 }
 
 .logout-btn:active {
-  background-color: darkred; 
+  background-color: darkred;
   transform: scale(0.95);
 }
 
@@ -81,10 +83,10 @@ body {
   align-items: center;
   background-color: #f8d7da;
   padding: 15px;
-  border: 1px solid darkred; 
+  border: 1px solid darkred;
   border-radius: 8px;
-  margin: 20px auto; 
-  max-width: 1000px; 
+  margin: 20px auto;
+  max-width: 1000px;
   color: #721c24;
   font-size: 14px;
   font-weight: bold;
@@ -95,25 +97,28 @@ body {
   border: none;
   cursor: pointer;
   font-size: 1.2rem;
-  color: #721c24; 
-  transition: color 0.3s ease; 
+  color: #721c24;
+  transition: color 0.3s ease;
 }
 
 .close-btn:hover {
-  color: darkred; 
+  color: darkred;
 }
 
+/* Responsive Design for Tabs and Alerts */
 @media (max-width: 768px) {
   .tabs-container {
-    flex-direction: column; 
+    padding: 15px;
+    flex-direction: column;
     align-items: center;
     gap: 20px;
-    padding: 15px;
   }
 
   .logout-btn {
-    width: 100%; 
+    width: auto;
     text-align: center;
+    position: static;
+    margin-top: 20px;
   }
 
   .alert {
