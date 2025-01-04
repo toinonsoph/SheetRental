@@ -62,4 +62,15 @@ export class CambreServicesComponent implements OnInit {
       this.isLoading = false;
     }
   }
+
+  openAddDialog() {
+    const dialogRef = this.dialog.open(EditMaterialsComponent, {
+      width: '600px',
+      data: { material: null },
+    });
+  
+    dialogRef.afterClosed().subscribe(async (result) => {
+      if (result) await this.loadMaterials();
+    });
+  }
 }

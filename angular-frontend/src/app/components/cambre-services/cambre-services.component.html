@@ -71,6 +71,6 @@
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
 
-<ng-container *ngIf="materials?.length === 0">
+<ng-container *ngIf="materials.data?.length === 0">
   <p>No materials available.</p>
 </ng-container>
