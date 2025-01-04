@@ -26,8 +26,13 @@ export class UserComponent {
     private router: Router 
   ) {}
 
+  ngOnInit() {
+    this.selectedTab = 'services';
+  }
+
   selectTab(tab: string) {
     this.selectedTab = tab;
+    console.log('Selected tab:', this.selectedTab);
     this.cdr.detectChanges();
   }
 
