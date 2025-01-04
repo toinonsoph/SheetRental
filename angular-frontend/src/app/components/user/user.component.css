@@ -1,13 +1,83 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5; 
+}
+
+.tabs-container {
+  display: flex;
+  align-items: center; 
+  justify-content: space-between; 
+  padding: 20px;
+  background-color: #ffffff; 
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin: 20px auto;
+  max-width: 1000px; 
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+}
+
+.mat-tab-group {
+  flex: 1; 
+}
+
+.mat-tab-label {
+  font-weight: bold;
+  font-size: 16px;
+  color: #333;
+}
+
+.mat-tab-label-active {
+  color: darkred;
+}
+
+.mat-tab-group:hover {
+  cursor: pointer;
+}
+
+/* Logout Button */
+.logout-btn {
+  background-color: lightcoral; 
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.logout-btn:hover {
+  background-color: crimson; 
+}
+
+.logout-btn:active {
+  background-color: red; 
+  transform: scale(0.95); 
+}
+
+.logout-btn:focus {
+  outline: none;
+  box-shadow: 0 0 8px rgba(255, 0, 0, 0.5); 
+}
+
+/* Alert Box */
 .alert {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #f8d7da;
+  background-color: #f8d7da; 
   padding: 10px;
   border: 1px solid darkred;
   border-radius: 4px;
-  margin-bottom: 1rem;
-  font-family: Arial, sans-serif;
+  margin: 20px auto; 
+  max-width: 1000px; 
+  color: #721c24;
+  font-size: 14px;
+  font-weight: bold;
 }
 
 .close-btn {
@@ -15,86 +85,24 @@
   border: none;
   cursor: pointer;
   font-size: 1.2rem;
-  line-height: 1;
   color: #721c24;
 }
 
-body {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-}
+/* Responsive Design */
+@media (max-width: 768px) {
+  .tabs-container {
+    flex-direction: column; 
+    align-items: center; 
+    gap: 20px; 
+  }
 
-.header {
-  background-color: white;
-  padding: 10px 20px;
-  border-bottom: 1px solid #ddd;
-}
+  .logout-btn {
+    width: 100%; 
+    text-align: center;
+  }
 
-.tabs-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-}
-
-.tabs {
-  display: flex;
-  justify-content: center;
-  gap: 20px; /* Spacing between tabs */
-}
-
-.tabs button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  background-color: white;
-  color: #333;
-  font-size: 16px;
-  font-weight: bold;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.tabs button.active {
-  background-color: darkred;
-  color: white;
-  border: 1px solid darkred;
-}
-
-.tabs button:hover {
-  background-color: #ffcccc;
-  color: darkred;
-}
-
-.logout-btn {
-  background-color: lightcoral;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: background-color 0.3s ease;
-}
-
-.logout-btn:hover {
-  background-color: crimson;
-}
-
-.logout-btn:focus {
-  outline: none;
-  box-shadow: 0 0 4px rgba(255, 0, 0, 0.5);
-}
-
-.mat-tab-group {
-  flex: 1;
-}
-
-.mat-tab-label {
-  font-weight: bold;
-}
-
-.mat-tab-label-active {
-  color: darkred;
+  .alert {
+    padding: 15px;
+    font-size: 12px;
+  }
 }
