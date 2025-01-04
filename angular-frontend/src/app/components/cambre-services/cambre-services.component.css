@@ -4,15 +4,15 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  max-width: 1200px; 
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 20px; 
+  padding: 20px;
   background-color: #f4f4f4;
-  position: relative; /* For positioning the Logout button */
+  position: relative;
 }
 
 .info-box {
-  background-color: #ffffff;
+  background-color: #f4f4f4 !important;
   border: 1px solid darkred !important;
   border-radius: 5px;
   padding: 15px;
@@ -20,8 +20,8 @@
   text-align: center;
   font-family: Arial, sans-serif;
   color: #333;
-  width: 100%; 
-  max-width: 800px; 
+  width: 100%;
+  max-width: 800px;
 }
 
 .info-box h3 {
@@ -30,9 +30,9 @@
 }
 
 .styled-table {
-  width: 80%; 
+  width: 100%;
   border-collapse: collapse;
-  background-color: darkred; 
+  background-color: darkred;
   text-align: center;
 }
 
@@ -40,7 +40,7 @@
 .styled-table td {
   padding: 10px;
   border: 1px solid #ddd;
-  color: black; 
+  color: black;
 }
 
 .styled-table th {
@@ -72,7 +72,7 @@ button {
 }
 
 button:hover {
-  background-color: #a50000; /* Slightly darker red on hover */
+  background-color: #a50000;
 }
 
 .loading-spinner {
@@ -87,7 +87,6 @@ button:hover {
   border-radius: 8px;
 }
 
-/* Mat Header and Cell Styling */
 .mat-header-cell, .mat-cell {
   padding: 10px;
   text-align: left;
@@ -96,33 +95,31 @@ button:hover {
 
 .mat-header-cell {
   font-weight: bold;
-  background-color: #f4f4f4; /* Light gray header background */
+  background-color: #f4f4f4;
 }
 
-/* Action Buttons in Material Table */
 .mat-cell button {
-  background-color: darkred;
-  color: white;
+  background-color: darkred !important;
+  color: white !important;
   border: none;
   border-radius: 5px;
-  padding: 5px 10px;
+  padding: 5px 15px;
   cursor: pointer;
-  margin-left: 5px; /* Space between buttons */
+  margin-right: 10px;
   display: inline-block;
 }
 
 .mat-cell button:hover {
-  background-color: #a50000; /* Darker red on hover */
+  background-color: #a50000;
 }
 
-/* Tab Styling */
 .mat-tab-label {
   color: darkred;
   font-weight: bold;
 }
 
 .mat-tab-label-active {
-  color: #a50000; /* Slightly darker red for active tab */
+  color: #a50000;
 }
 
 .mat-tab-header {
@@ -136,4 +133,20 @@ button:hover {
 
 ::ng-deep .mat-tab-label-active {
   color: #a50000 !important;
+}
+
+.openDialog {
+  float: right;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: white;
+  background-color: darkred;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 10px 0;
+}
+
+.openDialog:hover {
+  background-color: #a50000;
 }

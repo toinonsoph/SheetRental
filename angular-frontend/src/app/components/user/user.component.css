@@ -9,53 +9,60 @@ body {
   display: flex;
   flex-direction: column;
   position: relative;
-  align-items: stretch; 
-  justify-content: space-between; 
+  align-items: stretch;
+  justify-content: flex-start;
   padding: 20px;
   background-color: #ffffff;
   border: 1px solid #ddd;
   border-radius: 8px;
   margin: 20px auto;
-  width: 90%; 
-  max-width: 1400px; 
-  height: auto; 
-  min-height: 80vh; 
+  width: 90%;
+  max-width: 1400px;
+  height: auto;
+  min-height: 80vh;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .mat-tab-group {
-  width: 100%; /* Full width */
-  background-color: white;
+  width: 100%;
+  background-color: #ffffff;
   border-radius: 8px;
+  border: 1px solid #ddd;
+  overflow: hidden;
+}
+
+.mat-tab-header {
+  background-color: #f4f4f4;
+  border-bottom: 1px solid #ddd;
 }
 
 .mat-tab-label {
   font-weight: bold;
   font-size: 16px;
-  color: black !important;
-  padding: 10px 20px;
-  background-color: white !important;
-  border: 1px solid #ddd !important;
+  color: #333 !important;
+  padding: 12px 20px;
+  background-color: #ffffff !important;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .mat-tab-label-active {
-  color: white !important;
+  color: #ffffff !important;
   background-color: darkred !important;
-  border: 1px solid darkred !important;
   border-radius: 4px 4px 0 0;
+  font-size: 17px;
+  font-weight: bold;
 }
 
 .mat-tab-label:hover {
   background-color: #ffe6e6 !important;
-  color: red !important;
+  color: darkred !important;
   cursor: pointer;
 }
 
 .logout-btn {
   position: absolute;
-  top: 10px;
-  right: 20px; 
+  top: 20px;
+  right: 20px;
   padding: 10px 20px;
   font-size: 16px;
   color: white;
@@ -67,11 +74,10 @@ body {
 }
 
 .logout-btn:active {
-  background-color: red;
+  background-color: darkred;
   transform: scale(0.95);
 }
 
-/* Alert Box */
 .alert {
   display: flex;
   justify-content: space-between;
@@ -100,7 +106,6 @@ body {
   color: darkred;
 }
 
-/* Responsive Design for Tabs and Alerts */
 @media (max-width: 768px) {
   .tabs-container {
     padding: 15px;
