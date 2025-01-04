@@ -120,68 +120,54 @@ button:hover {
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-::ng-deep .user-component-tabs .mdc-tab {
-  font-weight: normal;
+::ng-deep .mat-tab-label {
+  color: black !important;
   font-size: 14px;
-  color: black;
-  padding: 10px 15px; 
+  font-weight: normal;
   text-align: center;
   background-color: white;
   border: 1px solid #ddd;
+  padding: 10px 15px;
   display: flex;
-  align-items: center; 
-  justify-content: center; 
+  align-items: center;
+  justify-content: center;
   transition: all 0.3s ease;
 }
 
-::ng-deep .user-component-tabs .mdc-tab--active {
+::ng-deep .mat-tab-label.mat-tab-label-active {
   color: white !important;
   background-color: darkred !important;
   border: 1px solid darkred;
   border-radius: 6px 6px 0 0;
 }
 
-::ng-deep .user-component-tabs .mdc-tab:hover {
+::ng-deep .mat-tab-label:hover {
   background-color: #ffe6e6 !important;
   color: darkred !important;
   cursor: pointer;
 }
 
-::ng-deep .user-component-tabs .mdc-tab-indicator .mdc-tab-indicator__content {
+::ng-deep .mat-tab-indicator .mat-tab-indicator-content {
   background-color: darkred;
   height: 5px;
 }
 
-::ng-deep .user-component-tabs .mat-tab-header {
+::ng-deep .mat-tab-header {
   background-color: #ffffff;
   border-bottom: 2px solid darkred;
 }
 
-::ng-deep .user-component-tabs .mat-tab-label-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-::ng-deep .user-component-tabs .mat-tab-body {
-  background-color: #f4f4f4;
-  padding: 30px;
-  border: 1px solid #ddd;
-  border-radius: 0 0 8px 8px;
-  font-size: 18px;
-}
-
 .logout-btn {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  padding: 12px 25px;
-  font-size: 18px;
+  position: relative;
+  margin: 10px 20px;
+  padding: 8px 15px;
+  font-size: 14px;
   color: white;
   background-color: coral;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  text-align: center;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
@@ -248,8 +234,8 @@ button:hover {
     font-size: 14px;
   }
 
-  ::ng-deep .user-component-tabs .mdc-tab {
-    font-size: 12px; 
-    padding: 8px 10px; 
+  ::ng-deep .mat-tab-label {
+    font-size: 12px;
+    padding: 8px 10px;
   }
 }
