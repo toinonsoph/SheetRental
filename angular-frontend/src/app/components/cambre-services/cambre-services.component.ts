@@ -1,14 +1,15 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { SupabaseService } from '../../services/supabase.service';
 import { EditMaterialsComponent } from '../edit-materials/edit-materials.component';
-import { NgModule } from '@angular/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-cambre-services',
@@ -26,6 +27,8 @@ import { MatTableDataSource } from '@angular/material/table';
 
 export class CambreServicesComponent implements OnInit {
   @Input() selectedTab!: string;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   materials: MatTableDataSource<any> = new MatTableDataSource();
   isLoading = false;
@@ -48,20 +51,23 @@ export class CambreServicesComponent implements OnInit {
 
   async ngOnInit() {
     await this.loadMaterials();
-  }
+  }  
 
   async loadMaterials() {
     this.isLoading = true;
     try {
-      const data = await this.supabase.getMaterials();
-      this.materials.data = data;
+      const materials = await this.supabase.getMaterials();
+      this.materials = new MatTableDataSource(materials || []);
+      this.materials.paginator = this.paginator; // Assign paginator
+      this.materials.sort = this.sort; // Assign sorting
     } catch (error) {
-      console.error('Error loading materials:', error);
-      this.materials.data = [];
+      console.error('Failed to load materials:', error.message);
+      this.materials = new MatTableDataSource([]);
     } finally {
       this.isLoading = false;
     }
   }
+  
 
   openAddDialog() {
     const dialogRef = this.dialog.open(EditMaterialsComponent, {
@@ -90,7 +96,7 @@ export class CambreServicesComponent implements OnInit {
   async deleteMaterial(id: string) {
     try {
       await this.supabase.deleteMaterial(id);
-      await this.loadMaterials();
+      await this.loadMaterials(); 
     } catch (error) {
       console.error('Error deleting material:', error);
     }

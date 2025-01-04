@@ -1,15 +1,24 @@
 mat-dialog-content {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-  }
-  
-  mat-dialog-actions {
+    gap: 15px; 
+}
+
+mat-dialog-content label {
+    margin-bottom: 5px; 
+}
+
+mat-dialog-content input,
+mat-dialog-content textarea {
+    margin-bottom: 10px; 
+}
+
+mat-dialog-actions {
     display: flex;
     justify-content: flex-end;
     gap: 10px;
-  }
-  
-  button {
+}
+
+button {
     padding: 8px 16px;
-  }  
+}
