@@ -53,7 +53,7 @@ export class SupabaseService {
 
   async deleteMaterial(id: string) {
     const { data, error } = await this.supabase
-      .from('materia')
+      .from('material')
       .delete()
       .eq('id', id); 
     if (error) throw error;

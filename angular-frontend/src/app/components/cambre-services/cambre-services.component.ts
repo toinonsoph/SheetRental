@@ -36,14 +36,14 @@ export class CambreServicesComponent implements OnInit {
   isLoading = false;
 
   displayedColumns: string[] = [
-    'Name Dutch',
-    'Name French',
-    'Name German',
-    'Info Dutch',
-    'Info French',
-    'Info German',
-    'Price',
-    'Actions',
+    'nameDutch',
+    'nameFrench',
+    'nameGerman',
+    'infoDutch',
+    'infoFrench',
+    'infoGerman',
+    'price',
+    'actions',
   ];
 
   constructor(private supabase: SupabaseService, private fb: FormBuilder) {
