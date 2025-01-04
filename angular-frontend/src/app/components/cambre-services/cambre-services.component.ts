@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, FormsModule, FormGroup, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { SupabaseService } from '../../services/supabase.service';
 
 @Component({
   selector: 'app-cambre-services',
   templateUrl: './cambre-services.component.html',
   styleUrls: ['./cambre-services.component.css'],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, FormsModule], 
+  providers: [SupabaseService], 
 })
 
 export class CambreServicesComponent implements OnInit {
