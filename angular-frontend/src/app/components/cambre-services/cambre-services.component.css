@@ -158,11 +158,11 @@ button:hover {
 .logout-btn {
   position: relative;
   display: block;
-  margin: 10px auto 20px auto; /* Adjust spacing */
+  margin: 10px auto 20px auto; 
   padding: 12px 25px;
-  font-size: 18px;
+  font-size: 14px;
   color: white;
-  background-color: coral;
+  background-color: lightcoral;
   border: none;
   border-radius: 5px;
   cursor: pointer;
