@@ -12,8 +12,8 @@
 }
 
 .info-box {
-  background-color: #f9f9f9;
-  border: 1px solid darkred;
+  background-color: #ffffff;
+  border: 1px solid darkred !important;
   border-radius: 5px;
   padding: 15px;
   margin: 20px 0;
