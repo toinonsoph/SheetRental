@@ -2,41 +2,51 @@ body {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
-  background-color: #f5f5f5; 
+  background-color: #f9f9f9; 
 }
 
 .tabs-container {
   display: flex;
   align-items: center; 
-  justify-content: space-between; 
+  justify-content: space-between;
   padding: 20px;
   background-color: #ffffff; 
   border: 1px solid #ddd;
   border-radius: 8px;
-  margin: 20px auto;
+  margin: 20px auto; 
   max-width: 1000px; 
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
 }
 
 .mat-tab-group {
   flex: 1; 
+  background-color: white; 
+  border-radius: 8px; 
 }
 
 .mat-tab-label {
   font-weight: bold;
   font-size: 16px;
-  color: #333;
+  color: black;
+  padding: 10px 20px; 
+  background-color: white; 
+  border: 1px solid #ddd; 
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .mat-tab-label-active {
-  color: darkred;
+  color: white;
+  background-color: darkred; 
+  border: 1px solid darkred;
+  border-radius: 4px 4px 0 0; 
 }
 
-.mat-tab-group:hover {
-  cursor: pointer;
+.mat-tab-label:hover {
+  background-color: #ffe6e6; 
+  color: darkred; 
+  cursor: pointer; 
 }
 
-/* Logout Button */
 .logout-btn {
   background-color: lightcoral; 
   color: white;
@@ -47,7 +57,7 @@ body {
   font-size: 16px;
   font-weight: bold;
   transition: background-color 0.3s ease, transform 0.2s ease;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); 
 }
 
 .logout-btn:hover {
@@ -55,13 +65,13 @@ body {
 }
 
 .logout-btn:active {
-  background-color: red; 
-  transform: scale(0.95); 
+  background-color: darkred; 
+  transform: scale(0.95);
 }
 
 .logout-btn:focus {
   outline: none;
-  box-shadow: 0 0 8px rgba(255, 0, 0, 0.5); 
+  box-shadow: 0 0 8px rgba(255, 0, 0, 0.5);
 }
 
 /* Alert Box */
@@ -69,10 +79,10 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #f8d7da; 
-  padding: 10px;
-  border: 1px solid darkred;
-  border-radius: 4px;
+  background-color: #f8d7da;
+  padding: 15px;
+  border: 1px solid darkred; 
+  border-radius: 8px;
   margin: 20px auto; 
   max-width: 1000px; 
   color: #721c24;
@@ -85,15 +95,20 @@ body {
   border: none;
   cursor: pointer;
   font-size: 1.2rem;
-  color: #721c24;
+  color: #721c24; 
+  transition: color 0.3s ease; 
 }
 
-/* Responsive Design */
+.close-btn:hover {
+  color: darkred; 
+}
+
 @media (max-width: 768px) {
   .tabs-container {
     flex-direction: column; 
-    align-items: center; 
-    gap: 20px; 
+    align-items: center;
+    gap: 20px;
+    padding: 15px;
   }
 
   .logout-btn {

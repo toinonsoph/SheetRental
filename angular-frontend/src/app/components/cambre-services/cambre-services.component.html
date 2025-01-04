@@ -13,39 +13,66 @@
 <button (click)="openAddDialog()">Add Material</button>
   
 <!-- Table for Materials -->
-<div *ngIf="isLoading" class="loading-spinner">
-  <table *ngIf="!isLoading && materials?.length; else noData" class="styled-table"> 
-      <thead>
-        <tr>
-          <th>Name Dutch</th>
-          <th>Name French</th>
-          <th>Name German</th>
-          <th>Information Dutch</th>
-          <th>Information French</th>
-          <th>Information German</th>
-          <th>Price</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let material of materials">
-          <td>{{ material.name_dutch }}</td>
-          <td>{{ material.name_french }}</td>
-          <td>{{ material.name_german }}</td>
-          <td>{{ material.information_dutch }}</td>
-          <td>{{ material.information_french }}</td>
-          <td>{{ material.information_german }}</td>
-          <td>{{ material.price | currency }}</td>
-          <td>
-            <button (click)="openEditDialog(material)">Edit</button>
-            <button (click)="deleteMaterial(material.id)">Delete</button>
-          </td>
-        </tr>
-      </tbody>
-  </table>
-  <ng-template #noData>
-        <p>No materials available.</p>
-  </ng-template>
-</div>
+<table mat-table [dataSource]="materials" class="mat-elevation-z8">
+  <!-- Name Dutch Column -->
+  <ng-container matColumnDef="nameDutch">
+    <th mat-header-cell *matHeaderCellDef> Name Dutch </th>
+    <td mat-cell *matCellDef="let material"> {{ material.name_dutch }} </td>
+  </ng-container>
+
+  <!-- Name French Column -->
+  <ng-container matColumnDef="nameFrench">
+    <th mat-header-cell *matHeaderCellDef> Name French </th>
+    <td mat-cell *matCellDef="let material"> {{ material.name_french }} </td>
+  </ng-container>
+
+  <!-- Name German Column -->
+  <ng-container matColumnDef="nameGerman">
+    <th mat-header-cell *matHeaderCellDef> Name German </th>
+    <td mat-cell *matCellDef="let material"> {{ material.name_german }} </td>
+  </ng-container>
+
+  <!-- Information Dutch Column -->
+  <ng-container matColumnDef="infoDutch">
+    <th mat-header-cell *matHeaderCellDef> Information Dutch </th>
+    <td mat-cell *matCellDef="let material"> {{ material.information_dutch }} </td>
+  </ng-container>
+
+  <!-- Information French Column -->
+  <ng-container matColumnDef="infoFrench">
+    <th mat-header-cell *matHeaderCellDef> Information French </th>
+    <td mat-cell *matCellDef="let material"> {{ material.information_french }} </td>
+  </ng-container>
+
+  <!-- Information German Column -->
+  <ng-container matColumnDef="infoGerman">
+    <th mat-header-cell *matHeaderCellDef> Information German </th>
+    <td mat-cell *matCellDef="let material"> {{ material.information_german }} </td>
+  </ng-container>
+
+  <!-- Price Column -->
+  <ng-container matColumnDef="price">
+    <th mat-header-cell *matHeaderCellDef> Price </th>
+    <td mat-cell *matCellDef="let material"> {{ material.price | currency }} </td>
+  </ng-container>
+
+  <!-- Actions Column -->
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef> Actions </th>
+    <td mat-cell *matCellDef="let material">
+      <button mat-button color="primary" (click)="openEditDialog(material)">Edit</button>
+      <button mat-button color="warn" (click)="deleteMaterial(material.id)">Delete</button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<ng-container *ngIf="materials?.length === 0">
+  <p>No materials available.</p>
+</ng-container>
+
   
 <!-- Add/Edit Dialog -->
 <div *ngIf="isFormVisible" class="form-container">

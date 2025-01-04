@@ -2,13 +2,26 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, FormsModule, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SupabaseService } from '../../services/supabase.service';
+import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-cambre-services',
   templateUrl: './cambre-services.component.html',
   styleUrls: ['./cambre-services.component.css'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule], 
+  imports: 
+  [
+    CommonModule, 
+    ReactiveFormsModule, 
+    FormsModule,
+    MatTableModule,
+    MatButtonModule,
+    MatInputModule,
+    MatFormFieldModule,
+  ], 
   providers: [SupabaseService], 
 })
 
@@ -21,6 +34,17 @@ export class CambreServicesComponent implements OnInit {
   isEditing = false;
   editingMaterialId: string | null = null;
   isLoading = false;
+
+  displayedColumns: string[] = [
+    'Name Dutch',
+    'Name French',
+    'Name German',
+    'Info Dutch',
+    'Info French',
+    'Info German',
+    'Price',
+    'Actions',
+  ];
 
   constructor(private supabase: SupabaseService, private fb: FormBuilder) {
     this.materialForm = this.fb.group({
@@ -36,7 +60,7 @@ export class CambreServicesComponent implements OnInit {
 
   async ngOnInit() {
     await this.loadMaterials();
-  }  
+  }
 
   async loadMaterials() {
     this.isLoading = true;
@@ -59,18 +83,18 @@ export class CambreServicesComponent implements OnInit {
   openEditDialog(material: any) {
     this.isFormVisible = true;
     this.isEditing = true;
-    this.editingMaterialId = material.id.toString(); 
+    this.editingMaterialId = material.id.toString();
     this.materialForm.patchValue(material);
   }
-  
+
   async submitForm() {
     if (this.materialForm.invalid) {
       console.error('Form is invalid');
       return;
     }
-  
+
     const material = this.materialForm.value;
-  
+
     try {
       if (this.isEditing && this.editingMaterialId) {
         await this.supabase.updateMaterial(this.editingMaterialId, material);
@@ -83,7 +107,7 @@ export class CambreServicesComponent implements OnInit {
       console.error('Error saving material:', error);
     }
   }
-  
+
   async deleteMaterial(id: string) {
     try {
       await this.supabase.deleteMaterial(id);
@@ -96,5 +120,5 @@ export class CambreServicesComponent implements OnInit {
   cancelForm() {
     this.isFormVisible = false;
     this.materialForm.reset();
-  }  
+  }
 }

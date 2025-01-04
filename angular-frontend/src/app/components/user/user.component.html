@@ -5,9 +5,9 @@
     </mat-tab>
     <mat-tab label="Agence Cambre">
       <app-agence-cambre></app-agence-cambre>
-    </mat-tab>
-    <button (click)="logout()" class="logout-btn">Logout</button>
+    </mat-tab>    
   </mat-tab-group> 
+  <button (click)="logout()" class="logout-btn">Logout</button>
 </div>
 
 <div *ngIf="message && message.trim()" class="alert alert-warning">

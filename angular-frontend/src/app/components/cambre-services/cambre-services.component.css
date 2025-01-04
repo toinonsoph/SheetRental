@@ -76,3 +76,17 @@
     margin: 20px 0;
     color: darkred;
   }  
+
+  .mat-elevation-z8 {
+    margin: 16px;
+    border-radius: 8px;
+  }
+  
+  .mat-header-cell, .mat-cell {
+    padding: 8px;
+    text-align: left;
+  }
+  
+  button {
+    margin: 0 4px;
+  }
