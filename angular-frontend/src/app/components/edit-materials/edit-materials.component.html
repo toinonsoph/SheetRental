@@ -60,16 +60,16 @@
 
     <!-- Price -->
     <div class="form-group">
-        <label for="price">Price</label>
-        <input id="price" type="number" formControlName="price" />
-        <small *ngIf="materialForm.controls['price'].invalid && materialForm.controls['price'].touched">
-          <span *ngIf="materialForm.controls['price'].errors?.['min']">Must be a positive number.</span>
-        </small>
+      <label for="price">Price</label>
+      <input id="price" type="number" formControlName="price" />
+      <small *ngIf="materialForm.controls['price'].invalid && materialForm.controls['price'].touched">
+        <span *ngIf="materialForm.controls['price'].errors?.['min']">Must be a positive number.</span>
+      </small>
     </div>
   </form>
 </div>
 
-<div mat-dialog-actions>
+<div mat-dialog-actions>  
   <button mat-button class="darkred-button" (click)="submitForm()" [disabled]="materialForm.invalid">
     {{ isEditing ? 'Update' : 'Add' }}
   </button>
