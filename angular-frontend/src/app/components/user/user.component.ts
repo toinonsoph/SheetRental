@@ -44,14 +44,4 @@ export class UserComponent {
       },
     });
   }
-
-  tabs = [
-    { label: 'Cambre Services', component: CambreServicesComponent },
-    { label: 'Agence Cambre', component: AgenceCambreComponent }
-  ];
-  activeTab = 0;
-
-  selectTab(index: number): void {
-    this.activeTab = index;
-  }
 }
