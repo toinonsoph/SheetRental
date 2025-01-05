@@ -1,6 +1,6 @@
-<h3 mat-dialog-title>
+<h3 mat-dialog-title *ngIf="isEditing !== undefined">
     {{ isEditing ? 'Edit Material' : 'Add Material' }}
-</h3>
+  </h3>
 <div mat-dialog-content>
   <form [formGroup]="materialForm">
     <!-- Name Dutch -->

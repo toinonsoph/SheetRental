@@ -23,6 +23,7 @@ import { CommonModule } from '@angular/common';
 export class EditMaterialsComponent {
   materialForm: FormGroup;
   isEditing: boolean;
+  initialized = false;
 
   constructor(
     private fb: FormBuilder,
@@ -30,7 +31,8 @@ export class EditMaterialsComponent {
     private dialogRef: MatDialogRef<EditMaterialsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { material: any },
     private cdr: ChangeDetectorRef 
-  ) {
+  ) {   
+    
     console.log('Material data passed to dialog:', data.material); 
     this.isEditing = !!data?.material;
     console.log(this.isEditing);
@@ -46,7 +48,8 @@ export class EditMaterialsComponent {
     });
 
     console.log('Form values:', this.materialForm.value);
-
+    
+    this.initialized = true;
     this.cdr.detectChanges();
   }
 
