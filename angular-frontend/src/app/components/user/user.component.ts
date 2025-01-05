@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -16,8 +15,7 @@ export class UserComponent {
   activeLink = this.links[0].label;
 
   constructor(
-    private http: HttpClient,
-    private router: Router
+    private http: HttpClient
   ) {}
 
   setActiveLink(link: string) {
@@ -41,9 +39,8 @@ export class UserComponent {
       },
       complete: () => {
         console.log('Logout request completed');
+        window.location.href = '/login';
       },
     });
-  
-    this.router.navigate(['/login']);
   }
 }
