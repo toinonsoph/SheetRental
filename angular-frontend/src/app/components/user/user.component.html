@@ -1,6 +1,6 @@
 <button (click)="logout()" class="logout-btn">Logout</button>
 <div class="tabs-container">
-  <nav mat-tab-nav-bar [tabPanel]="tabPanel">
+  <nav mat-tab-nav-bar>
     <a
       mat-tab-link
       *ngFor="let link of links"
@@ -9,9 +9,7 @@
       (click)="setActiveLink(link.label)">
       {{ link.label }}
     </a>
-    <a mat-tab-link disabled>Disabled Link</a>
   </nav>
-  <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
 </div>
 
 <div *ngIf="message && message.trim()" class="alert alert-warning">
