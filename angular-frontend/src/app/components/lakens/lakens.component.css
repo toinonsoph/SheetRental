@@ -1,14 +1,15 @@
 /* Container for cards */
 .card-container {
-    display: grid; 
-    grid-template-columns: repeat(2, 1fr); 
-    gap: 20px; 
-    justify-items: center; 
-    padding: 20px; 
-    max-width: 1000px; 
-    margin: 0 auto; 
-    flex: 2;
-  }
+  margin-top: 20px; 
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  justify-items: center;
+  padding: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+  flex: 2;
+}
   
   /* Individual card styling */
   .card {
@@ -313,21 +314,22 @@ h4{
 
 .info-box {
   background-color: #f4f4f4;
-  border: 2px solid darkred;
+  border: 2px solid darkred !important;
   border-radius: 8px;
-  padding: 15px; 
-  margin: 0 auto; 
-  text-align: center; 
+  padding: 15px;
+  margin: 0 auto;
+  text-align: center;
   color: #333;
-  width: 80%; 
+  width: 80%;
   max-width: 600px;
   font-size: 12px;
-  line-height: 1.5; 
-  position: absolute;
-  top: 20%; 
-  left: 50%; 
-  transform: translate(-50%, -20%); 
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  line-height: 1.5;
+  position: relative; 
+  top: 0; 
+  left: 0; 
+  transform: none; 
+  margin-bottom: 50px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 @keyframes spin {
