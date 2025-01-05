@@ -16,7 +16,6 @@ export class CambreServicesComponent implements OnInit {
   @Input() selectedTab!: string;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  @ViewChild('confirmDialog') confirmDialog!: TemplateRef<any>; // Reference the template
 
   materials: MatTableDataSource<any> = new MatTableDataSource();
   isLoading = false;
@@ -46,7 +45,7 @@ export class CambreServicesComponent implements OnInit {
     try {
       const materials = await this.supabase.getMaterials();
       this.materials = new MatTableDataSource(materials || []);
-      this.materials.paginator = this.paginator;
+      this.materials.paginator = this.paginator; 
       this.materials.sort = this.sort;
     } catch (error) {
       console.error('Failed to load materials:', error.message);
@@ -83,19 +82,18 @@ export class CambreServicesComponent implements OnInit {
   }
 
   async deleteMaterial(id: string) {
-    const dialogRef = this.dialog.open(this.confirmDialog, {
-      width: '400px',
-    });
-
-    dialogRef.afterClosed().subscribe(async (confirmed) => {
-      if (confirmed) {
-        try {
-          await this.supabase.deleteMaterial(id);
-          await this.loadMaterials();
-        } catch (error) {
-          console.error('Error deleting material:', error);
-        }
-      }
-    });
+    const isConfirmed = confirm('Are you sure you want to delete this material?'); 
+    if (!isConfirmed) {
+      return; // Exit if the user cancels
+    }
+  
+    try {
+      await this.supabase.deleteMaterial(id); 
+      await this.loadMaterials(); 
+      console.log(`Material with ID ${id} deleted successfully.`);
+    } catch (error) {
+      console.error('Error deleting material:', error);
+    }
   }
+  
 }

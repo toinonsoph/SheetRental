@@ -36,8 +36,8 @@ export class SupabaseService {
     const { data, error } = await this.supabase.from('material').insert([
       {
         ...material, 
-        createdOn: timestamp,
-        lastUpdateOn: timestamp,
+        createdon: timestamp,
+        lastUpdateon: timestamp,
       },
     ]);
     if (error) throw error;
@@ -50,7 +50,7 @@ export class SupabaseService {
       .from('material')
       .update({
         ...updates,
-        lastUpdateOn: timestamp,
+        lastUpdateon: timestamp,
       })
       .eq('id', id); 
     if (error) throw error;
