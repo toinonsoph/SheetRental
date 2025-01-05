@@ -41,7 +41,7 @@ export class CambreServicesComponent implements OnInit {
     'infoFrench',
     'infoGerman',
     'price',
-    'actions',
+    '',
   ];
 
   constructor(
