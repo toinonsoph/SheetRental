@@ -30,6 +30,7 @@ export class EditMaterialsComponent {
     private dialogRef: MatDialogRef<EditMaterialsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { material: any }
   ) {
+    console.log('Material data passed to dialog:', data.material); 
     this.isEditing = !!data.material;
     console.log(this.isEditing);
   
