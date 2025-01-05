@@ -21,19 +21,6 @@ export class SupabaseService {
     return this.supabase;
   }
 
-  get auth() {
-    return this.supabase.auth;
-  }
-
-  async ensureAuthenticatedUser() {
-    const { data: { user }, error } = await this.supabase.auth.getUser();
-    if (error || !user) {
-      throw new Error('User is not authenticated');
-    }
-    console.log('Authenticated user:', user);
-    return user;
-  }
-
   // Material table methods
   async getMaterials() {
     const { data, error } = await this.supabase
@@ -47,11 +34,9 @@ export class SupabaseService {
   async addMaterial(material: any) {
     const timestamp = new Date().toISOString();
 
-    const user = await this.ensureAuthenticatedUser();
     const { data, error: insertError } = await this.supabase.from('material').insert([
       {
         ...material,
-        user_id: user.id, 
         createdon: timestamp,
         lastupdatedon: timestamp,
       },
@@ -64,30 +49,26 @@ export class SupabaseService {
   async updateMaterial(id: string, updates: any) {
     const timestamp = new Date().toISOString();
 
-    const user = await this.ensureAuthenticatedUser();
     const { data, error: updateError } = await this.supabase
       .from('material')
       .update({
         ...updates,
         lastupdatedon: timestamp,
       })
-      .eq('id', id)
-      .eq('user_id', user.id); 
+      .eq('id', id);
 
     if (updateError) throw updateError;
     return data;
   }
 
   async deleteMaterial(id: string) {
-    const user = await this.ensureAuthenticatedUser();
     const { data, error: deleteError } = await this.supabase
       .from('material')
       .update({
         deleted: true,
         lastupdatedon: new Date().toISOString(),
       })
-      .eq('id', id)
-      .eq('user_id', user.id); 
+      .eq('id', id);
 
     if (deleteError) throw deleteError;
     return data;
