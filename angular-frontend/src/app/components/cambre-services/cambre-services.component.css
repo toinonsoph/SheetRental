@@ -224,6 +224,16 @@ button:hover {
   font-weight: bold; 
 }
 
+table.mat-elevation-z8 {
+  width: 100%; 
+  max-width: none; 
+  margin: 0 auto; 
+}
+
+.center-container {
+  max-width: 1600px; 
+}
+
 @media (max-width: 768px) {
   .tabs-container {
     padding: 20px;

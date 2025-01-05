@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Inject } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SupabaseService } from '../../services/supabase.service';
@@ -28,28 +28,23 @@ export class EditMaterialsComponent {
     private fb: FormBuilder,
     private supabase: SupabaseService,
     private dialogRef: MatDialogRef<EditMaterialsComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { material: any },
-    private cdr: ChangeDetectorRef 
+    @Inject(MAT_DIALOG_DATA) public data: { material?: any } = {}
   ) {   
-    
-    console.log('Material data passed to dialog:', data.material); 
-    this.isEditing = !!data?.material;
-    console.log(this.isEditing);
+    const material = data.material || {};
+    this.isEditing = !!data.material;
   
     this.materialForm = this.fb.group({
-      name_dutch: [data.material?.name_dutch || '', [Validators.required, Validators.maxLength(500)]],
-      name_french: [data.material?.name_french || '', [Validators.required, Validators.maxLength(500)]],
-      name_german: [data.material?.name_german || '', [Validators.required, Validators.maxLength(500)]],
-      information_dutch: [data.material?.information_dutch || '', [Validators.maxLength(500)]],
-      information_french: [data.material?.information_french || '', [Validators.maxLength(500)]],
-      information_german: [data.material?.information_german || '', [Validators.maxLength(500)]],
-      price: [data.material?.price || null, Validators.min(0)],
+      name_dutch: [material.name_dutch || '', [Validators.required, Validators.maxLength(500)]],
+      name_french: [material.name_french || '', [Validators.required, Validators.maxLength(500)]],
+      name_german: [material.name_german || '', [Validators.required, Validators.maxLength(500)]],
+      information_dutch: [material.information_dutch || '', [Validators.maxLength(500)]],
+      information_french: [material.information_french || '', [Validators.maxLength(500)]],
+      information_german: [material.information_german || '', [Validators.maxLength(500)]],
+      price: [material.price || null, Validators.min(0)],
     });
-
+  
     console.log('Form values:', this.materialForm.value);
-    
-    this.cdr.detectChanges();
-  }
+  }  
 
   async submitForm() {
     if (this.materialForm.invalid) return;
