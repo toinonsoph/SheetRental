@@ -32,7 +32,7 @@ export class EditMaterialsComponent {
     private cdr: ChangeDetectorRef 
   ) {
     console.log('Material data passed to dialog:', data.material); 
-    this.isEditing = !!data.material;
+    this.isEditing = !!data?.material;
     console.log(this.isEditing);
   
     this.materialForm = this.fb.group({
