@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { SupabaseService } from '../../services/supabase.service';
 import { EditMaterialsComponent } from '../edit-materials/edit-materials.component';
@@ -9,7 +9,10 @@ import { EditMaterialsComponent } from '../edit-materials/edit-materials.compone
 @Component({
   selector: 'app-cambre-services',
   templateUrl: './cambre-services.component.html',
-  styleUrls: ['./cambre-services.component.css']
+  styleUrls: ['./cambre-services.component.css'],
+  imports: [
+    MatPaginatorModule
+  ]
 })
 
 export class CambreServicesComponent implements OnInit {
