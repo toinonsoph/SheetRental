@@ -14,47 +14,40 @@
   
 <!-- Table for Materials -->
 <table mat-table [dataSource]="materials" *ngIf="materials" class="mat-elevation-z8">
-  <!-- Name Dutch Column -->
-  <ng-container matColumnDef="nameDutch">
+  <ng-container matColumnDef="name_dutch">
     <th mat-header-cell *matHeaderCellDef> Name Dutch </th>
     <td mat-cell *matCellDef="let material"> {{ material.name_dutch }} </td>
   </ng-container>
-
-  <!-- Name French Column -->
-  <ng-container matColumnDef="nameFrench">
+  
+  <ng-container matColumnDef="name_french">
     <th mat-header-cell *matHeaderCellDef> Name French </th>
-    <td mat-cell *matCellDef="let material"> {{ material.name_french }} </td>
+    <td mat-cell *matCellDef="let material"> {{ material.name_french || 'N/A' }} </td>
   </ng-container>
-
-  <!-- Name German Column -->
-  <ng-container matColumnDef="nameGerman">
+  
+  <ng-container matColumnDef="name_german">
     <th mat-header-cell *matHeaderCellDef> Name German </th>
-    <td mat-cell *matCellDef="let material"> {{ material.name_german }} </td>
+    <td mat-cell *matCellDef="let material"> {{ material.name_german || 'N/A' }} </td>
   </ng-container>
 
-  <!-- Information Dutch Column -->
-  <ng-container matColumnDef="infoDutch">
+  <ng-container matColumnDef="information_dutch">
     <th mat-header-cell *matHeaderCellDef> Information Dutch </th>
-    <td mat-cell *matCellDef="let material"> {{ material.information_dutch }} </td>
+    <td mat-cell *matCellDef="let material"> {{ material.information_dutch || 'N/A' }} </td>
   </ng-container>
-
-  <!-- Information French Column -->
-  <ng-container matColumnDef="infoFrench">
+  
+  <ng-container matColumnDef="information_french">
     <th mat-header-cell *matHeaderCellDef> Information French </th>
-    <td mat-cell *matCellDef="let material"> {{ material.information_french }} </td>
+    <td mat-cell *matCellDef="let material"> {{ material.information_french || 'N/A' }} </td>
   </ng-container>
-
-  <!-- Information German Column -->
-  <ng-container matColumnDef="infoGerman">
+  
+  <ng-container matColumnDef="information_german">
     <th mat-header-cell *matHeaderCellDef> Information German </th>
-    <td mat-cell *matCellDef="let material"> {{ material.information_german }} </td>
-  </ng-container>
-
-  <!-- Price Column -->
+    <td mat-cell *matCellDef="let material"> {{ material.information_german || 'N/A' }} </td>
+  </ng-container> 
+  
   <ng-container matColumnDef="price">
     <th mat-header-cell *matHeaderCellDef> Price </th>
-    <td mat-cell *matCellDef="let material"> {{ material.price }} </td>
-  </ng-container>
+    <td mat-cell *matCellDef="let material"> {{ material.price || 'N/A' }} </td>
+  </ng-container>  
 
   <!-- Actions -->
   <ng-container matColumnDef="actions">
