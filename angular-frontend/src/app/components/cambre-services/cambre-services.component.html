@@ -51,25 +51,12 @@
   </ng-container>
 
   <!-- Price Column -->
-  <ng-container matColumnDef="price">
-    <th mat-header-cell *matHeaderCellDef> Price </th>
-    <td mat-cell *matCellDef="let material"> {{ material.price | currency:'EUR':'symbol':'1.2-2' }} </td>
-  </ng-container>
-
-  <!-- Actions Columns -->
   <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef> </th>
     <td mat-cell *matCellDef="let material">
-      <div class="actions-container">
-        <button mat-button color="white" (click)="openEditDialog(material)">Edit</button>        
-      </div>
-    </td>
-  </ng-container>
-  <ng-container matColumnDef="actions">
-    <th mat-header-cell *matHeaderCellDef> </th>
-    <td mat-cell *matCellDef="let material">
-      <div class="actions-container">
-        <button mat-button color="white" (click)="deleteMaterial(material.id)">Delete</button>
+      <div class="actions-container" style="display: flex; gap: 8px;">
+        <button mat-button color="primary" style="color: white;" (click)="openEditDialog(material)">Edit</button>
+        <button mat-button color="warn"  style="color: white;" (click)="deleteMaterial(material.id)">Delete</button>
       </div>
     </td>
   </ng-container>
