@@ -3,6 +3,11 @@
   <button (click)="openPopup()" class="btn btn-primary">Aanvraag/Commande/Bestellung</button>
 </div>
 <br>
+<div class="info-box">
+  <p>Een aanvraag kan ook via mail (<a href="mailto:info@agencecambre.be">info&#64;agencecambre.be</a>) of telefonisch (<a href="tel:+32479599060">+32 479/59.90.60</a>) gebeuren.</p>      
+  <p>Une demande peut également être faite par email (<a href="mailto: info@agencecambre.be ">info&#64;agencecambre.be</a>) ou par téléphone (<a href="tel:+32479599060"> +32 479 /59.90.60</a>) se produisent.</p>
+  <p>Eine Anfrage ist auch per E-Mail (<a href="mailto: info@agencecambre.be ">info&#64;agencecambre.be</a>) oder Telefon (<a href="tel:+32479599060"> +32 479 /59.90.60</a>) möglich.</p>
+</div>  
 <br>
 <div *ngIf="successMessage" class="success-message" [innerHTML]="successMessage"></div>
 
@@ -29,12 +34,7 @@
     <h4>Aanvraag/Commande/Bestellung</h4><br>
     <div *ngIf="errorMessage" class="error-message">
       {{ errorMessage }}
-    </div>
-    <div class="info-box">
-      <p>Een aanvraag kan ook via mail (<a href="mailto:info@agencecambre.be">info&#64;agencecambre.be</a>) of telefonisch (<a href="tel:+32479599060">+32 479/59.90.60</a>) gebeuren.</p>      
-      <p>Une demande peut également être faite par email (<a href="mailto: info@agencecambre.be ">info&#64;agencecambre.be</a>) ou par téléphone (<a href="tel:+32479599060"> +32 479 /59.90.60</a>) se produisent.</p>
-      <p>Eine Anfrage ist auch per E-Mail (<a href="mailto: info@agencecambre.be ">info&#64;agencecambre.be</a>) oder Telefon (<a href="tel:+32479599060"> +32 479 /59.90.60</a>) möglich.</p>
-    </div>    
+    </div>      
     <br>
     <form (ngSubmit)="submitForm()">
       <div class="form-row">
