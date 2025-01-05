@@ -38,7 +38,7 @@ export class EditMaterialsComponent {
       information_dutch: [data.material?.information_dutch || '', [Validators.maxLength(500)]],
       information_french: [data.material?.information_french || '', [Validators.maxLength(500)]],
       information_german: [data.material?.information_german || '', [Validators.maxLength(500)]],
-      price: [data.material?.price || null, [Validators.required, Validators.min(0)]],
+      price: [null, Validators.min(0)],
     });
   }
 

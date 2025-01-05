@@ -2,67 +2,76 @@
 <div mat-dialog-content>
   <form [formGroup]="materialForm">
     <!-- Name Dutch -->
-    <label>Name Dutch</label>
-    <input formControlName="name_dutch" />
-    <small *ngIf="materialForm.controls['name_dutch'].invalid && materialForm.controls['name_dutch'].touched">
-      <span *ngIf="materialForm.controls['name_dutch'].errors?.['required']">Required.</span>
-      <span *ngIf="materialForm.controls['name_dutch'].errors?.['maxlength']">Max 500 characters.</span>
-    </small>
+    <div class="form-group">
+      <label for="nameDutch">Name Dutch</label>
+      <input id="nameDutch" formControlName="name_dutch" />
+      <small *ngIf="materialForm.controls['name_dutch'].invalid && materialForm.controls['name_dutch'].touched">
+        <span *ngIf="materialForm.controls['name_dutch'].errors?.['required']">Required.</span>
+        <span *ngIf="materialForm.controls['name_dutch'].errors?.['maxlength']">Max 500 characters.</span>
+      </small>
+    </div>
 
     <!-- Name French -->
-    <label>Name French</label>
-    <input formControlName="name_french" />
-    <small *ngIf="materialForm.controls['name_french'].invalid && materialForm.controls['name_french'].touched">
-      <span *ngIf="materialForm.controls['name_french'].errors?.['required']">Required.</span>
-      <span *ngIf="materialForm.controls['name_french'].errors?.['maxlength']">Max 500 characters.</span>
-    </small>
+    <div class="form-group">
+      <label for="nameFrench">Name French</label>
+      <input id="nameFrench" formControlName="name_french" />
+      <small *ngIf="materialForm.controls['name_french'].invalid && materialForm.controls['name_french'].touched">
+        <span *ngIf="materialForm.controls['name_french'].errors?.['required']">Required.</span>
+        <span *ngIf="materialForm.controls['name_french'].errors?.['maxlength']">Max 500 characters.</span>
+      </small>
+    </div>
 
     <!-- Name German -->
-    <label>Name German</label>
-    <input formControlName="name_german" />
-    <small *ngIf="materialForm.controls['name_german'].invalid && materialForm.controls['name_german'].touched">
-      <span *ngIf="materialForm.controls['name_german'].errors?.['required']">Required.</span>
-      <span *ngIf="materialForm.controls['name_german'].errors?.['maxlength']">Max 500 characters.</span>
-    </small>
+    <div class="form-group">
+      <label for="nameGerman">Name German</label>
+      <input id="nameGerman" formControlName="name_german" />
+      <small *ngIf="materialForm.controls['name_german'].invalid && materialForm.controls['name_german'].touched">
+        <span *ngIf="materialForm.controls['name_german'].errors?.['required']">Required.</span>
+        <span *ngIf="materialForm.controls['name_german'].errors?.['maxlength']">Max 500 characters.</span>
+      </small>
+    </div>
 
     <!-- Information Dutch -->
-    <label>Information Dutch</label>
-    <textarea formControlName="information_dutch"></textarea>
-    <small *ngIf="materialForm.controls['information_dutch'].invalid && materialForm.controls['information_dutch'].touched">
-      Max 500 characters allowed.
-    </small>
+    <div class="form-group">
+      <label for="infoDutch">Information Dutch</label>
+      <textarea id="infoDutch" formControlName="information_dutch"></textarea>
+      <small *ngIf="materialForm.controls['information_dutch'].invalid && materialForm.controls['information_dutch'].touched">
+        Max 500 characters allowed.
+      </small>
+    </div>
 
     <!-- Information French -->
-    <label>Information French</label>
-    <textarea formControlName="information_french"></textarea>
-    <small *ngIf="materialForm.controls['information_french'].invalid && materialForm.controls['information_french'].touched">
-      Max 500 characters allowed.
-    </small>
+    <div class="form-group">
+      <label for="infoFrench">Information French</label>
+      <textarea id="infoFrench" formControlName="information_french"></textarea>
+      <small *ngIf="materialForm.controls['information_french'].invalid && materialForm.controls['information_french'].touched">
+        Max 500 characters allowed.
+      </small>
+    </div>
 
     <!-- Information German -->
-    <label>Information German</label>
-    <textarea formControlName="information_german"></textarea>
-    <small *ngIf="materialForm.controls['information_german'].invalid && materialForm.controls['information_german'].touched">
-      Max 500 characters allowed.
-    </small>
+    <div class="form-group">
+      <label for="infoGerman">Information German</label>
+      <textarea id="infoGerman" formControlName="information_german"></textarea>
+      <small *ngIf="materialForm.controls['information_german'].invalid && materialForm.controls['information_german'].touched">
+        Max 500 characters allowed.
+      </small>
+    </div>
 
     <!-- Price -->
-    <label>Price</label>
-    <input type="number" formControlName="price" />
-    <small *ngIf="materialForm.controls['price'].invalid && materialForm.controls['price'].touched">
-      <span *ngIf="materialForm.controls['price'].errors?.['required']">Required.</span>
-      <span *ngIf="materialForm.controls['price'].errors?.['min']">Must be a positive number.</span>
-    </small>
+    <div class="form-group">
+        <label for="price">Price</label>
+        <input id="price" type="number" formControlName="price" />
+        <small *ngIf="materialForm.controls['price'].invalid && materialForm.controls['price'].touched">
+          <span *ngIf="materialForm.controls['price'].errors?.['min']">Must be a positive number.</span>
+        </small>
+    </div>
   </form>
 </div>
 
-<div mat-dialog-actions>  
-  <button 
-    mat-button 
-    color="primary" 
-    (click)="submitForm()" 
-    [disabled]="materialForm.invalid">
+<div mat-dialog-actions>
+  <button mat-button class="darkred-button" (click)="submitForm()" [disabled]="materialForm.invalid">
     {{ isEditing ? 'Update' : 'Add' }}
   </button>
-  <button mat-button (click)="cancel()">Cancel</button>
+  <button mat-button class="cancel-button" (click)="cancel()">Cancel</button>
 </div>

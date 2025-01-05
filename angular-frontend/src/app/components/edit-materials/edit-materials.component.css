@@ -1,37 +1,75 @@
+/* Ensure all fields are displayed underneath each other */
 mat-dialog-content {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    max-height: 60vh; 
-    overflow-y: auto; 
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-mat-dialog-content label {
-    margin-bottom: 5px;
+.form-group {
+  display: flex;
+  flex-direction: column;
 }
 
-mat-dialog-content input,
-mat-dialog-content textarea {
-    margin-bottom: 10px;
-    width: 100%; 
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 14px;
+label {
+  font-weight: bold;
+  margin-bottom: 5px;
 }
 
+input,
+textarea {
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+small {
+  color: red;
+  font-size: 12px;
+}
+
+/* Style buttons */
 mat-dialog-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    background-color: white; 
-    position: sticky;
-    bottom: 0;
-    padding-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
 }
 
-mat-dialog-actions button {
-    padding: 8px 16px;
-    margin: 5px;
-    min-width: 80px; 
+.darkred-button {
+  background-color: darkred;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
+
+.darkred-button:hover {
+  background-color: #a50000;
+}
+
+.darkred-button:disabled {
+  background-color: lightgray;
+  color: white;
+  cursor: not-allowed;
+}
+
+.cancel-button {
+    background-color: white;
+    color: darkred;
+    border: 1px solid darkred;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .cancel-button:hover {
+    background-color: darkred;
+    color: white;
+  }
