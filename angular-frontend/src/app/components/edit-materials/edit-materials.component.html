@@ -1,7 +1,6 @@
 <h3 mat-dialog-title>
-    <span *ngIf="isEditing">Edit Material</span>
-    <span *ngIf="!isEditing">Add Material</span>
-  </h3>
+    {{ isEditing ? 'Edit Material' : 'Add Material' }}
+</h3>
 <div mat-dialog-content>
   <form [formGroup]="materialForm">
     <!-- Name Dutch -->
@@ -73,9 +72,8 @@
 </div>
 
 <div mat-dialog-actions>  
-<button mat-button class="darkred-button" (click)="submitForm()" [disabled]="materialForm.invalid">
-        <span *ngIf="isEditing">Update</span>
-        <span *ngIf="!isEditing">Add</span>
-      </button>
-  <button mat-button class="cancel-button" (click)="cancel()">Cancel</button>
+    <button mat-button class="darkred-button" (click)="submitForm()" [disabled]="materialForm.invalid">
+        {{ isEditing ? 'Update' : 'Add' }}
+    </button>
+    <button mat-button class="cancel-button" (click)="cancel()">Cancel</button>
 </div>

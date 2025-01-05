@@ -38,7 +38,8 @@
             "styles": [
               "@angular/material/prebuilt-themes/rose-red.css",
               "src/styles.css",
-              "src/styles/shared.css"
+              "src/styles/shared.css",
+               "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
             ],
             "scripts": []
           },

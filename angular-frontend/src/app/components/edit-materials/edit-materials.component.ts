@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SupabaseService } from '../../services/supabase.service';
@@ -28,7 +28,8 @@ export class EditMaterialsComponent {
     private fb: FormBuilder,
     private supabase: SupabaseService,
     private dialogRef: MatDialogRef<EditMaterialsComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { material: any }
+    @Inject(MAT_DIALOG_DATA) public data: { material: any },
+    private cdr: ChangeDetectorRef 
   ) {
     console.log('Material data passed to dialog:', data.material); 
     this.isEditing = !!data.material;
@@ -43,6 +44,10 @@ export class EditMaterialsComponent {
       information_german: [data.material?.information_german || '', [Validators.maxLength(500)]],
       price: [data.material?.price || null, Validators.min(0)],
     });
+
+    console.log('Form values:', this.materialForm.value);
+
+    this.cdr.detectChanges();
   }
 
   async submitForm() {

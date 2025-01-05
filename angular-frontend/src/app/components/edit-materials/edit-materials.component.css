@@ -52,7 +52,7 @@ small {
 
 .darkred-button {
   background-color: darkred;
-  color: white;
+  color: white !important;
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
