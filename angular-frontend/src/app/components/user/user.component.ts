@@ -1,31 +1,28 @@
 import { Component } from '@angular/core';
-import { AgenceCambreComponent } from '../agence-cambre/agence-cambre.component';
-import { CambreServicesComponent } from '../cambre-services/cambre-services.component';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { MatTabsModule } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css'],
-  imports: 
-  [
-    AgenceCambreComponent, 
-    CambreServicesComponent,
-    MatTabsModule
-  ],
-  standalone: true
 })
 export class UserComponent {
   message: string | null = '';
-
-  links: string[] = ['services', 'agence'];
+  links = [
+    { label: 'Cambre Services', path: '/cambre-services' },
+    { label: 'Agence Cambre', path: '/agence-cambre' },
+  ];
+  activeLink = this.links[0].label;
 
   constructor(
     private http: HttpClient,
-    private router: Router 
+    private router: Router
   ) {}
+
+  setActiveLink(link: string) {
+    this.activeLink = link;
+  }
 
   clearMessage() {
     this.message = null;
@@ -34,15 +31,18 @@ export class UserComponent {
   logout() {
     localStorage.removeItem('authToken');
     sessionStorage.removeItem('authToken');
-    
-    this.http.post('/api/logout', {}).subscribe(
-      () => {
+  
+    this.http.post('/api/logout', {}).subscribe({
+      next: () => {
         console.log('Session invalidated on server');
       },
-      (error) => {
+      error: (error) => {
         console.error('Error during logout request:', error);
-      }
-    );
+      },
+      complete: () => {
+        console.log('Logout request completed');
+      },
+    });
   
     this.router.navigate(['/login']);
   }

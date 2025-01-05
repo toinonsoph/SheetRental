@@ -1,16 +1,22 @@
 <button (click)="logout()" class="logout-btn">Logout</button>
 <div class="tabs-container">
-  <mat-tab-group class="user-component-tabs"> 
-    <mat-tab label="Cambre Services" class="inactive-tab-label">
-      <app-cambre-services></app-cambre-services>
-    </mat-tab>
-    <mat-tab label="Agence Cambre" class="inactive-tab-label">
-      <app-agence-cambre></app-agence-cambre>
-    </mat-tab>    
-  </mat-tab-group>  
+  <nav mat-tab-nav-bar [tabPanel]="tabPanel">
+    <a
+      mat-tab-link
+      *ngFor="let link of links"
+      [routerLink]="link.path"
+      [active]="activeLink === link.label"
+      (click)="setActiveLink(link.label)">
+      {{ link.label }}
+    </a>
+    <a mat-tab-link disabled>Disabled Link</a>
+  </nav>
+  <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
 </div>
 
 <div *ngIf="message && message.trim()" class="alert alert-warning">
   {{ message }}
   <button (click)="clearMessage()" class="close-btn">✖</button>
 </div>
+
+<router-outlet></router-outlet>
