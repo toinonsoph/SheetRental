@@ -44,7 +44,8 @@ export class LakensComponent implements OnInit {
       this.toggleSpinner(true); 
       const { data, error } = await this.supabaseService.client
         .from('material')
-        .select('name_dutch, name_french, name_german, information_dutch, information_french, information_german, price');
+        .select('name_dutch, name_french, name_german, information_dutch, information_french, information_german, price')
+        .eq('deleted', false);
   
       if (error) {
         console.error('Error fetching data from Supabase:', error);

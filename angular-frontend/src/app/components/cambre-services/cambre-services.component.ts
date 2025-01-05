@@ -93,13 +93,12 @@ export class CambreServicesComponent implements OnInit {
   async deleteMaterial(id: string) {
     const isConfirmed = confirm('Are you sure you want to delete this material?'); 
     if (!isConfirmed) {
-      return; // Exit if the user cancels
+      return; 
     }
   
     try {
       await this.supabase.deleteMaterial(id); 
       await this.loadMaterials(); 
-      console.log(`Material with ID ${id} deleted successfully.`);
     } catch (error) {
       console.error('Error deleting material:', error);
     }

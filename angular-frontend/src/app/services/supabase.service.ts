@@ -26,6 +26,7 @@ export class SupabaseService {
     const { data, error } = await this.supabase
       .from('material')
       .select('*')
+      .eq('deleted', false)
       .order('name_dutch', { ascending: true });
     if (error) throw error;
     return data;
