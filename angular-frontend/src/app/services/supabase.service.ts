@@ -33,15 +33,18 @@ export class SupabaseService {
 
   async addMaterial(material: any) {
     const timestamp = new Date().toISOString();
-
+    
+    const id = crypto.randomUUID();
+  
     const { data, error: insertError } = await this.supabase.from('material').insert([
       {
+        id, 
         ...material,
         createdon: timestamp,
         lastupdatedon: timestamp,
       },
     ]);
-
+  
     if (insertError) throw insertError;
     return data;
   }
