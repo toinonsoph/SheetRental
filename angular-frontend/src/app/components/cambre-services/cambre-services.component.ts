@@ -53,7 +53,6 @@ export class CambreServicesComponent implements OnInit {
     try {
       const materials = await this.supabase.getMaterials();
       this.materials = new MatTableDataSource(materials || []);
-      console.log('Fetched materials:', materials); 
       this.materials.paginator = this.paginator; 
       this.materials.sort = this.sort;
     } catch (error) {

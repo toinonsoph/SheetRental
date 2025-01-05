@@ -44,8 +44,6 @@ export class EditMaterialsComponent {
       information_german: [material.information_german || '', [Validators.maxLength(500)]],
       price: [material.price || null, Validators.min(0)],
     });
-
-    console.log('Form values:', this.materialForm.value);
   }
 
   async submitForm() {

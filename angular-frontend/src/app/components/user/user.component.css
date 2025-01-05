@@ -232,6 +232,16 @@ button:hover {
 }
 
 
+::ng-deep .user-component-tabs .mdc-tab {
+  color: black !important; 
+}
+
+::ng-deep .user-component-tabs .mdc-tab.mdc-tab--active {
+  color: white !important; 
+  background-color: darkred !important;
+}
+
+
 @media (max-width: 768px) {
   .tabs-container {
     padding: 20px;
