@@ -1,10 +1,18 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { MatTabsModule } from '@angular/material/tabs';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css'],
+  imports: 
+  [
+    MatTabsModule,
+    RouterModule
+  ],
+  standalone: true
 })
 export class UserComponent {
   message: string | null = '';
