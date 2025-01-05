@@ -274,29 +274,3 @@ button:hover {
     padding: 8px 10px;
   }
 }
-
-.tab-headers {
-  display: flex;
-  border-bottom: 1px solid #ddd;
-}
-
-.tab-headers button {
-  flex: 1;
-  padding: 10px;
-  cursor: pointer;
-  border: none;
-  background-color: white;
-  color: black;
-  font-size: 16px;
-  text-align: center;
-}
-
-.tab-headers button.active {
-  border-bottom: 2px solid darkred;
-  background-color: darkred;
-  font-weight: bold;
-}
-
-.tab-content {
-  padding: 20px;
-}
