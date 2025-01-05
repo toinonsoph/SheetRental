@@ -13,7 +13,7 @@
 <button class="openDialog" (click)="openAddDialog()">Add Material</button>
   
 <!-- Table for Materials -->
-<table mat-table [dataSource]="materials" class="mat-elevation-z8">
+<table mat-table [dataSource]="materials" *ngIf="materials" class="mat-elevation-z8">
   <!-- Name Dutch Column -->
   <ng-container matColumnDef="nameDutch">
     <th mat-header-cell *matHeaderCellDef> Name Dutch </th>
@@ -51,6 +51,12 @@
   </ng-container>
 
   <!-- Price Column -->
+  <ng-container matColumnDef="price">
+    <th mat-header-cell *matHeaderCellDef> Price </th>
+    <td mat-cell *matCellDef="let material"> {{ material.price }} </td>
+  </ng-container>
+
+  <!-- Actions -->
   <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef> </th>
     <td mat-cell *matCellDef="let material">
