@@ -30,8 +30,9 @@ export class EditMaterialsComponent {
     private dialogRef: MatDialogRef<EditMaterialsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { material: any }
   ) {
-    this.isEditing = data.material !== null;
-        
+    this.isEditing = !!data.material;
+    console.log(this.isEditing);
+  
     this.materialForm = this.fb.group({
       name_dutch: [data.material?.name_dutch || '', [Validators.required, Validators.maxLength(500)]],
       name_french: [data.material?.name_french || '', [Validators.required, Validators.maxLength(500)]],
@@ -39,7 +40,7 @@ export class EditMaterialsComponent {
       information_dutch: [data.material?.information_dutch || '', [Validators.maxLength(500)]],
       information_french: [data.material?.information_french || '', [Validators.maxLength(500)]],
       information_german: [data.material?.information_german || '', [Validators.maxLength(500)]],
-      price: [null, Validators.min(0)],
+      price: [data.material?.price || null, Validators.min(0)],
     });
   }
 

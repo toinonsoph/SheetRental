@@ -75,7 +75,7 @@ mat-dialog-title {
     display: block;
     font-size: 20px;
     font-weight: bold;
-    color: darkred;
+    color: darkred !important;
     text-align: center;
     margin-bottom: 20px;
   }
@@ -95,5 +95,5 @@ mat-dialog-actions {
 }
 
 mat-mdc-button-touch-target {
-    color: white;
+    color: white !important;
 }
