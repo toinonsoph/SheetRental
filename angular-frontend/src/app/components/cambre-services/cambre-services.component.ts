@@ -16,7 +16,8 @@ import { MatButtonModule } from '@angular/material/button';
     MatPaginatorModule,
     MatSortModule,
     MatButtonModule
-  ]
+  ],
+  standalone: true
 })
 
 export class CambreServicesComponent implements OnInit {
