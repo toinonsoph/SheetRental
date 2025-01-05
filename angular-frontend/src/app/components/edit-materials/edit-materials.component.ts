@@ -17,10 +17,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatDialogModule,
     MatButtonModule,
     MatInputModule,
-    MatFormFieldModule 
+    MatFormFieldModule,
   ],
   templateUrl: './edit-materials.component.html',
-  styleUrls: ['./edit-materials.component.css']
+  styleUrls: ['./edit-materials.component.css'],
 })
 export class EditMaterialsComponent {
   materialForm: FormGroup;
@@ -31,10 +31,10 @@ export class EditMaterialsComponent {
     private supabase: SupabaseService,
     private dialogRef: MatDialogRef<EditMaterialsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { material?: any } = {}
-  ) {   
+  ) {
     const material = data.material || {};
     this.isEditing = !!data.material;
-  
+
     this.materialForm = this.fb.group({
       name_dutch: [material.name_dutch || '', [Validators.required, Validators.maxLength(500)]],
       name_french: [material.name_french || '', [Validators.required, Validators.maxLength(500)]],
@@ -44,29 +44,26 @@ export class EditMaterialsComponent {
       information_german: [material.information_german || '', [Validators.maxLength(500)]],
       price: [material.price || null, Validators.min(0)],
     });
-  
+
     console.log('Form values:', this.materialForm.value);
-  }  
+  }
 
   async submitForm() {
     if (this.materialForm.invalid) return;
-  
+
     const material = this.materialForm.value;
     try {
-      const user = this.supabase.auth.getUser(); 
-      if (!user) {
-        console.error('User is not authenticated');
-        return;
-      }
-  
       if (this.isEditing) {
+        // Update existing material
         await this.supabase.updateMaterial(this.data.material.id, material);
       } else {
+        // Add new material
         await this.supabase.addMaterial(material);
       }
       this.dialogRef.close(true);
     } catch (error) {
-      console.error('Error saving material:', error);
+      console.error('Error saving material:', error.message);
+      alert('Failed to save material. Please try again later.');
     }
   }
 

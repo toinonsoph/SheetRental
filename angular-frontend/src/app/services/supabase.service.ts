@@ -25,43 +25,46 @@ export class SupabaseService {
     return this.supabase.auth;
   }
 
+  async ensureAuthenticatedUser() {
+    const { data: { user }, error } = await this.supabase.auth.getUser();
+    if (error || !user) {
+      throw new Error('User is not authenticated');
+    }
+    console.log('Authenticated user:', user);
+    return user;
+  }
+
   // Material table methods
   async getMaterials() {
     const { data, error } = await this.supabase
       .from('material')
       .select('*')
-      .order('name_dutch', {ascending: true}); 
+      .order('name_dutch', { ascending: true });
     if (error) throw error;
     return data;
   }
 
   async addMaterial(material: any) {
     const timestamp = new Date().toISOString();
-    
-    const { data: user, error } = await this.supabase.auth.getUser();
-    if (error || !user) {
-      throw new Error('User is not authenticated');
-    }  
+
+    const user = await this.ensureAuthenticatedUser();
     const { data, error: insertError } = await this.supabase.from('material').insert([
       {
         ...material,
-        user_id: user.user.id, 
+        user_id: user.id, 
         createdon: timestamp,
         lastupdatedon: timestamp,
       },
     ]);
-  
+
     if (insertError) throw insertError;
     return data;
   }
 
   async updateMaterial(id: string, updates: any) {
     const timestamp = new Date().toISOString();
-  
-    const { data: user, error } = await this.supabase.auth.getUser();
-    if (error || !user) {
-      throw new Error('User is not authenticated');
-    }
+
+    const user = await this.ensureAuthenticatedUser();
     const { data, error: updateError } = await this.supabase
       .from('material')
       .update({
@@ -69,18 +72,14 @@ export class SupabaseService {
         lastupdatedon: timestamp,
       })
       .eq('id', id)
-      .eq('user_id', user.user.id);
-  
+      .eq('user_id', user.id); 
+
     if (updateError) throw updateError;
     return data;
   }
 
   async deleteMaterial(id: string) {
-    const { data: user, error } = await this.supabase.auth.getUser();
-    if (error || !user) {
-      throw new Error('User is not authenticated');
-    }
-
+    const user = await this.ensureAuthenticatedUser();
     const { data, error: deleteError } = await this.supabase
       .from('material')
       .update({
@@ -88,8 +87,8 @@ export class SupabaseService {
         lastupdatedon: new Date().toISOString(),
       })
       .eq('id', id)
-      .eq('user_id', user.user.id); 
-  
+      .eq('user_id', user.id); 
+
     if (deleteError) throw deleteError;
     return data;
   }
@@ -98,7 +97,7 @@ export class SupabaseService {
   async fetchEquipments() {
     try {
       const { data, error } = await this.supabase
-        .from('equipments') 
+        .from('equipments')
         .select('id, name, image_path');
 
       if (error) {
@@ -110,7 +109,7 @@ export class SupabaseService {
       this.equipments = data.map((equipment) => ({
         ...equipment,
         imageUrl: this.supabase.storage
-          .from(environment.supabaseStorage.iconBucket) 
+          .from(environment.supabaseStorage.iconBucket)
           .getPublicUrl(equipment.image_path).data.publicUrl,
       }));
     } catch (error) {
@@ -122,7 +121,7 @@ export class SupabaseService {
   async fetchHouses() {
     try {
       const { data: houses, error } = await this.supabase
-        .from('housing') 
+        .from('housing')
         .select('id, name, type, image_path');
 
       if (error) {
@@ -130,11 +129,10 @@ export class SupabaseService {
         return [];
       }
 
-      // Generate public URLs for house images
       return houses.map((house) => ({
         ...house,
         imageUrl: this.supabase.storage
-          .from(environment.supabaseStorage.bucket) 
+          .from(environment.supabaseStorage.bucket)
           .getPublicUrl(house.image_path).data.publicUrl,
       }));
     } catch (error) {
@@ -147,7 +145,7 @@ export class SupabaseService {
   async fetchAddresses() {
     try {
       const { data: addresses, error } = await this.supabase
-        .from('address') 
+        .from('address')
         .select('id, house_id, street, city');
 
       if (error) {
