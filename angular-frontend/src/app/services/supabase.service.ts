@@ -37,7 +37,7 @@ export class SupabaseService {
       {
         ...material, 
         createdon: timestamp,
-        lastUpdateon: timestamp,
+        lastupdatedon: timestamp,
       },
     ]);
     if (error) throw error;
@@ -50,7 +50,7 @@ export class SupabaseService {
       .from('material')
       .update({
         ...updates,
-        lastUpdateon: timestamp,
+        lastupdatedon: timestamp,
       })
       .eq('id', id); 
     if (error) throw error;
@@ -60,11 +60,15 @@ export class SupabaseService {
   async deleteMaterial(id: string) {
     const { data, error } = await this.supabase
       .from('material')
-      .delete()
-      .eq('id', id); 
+      .update({
+        deleted: true,
+        lastupdatedon: new Date().toISOString()
+      })
+      .eq('id', id);
+  
     if (error) throw error;
     return data;
-  }
+  }  
 
   // Equipments table methods
   async fetchEquipments() {

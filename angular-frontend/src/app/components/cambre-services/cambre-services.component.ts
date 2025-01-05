@@ -1,17 +1,21 @@
 import { Component, Input, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, MatSortModule } from '@angular/material/sort';
 import { SupabaseService } from '../../services/supabase.service';
 import { EditMaterialsComponent } from '../edit-materials/edit-materials.component';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-cambre-services',
   templateUrl: './cambre-services.component.html',
   styleUrls: ['./cambre-services.component.css'],
   imports: [
-    MatPaginatorModule
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatButtonModule
   ]
 })
 
@@ -48,6 +52,7 @@ export class CambreServicesComponent implements OnInit {
     try {
       const materials = await this.supabase.getMaterials();
       this.materials = new MatTableDataSource(materials || []);
+      console.log('Fetched materials:', materials); 
       this.materials.paginator = this.paginator; 
       this.materials.sort = this.sort;
     } catch (error) {
