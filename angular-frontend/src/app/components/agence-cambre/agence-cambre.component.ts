@@ -1,18 +1,13 @@
-import { Component, Input } from '@angular/core';
-import { MatTabsModule } from '@angular/material/tabs';
-import { SupabaseService } from '../../services/supabase.service';
-import { MatTableModule } from '@angular/material/table';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-agence-cambre',
-  templateUrl:'./agence-cambre.component.html',
+  templateUrl: './agence-cambre.component.html',
   styleUrls: ['./agence-cambre.component.css'],
-  imports: 
-  [
-      MatTabsModule,
-      MatTableModule 
-  ],
   standalone: true
 })
-export class AgenceCambreComponent { 
+export class AgenceCambreComponent implements OnInit { 
+  ngOnInit() {
+    console.log('Agence Cambre Component Initialized');
+  }
 }
