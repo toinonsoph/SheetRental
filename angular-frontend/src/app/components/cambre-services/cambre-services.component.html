@@ -58,13 +58,17 @@
 
   <!-- Actions Column -->
   <ng-container matColumnDef="actions">
-    <th mat-header-cell *matHeaderCellDef> Actions </th>
+    <th mat-header-cell *matHeaderCellDef> </th>
     <td mat-cell *matCellDef="let material">
       <div class="actions-container">
-        <button mat-button color="primary" (click)="openEditDialog(material)">Edit</button>        
+        <button mat-button color="white" (click)="openEditDialog(material)">Edit</button>        
       </div>
+    </td>
+
+    <th mat-header-cell *matHeaderCellDef> </th>
+    <td mat-cell *matCellDef="let material">
       <div class="actions-container">
-        <button mat-button color="warn" (click)="deleteMaterial(material.id)">Delete</button>
+        <button mat-button color="white" (click)="deleteMaterial(material.id)">Delete</button>
       </div>
     </td>
   </ng-container>
