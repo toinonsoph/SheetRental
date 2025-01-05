@@ -89,7 +89,6 @@
 }
 
 .card-type {
-  font-size: 1em;
   color: #555;
   font-weight: bold;
   text-transform: uppercase;
@@ -173,7 +172,7 @@
 
   .card-address,
   .card-type {
-    font-size: 0.8em !important;
+    font-size: 0.9em !important;
   }
 }
 
