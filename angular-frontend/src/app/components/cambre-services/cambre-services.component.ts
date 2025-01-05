@@ -1,35 +1,20 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { SupabaseService } from '../../services/supabase.service';
-import { EditMaterialsComponent } from '../edit-materials/edit-materials.component';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatTableModule } from '@angular/material/table';
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { SupabaseService } from '../../services/supabase.service';
 
 @Component({
   selector: 'app-cambre-services',
   templateUrl: './cambre-services.component.html',
   styleUrls: ['./cambre-services.component.css'],
-  providers: [SupabaseService],
-  imports: [
-    MatDialogModule,
-    MatTableModule,
-    MatButtonModule,
-    MatInputModule,
-    BrowserAnimationsModule, 
-  ]
 })
-
 export class CambreServicesComponent implements OnInit {
   @Input() selectedTab!: string;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild('confirmDialog') confirmDialog!: TemplateRef<any>; // Reference the template
 
   materials: MatTableDataSource<any> = new MatTableDataSource();
   isLoading = false;
@@ -52,15 +37,15 @@ export class CambreServicesComponent implements OnInit {
 
   async ngOnInit() {
     await this.loadMaterials();
-  }  
+  }
 
   async loadMaterials() {
     this.isLoading = true;
     try {
       const materials = await this.supabase.getMaterials();
       this.materials = new MatTableDataSource(materials || []);
-      this.materials.paginator = this.paginator; // Assign paginator
-      this.materials.sort = this.sort; // Assign sorting
+      this.materials.paginator = this.paginator;
+      this.materials.sort = this.sort;
     } catch (error) {
       console.error('Failed to load materials:', error.message);
       this.materials = new MatTableDataSource([]);
@@ -68,37 +53,12 @@ export class CambreServicesComponent implements OnInit {
       this.isLoading = false;
     }
   }
-  
 
-  openAddDialog() {
-    const dialogRef = this.dialog.open(EditMaterialsComponent, {
-      width: '600px',
-      data: { material: null },
-    });
-  
-    dialogRef.afterClosed().subscribe(async (result) => {
-      if (result) await this.loadMaterials();
-    });
-  }
-
-  openEditDialog(material: any) {
-    const dialogRef = this.dialog.open(EditMaterialsComponent, {
-      width: '600px',
-      data: { material },
-    });
-  
-    dialogRef.afterClosed().subscribe(async (result) => {
-      if (result) {
-        await this.loadMaterials();
-      }
-    });
-  }
-  
   async deleteMaterial(id: string) {
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+    const dialogRef = this.dialog.open(this.confirmDialog, {
       width: '400px',
     });
-  
+
     dialogRef.afterClosed().subscribe(async (confirmed) => {
       if (confirmed) {
         try {
