@@ -71,6 +71,10 @@ small {
   cursor: not-allowed;
 }
 
+.mat-dialog-container {
+  overflow: visible;
+}
+
 mat-dialog-title {
     display: block;
     font-size: 20px;
