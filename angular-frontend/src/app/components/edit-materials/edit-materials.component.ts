@@ -30,7 +30,8 @@ export class EditMaterialsComponent {
     private dialogRef: MatDialogRef<EditMaterialsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { material: any }
   ) {
-    this.isEditing = !!data.material;
+    this.isEditing = data.material !== null;
+        
     this.materialForm = this.fb.group({
       name_dutch: [data.material?.name_dutch || '', [Validators.required, Validators.maxLength(500)]],
       name_french: [data.material?.name_french || '', [Validators.required, Validators.maxLength(500)]],
