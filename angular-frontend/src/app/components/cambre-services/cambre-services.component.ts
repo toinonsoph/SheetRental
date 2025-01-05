@@ -10,6 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-cambre-services',
@@ -94,11 +95,19 @@ export class CambreServicesComponent implements OnInit {
   }
   
   async deleteMaterial(id: string) {
-    try {
-      await this.supabase.deleteMaterial(id);
-      await this.loadMaterials(); 
-    } catch (error) {
-      console.error('Error deleting material:', error);
-    }
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+    });
+  
+    dialogRef.afterClosed().subscribe(async (confirmed) => {
+      if (confirmed) {
+        try {
+          await this.supabase.deleteMaterial(id);
+          await this.loadMaterials();
+        } catch (error) {
+          console.error('Error deleting material:', error);
+        }
+      }
+    });
   }
 }
