@@ -241,11 +241,6 @@ button:hover {
   background-color: darkred !important;
 }
 
-.mat-tab-body-content {
-  visibility: visible !important;
-  opacity: 1 !important;
-  display: block !important;
-}
 
 @media (max-width: 768px) {
   .tabs-container {
