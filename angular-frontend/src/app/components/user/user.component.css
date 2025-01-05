@@ -224,7 +224,8 @@ button:hover {
 }
 
 .inactive-tab-label {
-  text-decoration: black; 
+  text-decoration: black !important; 
+  color: white !important;
 }
 
 .mdc-tab--active .inactive-tab-label {
