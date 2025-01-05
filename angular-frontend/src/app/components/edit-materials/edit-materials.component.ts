@@ -6,6 +6,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-edit-materials',
@@ -16,6 +17,7 @@ import { CommonModule } from '@angular/common';
     MatDialogModule,
     MatButtonModule,
     MatInputModule,
+    MatFormFieldModule 
   ],
   templateUrl: './edit-materials.component.html',
   styleUrls: ['./edit-materials.component.css']
