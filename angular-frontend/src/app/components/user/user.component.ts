@@ -17,6 +17,7 @@ import { AgenceCambreComponent } from '../agence-cambre/agence-cambre.component'
 })
 export class UserComponent {
   message: string | null = ''; 
+  selectedTabIndex: number = 0;
 
   clearMessage() {
     this.message = null;
@@ -27,4 +28,9 @@ export class UserComponent {
     sessionStorage.removeItem('authToken');
     window.location.href = '/login';
   }  
+
+  onTabChange(index: number) {
+    this.selectedTabIndex = index;
+    console.log(`Tab changed to index ${index}`);
+  }
 }
