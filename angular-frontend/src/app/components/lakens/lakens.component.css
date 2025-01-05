@@ -35,7 +35,7 @@
     background-color: darkred;
     color: white;
     font-weight: bold;
-    font-size: 2em !important;
+    font-size: 1em !important;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -44,14 +44,14 @@
   }
   
   .card-content .title {
-    font-size: 2em !important; 
+    font-size: 1em !important; 
     font-weight: bold;
     color: black;
     margin-bottom: 8px;
   }
   
   .card-content .info {
-    font-size: 1em !important;
+    font-size: 0.8em !important;
     color: #333;
     line-height: 1.4;
   }
