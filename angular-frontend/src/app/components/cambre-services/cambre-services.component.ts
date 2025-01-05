@@ -4,12 +4,14 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { SupabaseService } from '../../services/supabase.service';
+import { EditMaterialsComponent } from '../edit-materials/edit-materials.component';
 
 @Component({
   selector: 'app-cambre-services',
   templateUrl: './cambre-services.component.html',
-  styleUrls: ['./cambre-services.component.css'],
+  styleUrls: ['./cambre-services.component.css']
 })
+
 export class CambreServicesComponent implements OnInit {
   @Input() selectedTab!: string;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -52,6 +54,32 @@ export class CambreServicesComponent implements OnInit {
     } finally {
       this.isLoading = false;
     }
+  }
+
+  openAddDialog() {
+    const dialogRef = this.dialog.open(EditMaterialsComponent, {
+      width: '600px',
+      data: { material: null }, 
+    });
+  
+    dialogRef.afterClosed().subscribe(async (result) => {
+      if (result) {
+        await this.loadMaterials();
+      }
+    });
+  }
+
+  openEditDialog(material: any) {
+    const dialogRef = this.dialog.open(EditMaterialsComponent, {
+      width: '600px',
+      data: { material },
+    });
+  
+    dialogRef.afterClosed().subscribe(async (result) => {
+      if (result) {
+        await this.loadMaterials();
+      }
+    });
   }
 
   async deleteMaterial(id: string) {
