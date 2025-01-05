@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatTabsModule } from '@angular/material/tabs';
-import { RouterModule } from '@angular/router';
+import { CambreServicesComponent } from '../cambre-services/cambre-services.component';
+import { AgenceCambreComponent } from '../agence-cambre/agence-cambre.component';
 
 @Component({
   selector: 'app-user',
@@ -10,25 +11,17 @@ import { RouterModule } from '@angular/router';
   imports: 
   [
     MatTabsModule,
-    RouterModule
+    CambreServicesComponent,
+    AgenceCambreComponent
   ],
   standalone: true
 })
 export class UserComponent {
-  message: string | null = '';
-  links = [
-    { label: 'Cambre Services', path: '/cambre-services' },
-    { label: 'Agence Cambre', path: '/agence-cambre' },
-  ];
-  activeLink = this.links[0].label;
+  message: string | null = ''; 
 
   constructor(
     private http: HttpClient
   ) {}
-
-  setActiveLink(link: string) {
-    this.activeLink = link;
-  }
 
   clearMessage() {
     this.message = null;
