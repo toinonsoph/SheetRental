@@ -23,7 +23,6 @@ import { CommonModule } from '@angular/common';
 export class EditMaterialsComponent {
   materialForm: FormGroup;
   isEditing: boolean;
-  initialized = false;
 
   constructor(
     private fb: FormBuilder,
@@ -49,7 +48,6 @@ export class EditMaterialsComponent {
 
     console.log('Form values:', this.materialForm.value);
     
-    this.initialized = true;
     this.cdr.detectChanges();
   }
 
