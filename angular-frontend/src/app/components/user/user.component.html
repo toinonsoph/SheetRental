@@ -1,9 +1,27 @@
 <button (click)="logout()" class="logout-btn">Logout</button>
 
-<div>
-  <app-cambre-services></app-cambre-services>
-  <app-agence-cambre></app-agence-cambre>
+<div class="tabs">
+  <!-- Tab Headers -->
+  <div class="tab-headers">
+    <button
+      *ngFor="let tab of tabs; let i = index"
+      (click)="selectTab(i)"
+      [class.active]="activeTab === i"
+    >
+      {{ tab.label }}
+    </button>
+  </div>
+
+  <!-- Tab Content -->
+  <div class="tab-content">
+    <div *ngFor="let tab of tabs; let i = index" [hidden]="activeTab !== i">
+      <ng-container *ngIf="activeTab === i">
+        <ng-container *ngComponentOutlet="tab.component"></ng-container>
+      </ng-container>
+    </div>
+  </div>
 </div>
+
 
 <div *ngIf="message && message.trim()" class="alert alert-warning">
   {{ message }}
