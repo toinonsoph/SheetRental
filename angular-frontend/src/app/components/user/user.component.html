@@ -1,18 +1,18 @@
 <button (click)="logout()" class="logout-btn">Logout</button>
 
 <div class="tabs-container">
-  <mat-tab-group class="user-component-tabs">
+  <mat-tab-group class="user-component-tabs" (selectedTabChange)="onTabChange($event)">
     <!-- Cambre Services Tab -->
     <mat-tab label="Cambre Services" class="inactive-tab-label">
       <ng-template matTabContent>
-        <app-cambre-services></app-cambre-services>
+        <app-cambre-services *ngIf="showCambreServices"></app-cambre-services>
       </ng-template>
     </mat-tab>
 
     <!-- Agence Cambre Tab -->
     <mat-tab label="Agence Cambre" class="inactive-tab-label">
       <ng-template matTabContent>
-        <app-agence-cambre></app-agence-cambre>
+        <app-agence-cambre *ngIf="showAgenceCambre"></app-agence-cambre>
       </ng-template>
     </mat-tab>
   </mat-tab-group>
