@@ -50,9 +50,15 @@ export class EditMaterialsComponent {
 
   async submitForm() {
     if (this.materialForm.invalid) return;
-
+  
     const material = this.materialForm.value;
     try {
+      const user = this.supabase.auth.getUser(); 
+      if (!user) {
+        console.error('User is not authenticated');
+        return;
+      }
+  
       if (this.isEditing) {
         await this.supabase.updateMaterial(this.data.material.id, material);
       } else {

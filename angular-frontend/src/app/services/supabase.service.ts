@@ -21,6 +21,10 @@ export class SupabaseService {
     return this.supabase;
   }
 
+  get auth() {
+    return this.supabase.auth;
+  }
+
   // Material table methods
   async getMaterials() {
     const { data, error } = await this.supabase
@@ -33,42 +37,62 @@ export class SupabaseService {
 
   async addMaterial(material: any) {
     const timestamp = new Date().toISOString();
-    const { data, error } = await this.supabase.from('material').insert([
+    
+    const { data: user, error } = await this.supabase.auth.getUser();
+    if (error || !user) {
+      throw new Error('User is not authenticated');
+    }  
+    const { data, error: insertError } = await this.supabase.from('material').insert([
       {
-        ...material, 
+        ...material,
+        user_id: user.user.id, 
         createdon: timestamp,
         lastupdatedon: timestamp,
       },
     ]);
-    if (error) throw error;
+  
+    if (insertError) throw insertError;
     return data;
   }
 
   async updateMaterial(id: string, updates: any) {
     const timestamp = new Date().toISOString();
-    const { data, error } = await this.supabase
+  
+    const { data: user, error } = await this.supabase.auth.getUser();
+    if (error || !user) {
+      throw new Error('User is not authenticated');
+    }
+    const { data, error: updateError } = await this.supabase
       .from('material')
       .update({
         ...updates,
         lastupdatedon: timestamp,
       })
-      .eq('id', id); 
-    if (error) throw error;
+      .eq('id', id)
+      .eq('user_id', user.user.id);
+  
+    if (updateError) throw updateError;
     return data;
   }
 
   async deleteMaterial(id: string) {
-    const { data, error } = await this.supabase
+    const { data: user, error } = await this.supabase.auth.getUser();
+    if (error || !user) {
+      throw new Error('User is not authenticated');
+    }
+
+    const { data, error: deleteError } = await this.supabase
       .from('material')
       .update({
         deleted: true,
-        lastupdatedon: new Date().toISOString()
+        lastupdatedon: new Date().toISOString(),
       })
-      .eq('id', id);
+      .eq('id', id)
+      .eq('user_id', user.user.id); 
   
-    if (error) throw error;
+    if (deleteError) throw deleteError;
     return data;
-  }  
+  }
 
   // Equipments table methods
   async fetchEquipments() {
