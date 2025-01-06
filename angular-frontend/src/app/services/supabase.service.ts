@@ -440,5 +440,69 @@ export class SupabaseService {
       console.error('Error deleting property:', error);
       throw error;
     }
-  }   
+  }
+  
+  async fetchPropertyTypes(discriminator: string): Promise<any[]> {
+    return this.client
+      .from('property_types')
+      .select('*')
+      .eq('discriminator', discriminator)
+      .then(({ data }) => data);
+  }
+  
+  async fetchEquipmentForProperty(propertyId: string): Promise<any[]> {
+    return this.client
+      .from('equipment')
+      .select('*')
+      .eq('propertyId', propertyId)
+      .then(({ data }) => data);
+  }
+  
+  async uploadImage(file: File): Promise<any> {
+    const fileName = `${Date.now()}_${file.name}`;
+    const { data, error } = await this.client.storage
+      .from(environment.supabaseStorage.bucket)
+      .upload(fileName, file);
+  
+    if (error) {
+      throw new Error(`Error uploading image: ${error.message}`);
+    }
+
+    const publicUrlResponse = this.client.storage
+      .from(environment.supabaseStorage.bucket)
+      .getPublicUrl(fileName);
+  
+    if (!publicUrlResponse.data) {
+      throw new Error('Failed to generate public URL');
+    }
+  
+    return { publicUrl: publicUrlResponse.data.publicUrl };
+  }  
+  
+  async saveImageToBucket(imagePath: string): Promise<any> {
+    const publicUrlResponse = this.client.storage
+      .from(environment.supabaseStorage.bucket)
+      .getPublicUrl(imagePath);
+  
+    if (!publicUrlResponse.data) {
+      throw new Error('Failed to generate public URL');
+    }
+
+    return { publicUrl: publicUrlResponse.data.publicUrl };
+  }
+
+  async deleteImageFromBucket(fileName: string): Promise<void> {
+    const { error } = await this.client.storage
+      .from(environment.supabaseStorage.bucket)
+      .remove([fileName]);
+  
+    if (error) {
+      throw new Error(`Error deleting image: ${error.message}`);
+    }
+  }
+
+  extractFileNameFromUrl(url: string): string {
+    const parts = url.split('/');
+    return parts[parts.length - 1]; 
+  }
 }

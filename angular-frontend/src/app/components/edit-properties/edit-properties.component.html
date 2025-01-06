@@ -37,7 +37,6 @@
         <div class="equipment-icons">
           <div *ngFor="let icon of card.equipmentIcons" class="equipment-item">
             <img *ngIf="icon.url" [src]="icon.url" alt="{{ icon.name }}" />
-            <span>{{ icon.name }}</span>
           </div>
         </div>
         <br>
@@ -59,7 +58,16 @@
   <div class="popup-content">
     <h3>{{ isEditMode ? 'Edit Property' : 'Add New Property' }}</h3>
     <form (ngSubmit)="saveProperty()">
-      <div class="input-group">
+    <div class="input-group">
+        <label>House Image:</label>
+        <div *ngIf="currentProperty.image" class="image-preview-container">
+            <img [src]="currentProperty.image" alt="House Image" class="house-image-preview" />
+            <button type="button" (click)="removeImage()" class="remove-image-button">Remove Image</button>
+        </div>
+        <input type="file" (change)="onImageChange($event)" accept="image/*" />
+    </div>
+    <div class="input-group"></div>
+    <div class="input-group">
         <label>Name:</label>
         <input [(ngModel)]="currentProperty.name" name="name" required />
       </div>
