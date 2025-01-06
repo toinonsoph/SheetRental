@@ -102,6 +102,40 @@ export class SupabaseService {
     }
   }
 
+  // HousingEquipment table methods
+  async checkHousingEquipment(houseId: string, equipmentId: string): Promise<boolean> {
+    try {
+      const { data, error } = await this.supabase
+        .from('housingequipment')
+        .select('id')
+        .eq('housingid', houseId)
+        .eq('equipmentid', equipmentId)
+        .eq('deleted', false)
+        .single();
+  
+      if (error && error.code !== 'PGRST116') { 
+        throw error;
+      }
+  
+      return !!data; 
+    } catch (err) {
+      console.error('Error checking housing-equipment association:', err);
+      return false;
+    }
+  }
+
+  async addHousingEquipment(association: { houseId: string; equipmentId: string }): Promise<void> {
+    try {
+      const { error } = await this.supabase
+        .from('housingequipment')
+        .insert([association]);
+  
+      if (error) throw error;
+    } catch (err) {
+      console.error('Error adding housing-equipment association:', err);
+    }
+  }
+
   // Houses table methods
   async fetchHouses() {
     try {
@@ -278,7 +312,7 @@ export class SupabaseService {
     }
   }
 
-  // Address and Property methods
+  // Address methods
   async addAddress(address: any) {
     const timestamp = new Date().toISOString();
     const id = crypto.randomUUID();
@@ -296,10 +330,11 @@ export class SupabaseService {
     return data[0].id;
   }
 
-  async addProperty(property: any) {
+  // Housing table methods
+  async addProperty(property: any): Promise<{ id: string }> {
     const timestamp = new Date().toISOString();
     const id = crypto.randomUUID();
-
+  
     const { data, error } = await this.supabase.from('housing').insert([
       {
         id,
@@ -307,10 +342,15 @@ export class SupabaseService {
         createdon: timestamp,
         lastupdatedon: timestamp,
       },
-    ]);
-
+    ]).select('id');
+  
     if (error) throw error;
-    return data;
+  
+    if (!data || data.length === 0) {
+      throw new Error('Failed to add property. No ID returned.');
+    }
+  
+    return data[0]; 
   }
 
   async updateProperty(id: string, updates: any) {
@@ -328,16 +368,77 @@ export class SupabaseService {
     return data;
   }
 
-  async deleteProperty(id: string) {
-    const { data, error } = await this.supabase
-      .from('housing')
-      .update({
-        deleted: true,
-        lastupdatedon: new Date().toISOString(),
-      })
-      .eq('id', id);
-
-    if (error) throw error;
-    return data;
-  }
+  async deleteProperty(id: string): Promise<void> {
+    const supabase = this.supabase;
+  
+    try {
+      // Fetch the address ID linked to the property
+      const { data: property, error: propertyError } = await supabase
+        .from('housing')
+        .select('addressid')
+        .eq('id', id)
+        .single();
+  
+      if (propertyError || !property) {
+        throw new Error('Property not found or error fetching the property');
+      }
+  
+      const addressId = property.addressid;
+  
+      // Soft delete all related housing equipments
+      const { error: equipmentError } = await supabase
+        .from('housingequipment')
+        .update({
+          deleted: true,
+          lastupdatedon: new Date().toISOString(),
+        })
+        .eq('housingid', id); // Ensure all entries for this `housingid` are updated
+  
+      if (equipmentError) {
+        throw new Error(`Error soft deleting housing equipment: ${equipmentError.message}`);
+      }
+  
+      // Soft delete the property itself
+      const { error: deleteHousingError } = await supabase
+        .from('housing')
+        .update({
+          deleted: true,
+          lastupdatedon: new Date().toISOString(),
+        })
+        .eq('id', id);
+  
+      if (deleteHousingError) {
+        throw new Error(`Error soft deleting the property: ${deleteHousingError.message}`);
+      }
+  
+      // Check if the address is used by any other active (non-deleted) property
+      const { data: addressUsages, error: addressError } = await supabase
+        .from('housing')
+        .select('id')
+        .eq('addressid', addressId)
+        .eq('deleted', false);
+  
+      if (addressError) {
+        throw new Error(`Error checking address usage: ${addressError.message}`);
+      }
+  
+      // If no other property uses this address, soft delete the address
+      if (addressUsages.length === 0) {
+        const { error: deleteAddressError } = await supabase
+          .from('address')
+          .update({
+            deleted: true,
+            lastupdatedon: new Date().toISOString(),
+          })
+          .eq('id', addressId);
+  
+        if (deleteAddressError) {
+          throw new Error(`Error soft deleting the address: ${deleteAddressError.message}`);
+        }
+      }
+    } catch (error) {
+      console.error('Error deleting property:', error);
+      throw error;
+    }
+  }   
 }

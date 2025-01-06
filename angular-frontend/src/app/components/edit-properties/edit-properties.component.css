@@ -188,8 +188,8 @@ h4 {
   background-color: darkred;
   color: white;
   border: none;
-  padding: 8px 16px;
-  font-size: 14px;
+  padding: 12px 24px; /* Increased padding */
+  font-size: 16px; /* Larger font size */
   font-weight: bold;
   cursor: pointer;
   border-radius: 4px;
@@ -228,15 +228,23 @@ h4 {
 }
 
 .popup-content label {
-  display: block;
-  margin-top: 10px;
+  display: inline-block;
+  width: 120px; /* Fixed width for alignment */
+  margin-right: 10px;
+  vertical-align: middle;
 }
 
 .popup-content input {
-  width: 100%;
+  border: 1px solid black; /* Black border */
   padding: 8px;
-  margin-top: 5px;
-  margin-bottom: 15px;
+  margin-bottom: 15px; /* Spacing between inputs */
+  width: calc(100% - 140px); /* Adjusted for label width */
+}
+
+.popup-content .input-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
 .popup-content button {
@@ -251,6 +259,26 @@ h4 {
 
 .popup-content button:hover {
   background-color: #900;
+}
+
+.equipment-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.equipment-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.equipment-dropdown {
+  margin-top: 10px;
 }
 
 /* Responsive Design */

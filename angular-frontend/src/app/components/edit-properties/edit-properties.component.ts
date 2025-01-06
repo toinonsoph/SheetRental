@@ -73,38 +73,55 @@ export class EditPropertiesComponent implements OnInit {
   async saveProperty(): Promise<void> {
     try {
       if (this.isEditMode) {
+        // Update property
         await this.supabaseService.updateProperty(
           this.currentProperty.id,
           this.currentProperty
         );
-        const index = this.cards.findIndex(
-          (c) => c.id === this.currentProperty.id
-        );
+  
+        const index = this.cards.findIndex((c) => c.id === this.currentProperty.id);
         if (index !== -1) {
           this.cards[index] = { ...this.currentProperty };
         }
       } else {
+        // Create new property
         const addressId = await this.supabaseService.addAddress({
-          street: this.currentProperty.street,
-          city: this.currentProperty.city,
-          zipcode: this.currentProperty.zipcode,
-          number: this.currentProperty.number,
-          postbox: this.currentProperty.postbox,
+          street: this.currentProperty.address.street,
+          city: this.currentProperty.address.city,
+          zipcode: this.currentProperty.address.zipcode,
+          number: this.currentProperty.address.number,
+          postbox: this.currentProperty.address.postbox,
         });
-
+  
         const newProperty = await this.supabaseService.addProperty({
           ...this.currentProperty,
           addressId: addressId,
         });
-        
+  
         if (!newProperty) {
           console.error('Failed to create a new property.');
           return;
         }
-        
-        this.cards.push(newProperty);   
+  
+        // Save equipment associations
+        if (this.currentProperty.equipment) {
+          for (const equipment of this.currentProperty.equipment) {
+            const exists = await this.supabaseService.checkHousingEquipment(
+              newProperty.id,
+              equipment.id
+            );
+  
+            if (!exists) {
+              await this.supabaseService.addHousingEquipment({
+                houseId: newProperty.id,
+                equipmentId: equipment.id,
+              });
+            }
+          }
+        }  
+        this.cards.push(newProperty);
       }
-
+  
       this.closePopup();
       this.setFilter(this.selectedFilter);
     } catch (error) {
@@ -113,6 +130,10 @@ export class EditPropertiesComponent implements OnInit {
   }
 
   async deleteCard(id: string): Promise<void> {
+    const isConfirmed = confirm('Are you sure you want to delete this property?');
+    if (!isConfirmed) {
+      return; 
+    }  
     try {
       await this.supabaseService.deleteProperty(id);
       this.cards = this.cards.filter((card) => card.id !== id);
@@ -180,5 +201,5 @@ export class EditPropertiesComponent implements OnInit {
       const baseUrl = environment.supabaseUrl;
       const encodedFileName = encodeURIComponent(fileName);
       return `${baseUrl}/storage/v1/object/public/${bucket}/${encodedFileName}`;
-    }
+    }    
 }

@@ -35,15 +35,13 @@
         </div>
         <br>
         <div class="equipment-icons">
-          <div *ngFor="let icon of card.equipmentIcons">
-            <img [ngStyle]="equipmentIconsStyle" *ngIf="icon.url" [src]="icon.url" alt="{{ icon.name }}" />
-            <span *ngIf="!icon.url">{{ icon.name }}</span>
+          <div *ngFor="let icon of card.equipmentIcons" class="equipment-item">
+            <img *ngIf="icon.url" [src]="icon.url" alt="{{ icon.name }}" />
+            <span>{{ icon.name }}</span>
           </div>
         </div>
         <br>
-        <p class="card-price">
-          Prijs vanaf/Prix à partir de/Preis ab: €{{ card.price }}
-        </p>
+        <p class="card-price">Prijs vanaf/Prix à partir de/Preis ab: €{{ card.price }}</p>
         <br>
         <p class="card-url">
             {{ card.url }}
@@ -61,18 +59,64 @@
   <div class="popup-content">
     <h3>{{ isEditMode ? 'Edit Property' : 'Add New Property' }}</h3>
     <form (ngSubmit)="saveProperty()">
-      <label>Name:</label>
-      <input [(ngModel)]="currentProperty.name" name="name" required />
-      <label>Type:</label>
-      <input [(ngModel)]="currentProperty.propertyType" name="type" required />
-      <label>Address:</label>
-      <input [(ngModel)]="currentProperty.address" name="address" required />
-      <label>Price:</label>
-      <input type="number" [(ngModel)]="currentProperty.price" name="price" />
-      <label>Total Persons:</label>
-      <input type="number" [(ngModel)]="currentProperty.totalpersons" name="totalpersons" />
-      <label>Total Rooms:</label>
-      <input type="number" [(ngModel)]="currentProperty.totalrooms" name="totalrooms" />
+      <div class="input-group">
+        <label>Name:</label>
+        <input [(ngModel)]="currentProperty.name" name="name" required />
+      </div>
+      <div class="input-group">
+        <label>Type:</label>
+        <input [(ngModel)]="currentProperty.propertyType" name="type" required />
+      </div>
+      <div class="input-group">
+        <label>Street:</label>
+        <input [(ngModel)]="currentProperty.address.street" name="street" required />
+      </div>
+      <div class="input-group">
+        <label>Number:</label>
+        <input [(ngModel)]="currentProperty.address.number" name="number" required />
+      </div>
+      <div class="input-group">
+        <label>Postbox:</label>
+        <input [(ngModel)]="currentProperty.address.postbox" name="postbox" />
+      </div>
+      <div class="input-group">
+        <label>Zipcode:</label>
+        <input type="number" [(ngModel)]="currentProperty.address.zipcode" name="zipcode" value="8420" readonly />
+      </div>
+      <div class="input-group">
+        <label>City:</label>
+        <input [(ngModel)]="currentProperty.address.city" name="city" value="De Haan" readonly />
+      </div>
+      <div class="input-group">
+        <label>Country:</label>
+        <input [(ngModel)]="currentProperty.address.country" name="country" value="Belgium" readonly />
+      </div>
+      <div class="input-group">
+        <label>Price:</label>
+        <input type="number" [(ngModel)]="currentProperty.price" name="price" />
+      </div>
+      <div class="input-group">
+        <label>Total Persons:</label>
+        <input type="number" [(ngModel)]="currentProperty.totalpersons" name="totalpersons" />
+      </div>
+      <div class="input-group">
+        <label>Total Rooms:</label>
+        <input type="number" [(ngModel)]="currentProperty.totalrooms" name="totalrooms" />
+      </div>
+
+      <!-- Equipment Dropdown -->
+      <div class="input-group">
+        <label>Equipment:</label>
+        <select class="equipment-dropdown" (change)="addEquipment($event.target.value)">
+          <option *ngFor="let equipment of equipmentList" [value]="equipment.id">{{ equipment.name }}</option>
+        </select>
+      </div>
+      <div class="equipment-container">
+        <div *ngFor="let equipment of currentProperty.equipment" class="equipment-item">
+          <span>{{ equipment.name }}</span>
+        </div>
+      </div>
+
       <button type="submit">Save</button>
       <button type="button" (click)="closePopup()">Cancel</button>
     </form>
