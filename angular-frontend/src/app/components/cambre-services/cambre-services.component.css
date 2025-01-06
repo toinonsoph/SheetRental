@@ -5,6 +5,19 @@ body {
   background-color: #f4f4f4;
 }
 
+html, body {
+  height: 100%;
+  margin: 0; 
+}
+
+.center-content {
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  height: 100vh;
+  text-align: center; 
+}
+
 .center-container {
   display: flex;
   flex-direction: column;

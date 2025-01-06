@@ -2,11 +2,16 @@
 
 <div class="button-group">
   <button
-    *ngFor="let link of navLinks; let i = index"
-    [routerLink]="link.link"
-    [class.active]="i === activeLinkIndex"
+    (click)="navigateTo('/user/cambre-services')"
+    [class.active]="activeLinkIndex === 0"
     class="nav-button">
-    {{ link.label }}
+    Cambre Services
+  </button>
+  <button
+    (click)="navigateTo('/user/agence-cambre')"
+    [class.active]="activeLinkIndex === 1"
+    class="nav-button">
+    Agence Cambre
   </button>
 </div>
 

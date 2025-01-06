@@ -278,6 +278,7 @@ button:hover {
 .button-group {
   display: flex;
   gap: 10px;
+  margin-bottom: 20px;
 }
 
 .nav-button {
@@ -292,4 +293,9 @@ button:hover {
   background-color: darkred;
   color: white;
   border-color: darkred;
+}
+
+.nav-button:hover {
+  background-color: darkred;
+  color: white;
 }

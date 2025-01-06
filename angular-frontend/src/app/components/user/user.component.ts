@@ -14,31 +14,36 @@ import { Router, RouterModule } from '@angular/router';
   standalone: true
 })
 export class UserComponent {
-  message: string | null = ''; 
+  message: string | null = '';
 
-  navLinks: any[];
-  activeLinkIndex = -1; 
-  constructor(private router: Router) {
-    this.navLinks = [
-      { label: 'Cambre Services', link: '/user/cambre-services', index: 0 },
-      { label: 'Agence Cambre', link: '/user/agence-cambre', index: 1 }
-    ];
-  }
+  activeLinkIndex = -1;
+
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.router.events.subscribe(() => {
-      this.activeLinkIndex = this.navLinks.findIndex(tab => tab.link === this.router.url);
-      console.log('Active Link:', this.activeLinkIndex, 'URL:', this.router.url);
+      const url = this.router.url;
+      if (url === '/user/cambre-services') {
+        this.activeLinkIndex = 0;
+      } else if (url === '/user/agence-cambre') {
+        this.activeLinkIndex = 1;
+      } else {
+        this.activeLinkIndex = -1; 
+      }
     });
   }
-  
-  clearMessage() {
+
+  navigateTo(route: string): void {
+    this.router.navigate([route]);
+  }
+
+  clearMessage(): void {
     this.message = null;
   }
 
-  logout() {
+  logout(): void {
     localStorage.removeItem('authToken');
     sessionStorage.removeItem('authToken');
     window.location.href = 'login';
-  }  
+  }
 }
