@@ -114,7 +114,7 @@ export class SupabaseService {
         return [];
       }
   
-      // Fetch all image files from the bucket
+      // Fetch all image files from the storage bucket
       const { data: imageFiles, error: storageError } = await this.supabase.storage
         .from(environment.supabaseStorage.bucket)
         .list('');
@@ -122,6 +122,16 @@ export class SupabaseService {
       if (storageError) {
         console.error('Error fetching images from storage bucket:', storageError);
         return houses.map((house) => ({ ...house, imageUrl: null }));
+      }
+  
+      // Fetch all icons from the storage bucket
+      const { data: iconFiles, error: iconError } = await this.supabase.storage
+        .from('icons') // Replace 'icons' with your actual bucket name if needed
+        .list('');
+  
+      if (iconError) {
+        console.error('Error fetching icons from storage bucket:', iconError);
+        return houses.map((house) => ({ ...house, equipmentIcons: [] }));
       }
   
       // Fetch all equipment data
@@ -196,14 +206,15 @@ export class SupabaseService {
                 .from(environment.supabaseStorage.bucket)
                 .getPublicUrl(matchingImage.name).data.publicUrl
             : null,
-          equipmentIcons: equipmentIcons.sort((a, b) => a.name.localeCompare(b.name)), 
+          equipmentIcons: equipmentIcons.sort((a, b) => a.name.localeCompare(b.name)), // Sort icons alphabetically
         };
       });
     } catch (error) {
       console.error('Error fetching houses:', error);
       return [];
     }
-  }  
+  }
+  
 
   // Addresses table methods
   async fetchAddresses() {
