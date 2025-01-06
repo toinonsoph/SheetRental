@@ -9,9 +9,17 @@ import { AgenceCambreComponent } from './components/agence-cambre/agence-cambre.
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent }, 
-  { path: 'user', component: UserComponent, canActivate: [AuthGuard] }, 
-  { path: 'cambre-services', component: CambreServicesComponent },
-  { path: 'agence-cambre', component: AgenceCambreComponent },
+  
+  { 
+    path: 'user', 
+    component: UserComponent, 
+    canActivate: [AuthGuard],
+    children: [
+      { path: 'cambre-services', component: CambreServicesComponent },
+      { path: 'agence-cambre', component: AgenceCambreComponent },
+      { path: '', redirectTo: 'cambre-services', pathMatch: 'full' }
+    ]
+  },
 
   { path: 'rental', component: VerhuurComponent }, 
   { path: 'sheets', component: LakensComponent }, 

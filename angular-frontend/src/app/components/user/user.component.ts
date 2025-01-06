@@ -20,21 +20,15 @@ export class UserComponent {
   activeLinkIndex = -1; 
   constructor(private router: Router) {
     this.navLinks = [
-        {
-            label: 'Cambre Services',
-            link: '/cambre-services',
-            index: 0
-        }, {
-            label: 'Agence Cambre',
-            link: '/agence-cambre',
-            index: 1
-        }
+      { label: 'Cambre Services', link: '/user/cambre-services', index: 0 },
+      { label: 'Agence Cambre', link: '/user/agence-cambre', index: 1 }
     ];
   }
 
   ngOnInit(): void {
     this.router.events.subscribe(() => {
       this.activeLinkIndex = this.navLinks.findIndex(tab => tab.link === this.router.url);
+      console.log('Active Link:', this.activeLinkIndex, 'URL:', this.router.url);
     });
   }
   
