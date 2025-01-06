@@ -104,22 +104,52 @@ export class SupabaseService {
   // Houses table methods
   async fetchHouses() {
     try {
+      // Fetch housing data without relying on a column for image paths
       const { data: houses, error } = await this.supabase
         .from('housing')
-        .select('id, name, typebase: typeid (name), image_path, address_id');
-
+        .select('id, name, typebase: typeid (name), address_id');
+  
       if (error) {
         console.error('Error fetching houses:', error);
         return [];
       }
-
-      return houses.map((house) => ({
-        ...house,
-        propertyType: house.typebase || '', 
-        imageUrl: this.supabase.storage
-          .from(environment.supabaseStorage.bucket)
-          .getPublicUrl(house.image_path).data.publicUrl,
-      }));
+  
+      // Fetch all image files from the bucket
+      const { data: imageFiles, error: storageError } = await this.supabase.storage
+        .from('villas_and_appartements')
+        .list('');
+  
+      if (storageError) {
+        console.error('Error fetching images from storage bucket:', storageError);
+        return houses.map((house) => ({ ...house, imageUrl: null }));
+      }
+  
+      const normalizeString = (str: string): string =>
+        str
+          .normalize('NFD') 
+          .replace(/[\u0300-\u036f]/g, '') 
+          .replace(/\s+/g, '_') 
+          .toLowerCase();
+  
+      // Map houses with their corresponding images
+      return houses.map((house) => {
+        const normalizedHouseName = normalizeString(house.name);
+  
+        // Find the matching image file for the house
+        const matchingImage = imageFiles?.find((file) =>
+          normalizeString(file.name).includes(normalizedHouseName)
+        );
+  
+        return {
+          ...house,
+          propertyType: house.typebase|| '',
+          imageUrl: matchingImage
+            ? this.supabase.storage
+                .from(environment.supabaseStorage.bucket)
+                .getPublicUrl(matchingImage.name).data.publicUrl
+            : null, 
+        };
+      });
     } catch (error) {
       console.error('Error fetching houses:', error);
       return [];
