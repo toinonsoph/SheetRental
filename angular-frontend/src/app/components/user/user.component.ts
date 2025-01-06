@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { Router, RouterModule } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-user',
@@ -18,7 +19,7 @@ export class UserComponent {
 
   activeLinkIndex = -1;
 
-  constructor(private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.router.events.subscribe(() => {
@@ -42,8 +43,9 @@ export class UserComponent {
   }
 
   logout(): void {
-    localStorage.removeItem('authToken');
-    sessionStorage.removeItem('authToken');
-    window.location.href = 'login';
+    this.authService.logout();
+    this.router.navigate(['/login'], {
+      state: { message: 'You have been logged out.' },
+    });
   }
 }

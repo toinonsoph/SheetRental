@@ -35,7 +35,7 @@ export class AuthService {
         return false;
       }
 
-      localStorage.setItem('supabaseToken', username);
+      localStorage.setItem('supabaseToken', username); 
       return true;
     } catch (err) {
       console.error('Unexpected error during login:', err);
@@ -45,9 +45,19 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem('supabaseToken');
+    sessionStorage.clear(); 
   }
 
-  isAuthenticated(): boolean {
-    return !!localStorage.getItem('supabaseToken');
+  async isAuthenticated(): Promise<boolean> {
+    const token = localStorage.getItem('supabaseToken');
+    if (!token) return false;
+
+    const { data: user, error } = await this.supabase
+      .from('users')
+      .select('username')
+      .eq('username', token)
+      .single();
+
+    return !error && !!user;
   }
 }
