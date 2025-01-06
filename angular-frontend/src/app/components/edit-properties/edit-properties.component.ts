@@ -25,21 +25,27 @@ export class EditPropertiesComponent implements OnInit {
   async loadCards(): Promise<void> {
     try {
       const data = await this.supabaseService.fetchHousesWithAddresses();
-      this.cards = data;
+      console.log('Fetched Data:', data); // Debug
+      this.cards = data || []; // Ensure cards is never null
       this.filteredCards = [...this.cards];
     } catch (error) {
       console.error('Error loading cards:', error);
+      console.log(error);
     }
   }
 
   setFilter(filter: string): void {
-    this.selectedFilter = filter;
+    console.log('Selected Filter:', filter); 
+    console.log('Cards Before Filter:', this.cards); 
+  
     this.filteredCards =
-      this.selectedFilter === 'all'
+      filter === 'all'
         ? this.cards
         : this.cards.filter((card) =>
             card.propertyType.toLowerCase() === filter.toLowerCase()
           );
+  
+    console.log('Filtered Cards:', this.filteredCards); 
   }
 
   openEditPopup(card: any): void {

@@ -265,17 +265,20 @@ export class SupabaseService {
   async fetchHousesWithAddresses() {
     try {
       const houses = await this.fetchHouses();
+      console.log('Houses:', houses); // Debug
       const addresses = await this.fetchAddresses();
-
-      // Combine houses with their addresses
+      console.log('Addresses:', addresses); // Debug
+  
       this.houses = houses.map((house) => ({
         ...house,
         address: addresses.find((address) => address.id === house.address_id),
       }));
-
+  
+      console.log('Mapped Houses with Addresses:', this.houses); // Debug
       return this.houses;
     } catch (error) {
       console.error('Error fetching houses with addresses:', error);
+      console.log(error);
       return [];
     }
   }
