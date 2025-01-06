@@ -1,11 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { SupabaseService } from '../../services/supabase.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-edit-properties',
   templateUrl: './edit-properties.component.html',
   styleUrls: ['./edit-properties.component.css'],
   standalone: true,
+  imports: 
+  [
+    CommonModule
+  ]
 })
 export class EditPropertiesComponent implements OnInit {
   isPopupOpen: boolean = false;
@@ -19,18 +24,18 @@ export class EditPropertiesComponent implements OnInit {
   constructor(private supabaseService: SupabaseService) {}
 
   async ngOnInit(): Promise<void> {
+    console.log('ngOnInit called'); 
     await this.loadCards();
+    console.log('Cards Loaded:', this.cards); 
   }
 
   async loadCards(): Promise<void> {
     try {
-      const data = await this.supabaseService.fetchHousesWithAddresses();
-      console.log('Fetched Data:', data); // Debug
-      this.cards = data || []; // Ensure cards is never null
+      const data = await this.supabaseService.fetchHousesWithAddresses();      
+      this.cards = data || []; 
       this.filteredCards = [...this.cards];
     } catch (error) {
       console.error('Error loading cards:', error);
-      console.log(error);
     }
   }
 
@@ -43,8 +48,7 @@ export class EditPropertiesComponent implements OnInit {
         ? this.cards
         : this.cards.filter((card) =>
             card.propertyType.toLowerCase() === filter.toLowerCase()
-          );
-  
+          );  
     console.log('Filtered Cards:', this.filteredCards); 
   }
 
