@@ -14,8 +14,9 @@
 </div>
   
 <!-- Add Material Button -->
-<button class="openDialog" (click)="openAddDialog()">Add Material</button>
-  
+<button class="actions-container" (click)="openAddDialog()">Add Material</button>
+
+<br>
 <!-- Table for Materials -->
 <table mat-table [dataSource]="materials" class="mat-elevation-z8">
   <ng-container matColumnDef="name_dutch">
