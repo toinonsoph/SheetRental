@@ -21,9 +21,9 @@ export class AgenceCambreComponent implements OnInit {
     ngOnInit(): void {
       this.router.events.subscribe(() => {
         const url = this.router.url;
-        if (url === './properties') {
+        if (url === '/properties') {
           this.activeLinkIndex = 0;
-        } else if (url === './equipments') {
+        } else if (url === '/equipments') {
           this.activeLinkIndex = 1;
         } else {
           this.activeLinkIndex = -1; 
@@ -32,6 +32,6 @@ export class AgenceCambreComponent implements OnInit {
     }
   
     navigateTo(route: string): void {
-      this.router.navigate([route]);
+      this.router.navigate([route], { relativeTo: this.router.routerState.root.firstChild!.firstChild });
     }
 }

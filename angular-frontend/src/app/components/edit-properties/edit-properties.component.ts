@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SupabaseService } from '../../services/supabase.service';
 import { CommonModule } from '@angular/common';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-edit-properties',
@@ -20,13 +21,13 @@ export class EditPropertiesComponent implements OnInit {
   filteredCards: any[] = [];
   selectedFilter: string = 'all';
   selectedImage: string | null = null;
+  peopleIconUrl: string | null = null; 
+  roomIconUrl: string | null = null; 
 
   constructor(private supabaseService: SupabaseService) {}
 
   async ngOnInit(): Promise<void> {
-    console.log('ngOnInit called'); 
     await this.loadCards();
-    console.log('Cards Loaded:', this.cards); 
   }
 
   async loadCards(): Promise<void> {
@@ -128,4 +129,56 @@ export class EditPropertiesComponent implements OnInit {
   closeImageModal(): void {
     this.selectedImage = null;
   }
+
+  async fetchPeopleIcon(): Promise<void> {
+      try {
+        const { data, error } = await this.supabaseService.client
+          .storage
+          .from(environment.supabaseStorage.iconBucket)
+          .list('', { search: 'people.png' });
+  
+        if (error) {
+          console.error('Error fetching People icon:', error);
+          return;
+        }
+  
+        const matchingIcon = data?.find((file) => file.name === 'people.png');
+        if (matchingIcon) {
+          this.peopleIconUrl = this.getImageUrl(environment.supabaseStorage.iconBucket, matchingIcon.name);
+        } else {
+          console.warn('People icon not found.');
+        }
+      } catch (err) {
+        console.error('Unexpected error fetching People icon:', err);
+      }
+    }
+  
+    async fetchRoomIcon(): Promise<void> {
+      try {
+        const { data, error } = await this.supabaseService.client
+          .storage
+          .from(environment.supabaseStorage.iconBucket)
+          .list('', { search: 'room.png' });
+  
+        if (error) {
+          console.error('Error fetching Room icon:', error);
+          return;
+        }
+  
+        const matchingIcon = data?.find((file) => file.name === 'room.png');
+        if (matchingIcon) {
+          this.roomIconUrl = this.getImageUrl(environment.supabaseStorage.iconBucket, matchingIcon.name);
+        } else {
+          console.warn('Room icon not found.');
+        }
+      } catch (err) {
+        console.error('Unexpected error fetching Room icon:', err);
+      }
+    }
+
+    getImageUrl(bucket: string, fileName: string): string {
+      const baseUrl = environment.supabaseUrl;
+      const encodedFileName = encodeURIComponent(fileName);
+      return `${baseUrl}/storage/v1/object/public/${bucket}/${encodedFileName}`;
+    }
 }

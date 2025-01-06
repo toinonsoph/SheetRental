@@ -1,8 +1,38 @@
 .center-content {
-  display: flex; 
-  justify-content: center; 
-  align-items: center; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 10vh;
-  text-align: center; 
+  text-align: center;
   background: #f4f4f4;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+  background: #fff;
+  margin: 0;
+}
+
+.nav-button {
+  flex: 1;
+  height: 100%;
+  font-size: 1.5rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.nav-button.active {
+  background-color: darkred;
+  color: white;
+}
+
+.nav-button:not(.active) {
+  background-color: white;
+  color: darkred;
+  border: 1px solid darkred;
 }

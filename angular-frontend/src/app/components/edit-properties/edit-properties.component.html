@@ -41,8 +41,12 @@
           </div>
         </div>
         <br>
-        <p class="card-price" *ngIf="card.price !== null">
+        <p class="card-price">
           Prijs vanaf/Prix à partir de/Preis ab: €{{ card.price }}
+        </p>
+        <br>
+        <p class="card-url">
+            {{ card.url }}
         </p>
         <br>
         <button class="edit-button" (click)="openEditPopup(card)">Edit</button>
