@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { environment } from '../../environments/environment';
+import { Housing } from '../interfaces/housing.module';
 
 @Injectable({
   providedIn: 'root',
@@ -104,48 +105,45 @@ export class SupabaseService {
   // Houses table methods
   async fetchHouses() {
     try {
-      // Fetch housing data
-      const { data: houses, error } = await this.supabase
-        .from('housing')
-        .select('id, name, totalpersons, typebase: typeid (name), price, totalrooms, addressid, url');
+      // Fetch housing data with nested relationships
+      const { data: houses, error: houseError } = await this.supabase
+          .from('housing')
+          .select(`
+            id,
+            name,
+            totalpersons,
+            totalrooms,
+            price,
+            typebase: typeid (name),
+            address: addressid (street, number, postbox, zipcode, city),
+            url
+          `)
+          .eq('deleted', false) as { data: Housing[] | null, error: any };
   
-      if (error) {
-        console.error('Error fetching houses:', error);
+      if (houseError) {
+        console.error('Error fetching houses:', houseError.message, houseError.details, houseError.hint);
         return [];
       }
   
       // Fetch all image files from the storage bucket
-      const { data: imageFiles, error: storageError } = await this.supabase.storage
+      const { data: imageFiles, error: imageError } = await this.supabase
+        .storage
         .from(environment.supabaseStorage.bucket)
         .list('');
   
-      if (storageError) {
-        console.error('Error fetching images from storage bucket:', storageError);
-        return houses.map((house) => ({ ...house, imageUrl: null }));
-      }
-  
-      // Fetch all icons from the storage bucket
-      const { data: iconFiles, error: iconError } = await this.supabase.storage
-        .from('icons') // Replace 'icons' with your actual bucket name if needed
-        .list('');
-  
-      if (iconError) {
-        console.error('Error fetching icons from storage bucket:', iconError);
-        return houses.map((house) => ({ ...house, equipmentIcons: [] }));
+      if (imageError) {
+        console.error('Error fetching image files:', imageError.message);
       }
   
       // Fetch all equipment data
-      const { data: equipments, error: equipmentsError } = await this.supabase
+      const { data: equipments, error: equipmentError } = await this.supabase
         .from('equipment')
         .select('id, name');
   
-      if (equipmentsError) {
-        console.error('Error fetching equipments:', equipmentsError);
+      if (equipmentError) {
+        console.error('Error fetching equipment:', equipmentError.message);
         return houses.map((house) => ({ ...house, equipmentIcons: [] }));
       }
-  
-      // Create a mapping of equipment IDs to their names
-      const equipmentMap = new Map(equipments.map((equipment) => [equipment.id, equipment.name]));
   
       // Fetch house equipment data
       const { data: houseEquipments, error: houseEquipmentError } = await this.supabase
@@ -153,10 +151,21 @@ export class SupabaseService {
         .select('housingid, equipmentid');
   
       if (houseEquipmentError) {
-        console.error('Error fetching house equipments:', houseEquipmentError);
+        console.error('Error fetching house equipments:', houseEquipmentError.message);
         return houses.map((house) => ({ ...house, equipmentIcons: [] }));
       }
   
+      // Fetch all icons from the storage bucket
+      const { data: iconFiles, error: iconError } = await this.supabase
+        .storage
+        .from(environment.supabaseStorage.iconBucket)
+        .list('');
+  
+      if (iconError) {
+        console.error('Error fetching icons:', iconError.message);
+      }
+  
+      // Helper function: Normalize strings for matching
       const normalizeString = (str: string): string =>
         str
           .normalize('NFD')
@@ -164,11 +173,11 @@ export class SupabaseService {
           .replace(/\s+/g, '_')
           .toLowerCase();
   
-      // Map houses with their corresponding images and equipment icons
+      // Map houses with their corresponding images, address, and equipment
+      const defaultImageUrl = this.getDefaultImageUrl();
       return houses.map((house) => {
+        // Find matching image for the house
         const normalizedHouseName = normalizeString(house.name);
-  
-        // Find the matching image file for the house
         const matchingImage = imageFiles?.find((file) =>
           normalizeString(file.name).includes(normalizedHouseName)
         );
@@ -178,10 +187,13 @@ export class SupabaseService {
           .filter((equipment) => equipment.housingid === house.id)
           .map((equipment) => equipment.equipmentid);
   
-        // Map IDs to names using the equipmentMap
-        const equipmentNames = equipmentIds.map((id) => equipmentMap.get(id));
+        // Map equipment IDs to names
+        const equipmentNames = equipmentIds.map((id) => {
+          const equipment = equipments.find((eq) => eq.id === id);
+          return equipment ? equipment.name : null;
+        });
   
-        // Map equipment to their corresponding icons
+        // Map equipment names to icons
         const equipmentIcons = equipmentNames.map((equipmentName) => {
           const normalizedName = normalizeString(equipmentName || '');
           const matchingIcon = iconFiles?.find((file) =>
@@ -189,32 +201,46 @@ export class SupabaseService {
           );
   
           return {
-            name: equipmentName,
+            name: equipmentName || '',
             url: matchingIcon
-              ? this.supabase.storage
-                  .from('icons')
-                  .getPublicUrl(matchingIcon.name).data.publicUrl
-              : null, // Default to null if no matching icon is found
+              ? this.getImageUrl(environment.supabaseStorage.iconBucket, matchingIcon.name)
+              : null, 
           };
         });
   
         return {
-          ...house,
-          propertyType: house.typebase || '',
-          imageUrl: matchingImage
-            ? this.supabase.storage
-                .from(environment.supabaseStorage.bucket)
-                .getPublicUrl(matchingImage.name).data.publicUrl
-            : null,
-          equipmentIcons: equipmentIcons.sort((a, b) => a.name.localeCompare(b.name)), // Sort icons alphabetically
+          id: house.id,
+          name: house.name,
+          totalpersons: house.totalpersons,
+          totalrooms: house.totalrooms,
+          price: house.price,
+          propertyType: house.typebase?.name || '',
+          address: `${house.address.street} ${house.address.number}${
+            house.address.postbox ? `/${house.address.postbox}, ` : ', '
+          }${house.address.zipcode} ${house.address.city}`,
+          image: matchingImage
+            ? this.getImageUrl(environment.supabaseStorage.bucket, matchingImage.name)
+            : defaultImageUrl,
+          equipmentIcons: equipmentIcons.sort((a, b) => a.name.localeCompare(b.name)),
         };
       });
     } catch (error) {
-      console.error('Error fetching houses:', error);
+      console.error('Unexpected error fetching houses:', error);
       return [];
     }
+  } 
+
+  getImageUrl(bucket: string, fileName: string): string {
+    const baseUrl = environment.supabaseUrl;
+    const encodedFileName = encodeURIComponent(fileName);
+    return `${baseUrl}/storage/v1/object/public/${bucket}/${encodedFileName}`;
   }
   
+  getDefaultImageUrl(): string {
+    const baseUrl = environment.supabaseUrl;
+    const bucket = environment.supabaseStorage.bucket;
+    return `${baseUrl}/storage/v1/object/public/${bucket}/default.png`;
+  }  
 
   // Addresses table methods
   async fetchAddresses() {
