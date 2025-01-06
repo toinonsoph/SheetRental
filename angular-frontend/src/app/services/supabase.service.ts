@@ -106,7 +106,7 @@ export class SupabaseService {
     try {
       const { data: houses, error } = await this.supabase
         .from('housing')
-        .select('id, name, type, image_path, address_id');
+        .select('id, name, typebase: typeid (name), image_path, address_id');
 
       if (error) {
         console.error('Error fetching houses:', error);
@@ -115,6 +115,7 @@ export class SupabaseService {
 
       return houses.map((house) => ({
         ...house,
+        propertyType: house.typebase || '', 
         imageUrl: this.supabase.storage
           .from(environment.supabaseStorage.bucket)
           .getPublicUrl(house.image_path).data.publicUrl,
@@ -179,31 +180,23 @@ export class SupabaseService {
 
     if (error) throw error;
     return data[0].id;
-  }  
+  }
 
-  async addProperty(property: any): Promise<any> {
+  async addProperty(property: any) {
     const timestamp = new Date().toISOString();
     const id = crypto.randomUUID();
-  
-    const { data, error } = await this.supabase
-      .from('housing')
-      .insert([
-        {
-          id,
-          ...property,
-          createdon: timestamp,
-          lastupdatedon: timestamp,
-        },
-      ])
-      .select('*'); 
-  
+
+    const { data, error } = await this.supabase.from('housing').insert([
+      {
+        id,
+        ...property,
+        createdon: timestamp,
+        lastupdatedon: timestamp,
+      },
+    ]);
+
     if (error) throw error;
-  
-    if (!data || data.length === 0) {
-      throw new Error('Failed to insert property.');
-    }
-  
-    return data[0]; 
+    return data;
   }
 
   async updateProperty(id: string, updates: any) {
