@@ -274,3 +274,9 @@ button:hover {
     padding: 8px 10px;
   }
 }
+
+.mat-tab-body {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
