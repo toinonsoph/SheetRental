@@ -278,3 +278,41 @@ table.mat-elevation-z8 {
     padding: 8px 10px;
   }
 }
+
+/* Center the title and move it higher */
+.page-title {
+  text-align: center;
+  margin: 20px 0 10px 0;
+  font-size: 24px;
+  color: darkred;
+}
+
+/* Table styling */
+.styled-table-container {
+  margin: 0 auto;
+  width: 90%; /* Center the table */
+}
+
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #f9f9f9;
+  text-align: center;
+  margin-top: 10px; 
+}
+
+.styled-table th,
+.styled-table td {
+  padding: 15px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+}
+
+.styled-table th {
+  background-color: #ffffff;
+  font-weight: bold;
+}
+
+.styled-table tr:hover {
+  background-color: #f1f1f1;
+}
