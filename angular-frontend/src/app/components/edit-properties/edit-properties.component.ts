@@ -1,248 +1,114 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SupabaseService } from '../../services/supabase.service';
-import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-edit-properties',
-  imports: [],
   templateUrl: './edit-properties.component.html',
   styleUrls: ['./edit-properties.component.css'],
-  standalone: true
+  standalone: true,
 })
-
-export class EditPropertiesComponent {
+export class EditPropertiesComponent implements OnInit {
   isPopupOpen: boolean = false;
   isEditMode: boolean = false;
   currentProperty: any = {};
   cards: any[] = [];
-  filteredCards: any[] = []; 
-  selectedFilter: string = 'all'; 
+  filteredCards: any[] = [];
+  selectedFilter: string = 'all';
   selectedImage: string | null = null;
-  peopleIconUrl: string | null = null; 
-  roomIconUrl: string | null = null; 
 
   constructor(private supabaseService: SupabaseService) {}
 
-  
+  async ngOnInit(): Promise<void> {
+    await this.loadCards();
+  }
+
+  async loadCards(): Promise<void> {
+    try {
+      const data = await this.supabaseService.fetchHousesWithAddresses();
+      this.cards = data;
+      this.filteredCards = [...this.cards];
+    } catch (error) {
+      console.error('Error loading cards:', error);
+    }
+  }
+
+  setFilter(filter: string): void {
+    this.selectedFilter = filter;
+    this.filteredCards =
+      this.selectedFilter === 'all'
+        ? this.cards
+        : this.cards.filter((card) =>
+            card.propertyType.toLowerCase() === filter.toLowerCase()
+          );
+  }
+
   openEditPopup(card: any): void {
     this.isEditMode = true;
-    this.currentProperty = { ...card }; 
+    this.currentProperty = { ...card };
     this.isPopupOpen = true;
   }
-  
+
   openAddPopup(): void {
     this.isEditMode = false;
-    this.currentProperty = {}; 
+    this.currentProperty = {};
     this.isPopupOpen = true;
   }
-  
+
   closePopup(): void {
     this.isPopupOpen = false;
     this.currentProperty = {};
   }
-  
-  saveProperty(): void {
-    if (this.isEditMode) {
-      const index = this.cards.findIndex(c => c.id === this.currentProperty.id);
-      if (index !== -1) {
-        this.cards[index] = { ...this.currentProperty };
-      }
-    } else {
-      this.currentProperty.id = Date.now(); 
-      this.cards.push({ ...this.currentProperty });
-    }
-    this.closePopup();
-    this.setFilter(this.selectedFilter); 
-  }
-  
-  deleteCard(id: number): void {
-    this.cards = this.cards.filter(card => card.id !== id);
-    this.setFilter(this.selectedFilter); 
-  }    
 
-  async ngOnInit(): Promise<void> {
+  async saveProperty(): Promise<void> {
     try {
-      await this.fetchPeopleIcon();
-      await this.fetchRoomIcon();
-
-      const { data: housingData, error: housingError } = await this.supabaseService.client
-        .from('housing')
-        .select(`
-          id,
-          name,
-          totalpersons,
-          totalrooms,
-          price,
-          typebase: typeid (name),
-          address: addressid (street, number, postbox, zipcode, city),
-          url
-        `);
-
-      if (housingError) {
-        console.error('Error fetching housing data:', housingError);
-        return;
-      }
-
-      const { data: houseEquipments, error: equipmentError } = await this.supabaseService.client
-        .from('housingequipment')
-        .select(`
-          housingid,
-          equipmentid (name)
-        `);
-
-      if (equipmentError) {
-        console.error('Error fetching house equipments:', equipmentError);
-        return;
-      }
-
-      const { data: imageFiles, error: imageError } = await this.supabaseService.client
-        .storage
-        .from(environment.supabaseStorage.bucket)
-        .list('');
-
-      if (imageError) {
-        console.error('Error fetching image files:', imageError);
-        return;
-      }
-
-      const { data: iconFiles, error: iconError } = await this.supabaseService.client
-        .storage
-        .from(environment.supabaseStorage.iconBucket)
-        .list('');
-
-      if (iconError) {
-        console.error('Error fetching icon files:', iconError);
-        return;
-      }
-
-      const defaultImageUrl = this.getDefaultImageUrl();
-
-      // Normalize function for matching
-      const normalizeString = (str: string): string =>
-        str
-          .normalize('NFD') // Decompose diacritics
-          .replace(/[\u0300-\u036f]/g, '') // Remove diacritic marks
-          .replace(/\s+/g, '_') // Replace spaces with underscores
-          .toLowerCase();
-
-      this.cards = (housingData || []).map((house: any) => {
-        const normalizedHousingName = normalizeString(house.name);
-
-        // Find matching image by normalized name
-        const matchingImage = imageFiles?.find((file) =>
-          normalizeString(file.name).includes(normalizedHousingName)
-      );
-
-        const equipments = houseEquipments
-          .filter((equipment: any) => equipment.housingid === house.id)
-          .map((equipment: any) => equipment.equipmentid.name);
-
-        return {
-          name: house.name,
-          totalpersons: house.totalpersons,
-          totalrooms: house.totalrooms,
-          propertyType: house.typebase?.name || '',
-          address: `${house.address.street} ${house.address.number}${
-            house.address.postbox ? `/${house.address.postbox}, ` : ''
-          }${house.address.zipcode} ${house.address.city}`,
-          price: house.price,
-          url: house.url,
-          image: matchingImage
-            ? this.getImageUrl(environment.supabaseStorage.bucket, matchingImage.name)
-            : defaultImageUrl,
-            equipmentIcons: equipments
-            .map((equipment: string) => {
-              const iconFileName = `${this.normalizeString(equipment.replace(/\s+/g, '_'))}.png`;
-              const matchingIcon = iconFiles?.find(
-                (file) => this.normalizeString(file.name) === iconFileName
-              );
-
-              return matchingIcon
-                ? {
-                    name: equipment.replace(/_/g, ' '),
-                    url: this.getImageUrl(environment.supabaseStorage.iconBucket, matchingIcon.name),
-                    hasIcon: true,
-                  }
-                : {
-                    name: equipment.replace(/_/g, ' '),
-                    url: null,
-                    hasIcon: false,
-                  };
-            })
-            .sort((a, b) => a.name.localeCompare(b.name)), 
-        };
-      });
-
-      this.cards.sort((a, b) => a.name.localeCompare(b.name));
-      this.filteredCards = [...this.cards]; 
-    } catch (err) {
-      console.error('Unexpected error:', err);
-    }
-  }
-  
-  setFilter(filter: string): void {
-    this.selectedFilter = filter;
-    this.filteredCards = this.selectedFilter === 'all'
-      ? this.cards
-      : this.cards.filter((card) => card.propertyType.toLowerCase() === filter.toLowerCase());
-  }
-  
-  async fetchPeopleIcon(): Promise<void> {
-    try {
-      const { data, error } = await this.supabaseService.client
-        .storage
-        .from(environment.supabaseStorage.iconBucket)
-        .list('', { search: 'people.png' });
-
-      if (error) {
-        console.error('Error fetching People icon:', error);
-        return;
-      }
-
-      const matchingIcon = data?.find((file) => file.name === 'people.png');
-      if (matchingIcon) {
-        this.peopleIconUrl = this.getImageUrl(environment.supabaseStorage.iconBucket, matchingIcon.name);
+      if (this.isEditMode) {
+        await this.supabaseService.updateProperty(
+          this.currentProperty.id,
+          this.currentProperty
+        );
+        const index = this.cards.findIndex(
+          (c) => c.id === this.currentProperty.id
+        );
+        if (index !== -1) {
+          this.cards[index] = { ...this.currentProperty };
+        }
       } else {
-        console.warn('People icon not found.');
+        const addressId = await this.supabaseService.addAddress({
+          street: this.currentProperty.street,
+          city: this.currentProperty.city,
+          zipcode: this.currentProperty.zipcode,
+          number: this.currentProperty.number,
+          postbox: this.currentProperty.postbox,
+        });
+
+        const newProperty = await this.supabaseService.addProperty({
+          ...this.currentProperty,
+          addressId: addressId,
+        });
+        
+        if (!newProperty) {
+          console.error('Failed to create a new property.');
+          return;
+        }
+        
+        this.cards.push({ ...newProperty });        
       }
-    } catch (err) {
-      console.error('Unexpected error fetching People icon:', err);
+
+      this.closePopup();
+      this.setFilter(this.selectedFilter);
+    } catch (error) {
+      console.error('Error saving property:', error);
     }
   }
 
-  async fetchRoomIcon(): Promise<void> {
+  async deleteCard(id: string): Promise<void> {
     try {
-      const { data, error } = await this.supabaseService.client
-        .storage
-        .from(environment.supabaseStorage.iconBucket)
-        .list('', { search: 'room.png' });
-
-      if (error) {
-        console.error('Error fetching Room icon:', error);
-        return;
-      }
-
-      const matchingIcon = data?.find((file) => file.name === 'room.png');
-      if (matchingIcon) {
-        this.roomIconUrl = this.getImageUrl(environment.supabaseStorage.iconBucket, matchingIcon.name);
-      } else {
-        console.warn('Room icon not found.');
-      }
-    } catch (err) {
-      console.error('Unexpected error fetching Room icon:', err);
+      await this.supabaseService.deleteProperty(id);
+      this.cards = this.cards.filter((card) => card.id !== id);
+      this.setFilter(this.selectedFilter);
+    } catch (error) {
+      console.error('Error deleting card:', error);
     }
-  }
-
-  getImageUrl(bucket: string, fileName: string): string {
-    const baseUrl = environment.supabaseUrl;
-    const encodedFileName = encodeURIComponent(fileName);
-    return `${baseUrl}/storage/v1/object/public/${bucket}/${encodedFileName}`;
-  }
-
-  getDefaultImageUrl(): string {
-    const baseUrl = environment.supabaseUrl;
-    const bucket = environment.supabaseStorage.bucket;
-    return `${baseUrl}/storage/v1/object/public/${bucket}/default.png`;
   }
 
   openImageModal(image: string): void {
@@ -252,16 +118,4 @@ export class EditPropertiesComponent {
   closeImageModal(): void {
     this.selectedImage = null;
   }
-
-  normalizeString(str: string): string {
-    return str
-      .normalize('NFD') 
-      .replace(/[\u0300-\u036f]/g, '') 
-      .toLowerCase(); 
-  }
-
-  equipmentIconsStyle = {
-    width: '40px',
-    height: '40px'
-  };
 }

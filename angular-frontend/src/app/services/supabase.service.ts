@@ -34,18 +34,17 @@ export class SupabaseService {
 
   async addMaterial(material: any) {
     const timestamp = new Date().toISOString();
-    
     const id = crypto.randomUUID();
-  
+
     const { data, error: insertError } = await this.supabase.from('material').insert([
       {
-        id, 
+        id,
         ...material,
         createdon: timestamp,
         lastupdatedon: timestamp,
       },
     ]);
-  
+
     if (insertError) throw insertError;
     return data;
   }
@@ -162,5 +161,77 @@ export class SupabaseService {
       console.error('Error fetching houses with addresses:', error);
       return [];
     }
+  }
+
+  // Address and Property methods
+  async addAddress(address: any) {
+    const timestamp = new Date().toISOString();
+    const id = crypto.randomUUID();
+
+    const { data, error } = await this.supabase.from('address').insert([
+      {
+        id,
+        ...address,
+        createdon: timestamp,
+        lastupdatedon: timestamp,
+      },
+    ]).select('id');
+
+    if (error) throw error;
+    return data[0].id;
+  }
+
+  async addProperty(property: any) {
+    const timestamp = new Date().toISOString();
+    const id = crypto.randomUUID();
+  
+    const { data, error } = await this.supabase
+      .from('housing')
+      .insert([
+        {
+          id,
+          ...property,
+          createdon: timestamp,
+          lastupdatedon: timestamp,
+        },
+      ])
+      .select('*'); 
+  
+    if (error) throw error;
+  
+    if (!data || data.length === 0) {
+      throw new Error('Failed to insert property.');
+    }
+  
+    return data[0]; 
+  }
+  
+
+  async updateProperty(id: string, updates: any) {
+    const timestamp = new Date().toISOString();
+
+    const { data, error } = await this.supabase
+      .from('housing')
+      .update({
+        ...updates,
+        lastupdatedon: timestamp,
+      })
+      .eq('id', id);
+
+    if (error) throw error;
+    return data;
+  }
+
+  async deleteProperty(id: string) {
+    const { data, error } = await this.supabase
+      .from('housing')
+      .update({
+        deleted: true,
+        lastupdatedon: new Date().toISOString(),
+      })
+      .eq('id', id);
+
+    if (error) throw error;
+    return data;
   }
 }
