@@ -104,10 +104,10 @@ export class SupabaseService {
   // Houses table methods
   async fetchHouses() {
     try {
-      // Fetch housing data without relying on a column for image paths
+      // Fetch housing data
       const { data: houses, error } = await this.supabase
         .from('housing')
-        .select('id, name, typebase: typeid (name), address_id');
+        .select('id, name, totalpersons, typebase: typeid (name), price, totalrooms, addressid, url');
   
       if (error) {
         console.error('Error fetching houses:', error);
@@ -116,7 +116,7 @@ export class SupabaseService {
   
       // Fetch all image files from the bucket
       const { data: imageFiles, error: storageError } = await this.supabase.storage
-        .from('villas_and_appartements')
+        .from(environment.supabaseStorage.bucket)
         .list('');
   
       if (storageError) {
@@ -124,14 +124,37 @@ export class SupabaseService {
         return houses.map((house) => ({ ...house, imageUrl: null }));
       }
   
+      // Fetch all equipment data
+      const { data: equipments, error: equipmentsError } = await this.supabase
+        .from('equipment')
+        .select('id, name');
+  
+      if (equipmentsError) {
+        console.error('Error fetching equipments:', equipmentsError);
+        return houses.map((house) => ({ ...house, equipmentIcons: [] }));
+      }
+  
+      // Create a mapping of equipment IDs to their names
+      const equipmentMap = new Map(equipments.map((equipment) => [equipment.id, equipment.name]));
+  
+      // Fetch house equipment data
+      const { data: houseEquipments, error: houseEquipmentError } = await this.supabase
+        .from('housingequipment')
+        .select('housingid, equipmentid');
+  
+      if (houseEquipmentError) {
+        console.error('Error fetching house equipments:', houseEquipmentError);
+        return houses.map((house) => ({ ...house, equipmentIcons: [] }));
+      }
+  
       const normalizeString = (str: string): string =>
         str
-          .normalize('NFD') 
-          .replace(/[\u0300-\u036f]/g, '') 
-          .replace(/\s+/g, '_') 
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .replace(/\s+/g, '_')
           .toLowerCase();
   
-      // Map houses with their corresponding images
+      // Map houses with their corresponding images and equipment icons
       return houses.map((house) => {
         const normalizedHouseName = normalizeString(house.name);
   
@@ -140,21 +163,47 @@ export class SupabaseService {
           normalizeString(file.name).includes(normalizedHouseName)
         );
   
+        // Get all equipment IDs for the current house
+        const equipmentIds = houseEquipments
+          .filter((equipment) => equipment.housingid === house.id)
+          .map((equipment) => equipment.equipmentid);
+  
+        // Map IDs to names using the equipmentMap
+        const equipmentNames = equipmentIds.map((id) => equipmentMap.get(id));
+  
+        // Map equipment to their corresponding icons
+        const equipmentIcons = equipmentNames.map((equipmentName) => {
+          const normalizedName = normalizeString(equipmentName || '');
+          const matchingIcon = iconFiles?.find((file) =>
+            normalizeString(file.name).includes(normalizedName)
+          );
+  
+          return {
+            name: equipmentName,
+            url: matchingIcon
+              ? this.supabase.storage
+                  .from('icons')
+                  .getPublicUrl(matchingIcon.name).data.publicUrl
+              : null, // Default to null if no matching icon is found
+          };
+        });
+  
         return {
           ...house,
-          propertyType: house.typebase|| '',
+          propertyType: house.typebase || '',
           imageUrl: matchingImage
             ? this.supabase.storage
                 .from(environment.supabaseStorage.bucket)
                 .getPublicUrl(matchingImage.name).data.publicUrl
-            : null, 
+            : null,
+          equipmentIcons: equipmentIcons.sort((a, b) => a.name.localeCompare(b.name)), 
         };
       });
     } catch (error) {
       console.error('Error fetching houses:', error);
       return [];
     }
-  }
+  }  
 
   // Addresses table methods
   async fetchAddresses() {
