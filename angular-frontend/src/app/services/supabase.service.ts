@@ -444,7 +444,7 @@ export class SupabaseService {
   
   async fetchPropertyTypes(discriminator: string): Promise<any[]> {
     return this.client
-      .from('property_types')
+      .from('typebase')
       .select('*')
       .eq('discriminator', discriminator)
       .then(({ data }) => data);
