@@ -179,23 +179,31 @@ export class SupabaseService {
 
     if (error) throw error;
     return data[0].id;
-  }
+  }  
 
-  async addProperty(property: any) {
+  async addProperty(property: any): Promise<any> {
     const timestamp = new Date().toISOString();
     const id = crypto.randomUUID();
-
-    const { data, error } = await this.supabase.from('housing').insert([
-      {
-        id,
-        ...property,
-        createdon: timestamp,
-        lastupdatedon: timestamp,
-      },
-    ]);
-
+  
+    const { data, error } = await this.supabase
+      .from('housing')
+      .insert([
+        {
+          id,
+          ...property,
+          createdon: timestamp,
+          lastupdatedon: timestamp,
+        },
+      ])
+      .select('*'); 
+  
     if (error) throw error;
-    return data;
+  
+    if (!data || data.length === 0) {
+      throw new Error('Failed to insert property.');
+    }
+  
+    return data[0]; 
   }
 
   async updateProperty(id: string, updates: any) {

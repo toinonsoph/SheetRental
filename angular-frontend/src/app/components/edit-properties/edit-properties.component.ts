@@ -91,7 +91,7 @@ export class EditPropertiesComponent implements OnInit {
           return;
         }
         
-        this.cards.push({ ...newProperty });        
+        this.cards.push(newProperty);   
       }
 
       this.closePopup();
