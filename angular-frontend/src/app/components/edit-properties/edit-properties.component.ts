@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { SupabaseService } from '../../services/supabase.service';
 import { environment } from '../../../environments/environment';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-edit-properties',
   templateUrl: './edit-properties.component.html',
-  styleUrls: ['./edit-properties.component.css']
+  styleUrls: ['./edit-properties.component.css'],
+  imports: [CommonModule],
+  standalone: true
 })
 export class EditPropertiesComponent implements OnInit {
   isPopupOpen: boolean = false;
