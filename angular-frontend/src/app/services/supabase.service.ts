@@ -106,7 +106,7 @@ export class SupabaseService {
     try {
       const { data: houses, error } = await this.supabase
         .from('housing')
-        .select('id, name, type, image_path');
+        .select('id, name, type, image_path, address_id');
 
       if (error) {
         console.error('Error fetching houses:', error);
@@ -130,7 +130,7 @@ export class SupabaseService {
     try {
       const { data: addresses, error } = await this.supabase
         .from('address')
-        .select('id, house_id, street, city');
+        .select('id, street, city');
 
       if (error) {
         console.error('Error fetching addresses:', error);
@@ -153,7 +153,7 @@ export class SupabaseService {
       // Combine houses with their addresses
       this.houses = houses.map((house) => ({
         ...house,
-        addresses: addresses.filter((address) => address.house_id === house.id),
+        address: addresses.find((address) => address.id === house.address_id),
       }));
 
       return this.houses;
@@ -184,28 +184,19 @@ export class SupabaseService {
   async addProperty(property: any) {
     const timestamp = new Date().toISOString();
     const id = crypto.randomUUID();
-  
-    const { data, error } = await this.supabase
-      .from('housing')
-      .insert([
-        {
-          id,
-          ...property,
-          createdon: timestamp,
-          lastupdatedon: timestamp,
-        },
-      ])
-      .select('*'); 
-  
+
+    const { data, error } = await this.supabase.from('housing').insert([
+      {
+        id,
+        ...property,
+        createdon: timestamp,
+        lastupdatedon: timestamp,
+      },
+    ]);
+
     if (error) throw error;
-  
-    if (!data || data.length === 0) {
-      throw new Error('Failed to insert property.');
-    }
-  
-    return data[0]; 
+    return data;
   }
-  
 
   async updateProperty(id: string, updates: any) {
     const timestamp = new Date().toISOString();
