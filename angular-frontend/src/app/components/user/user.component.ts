@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
-import { CambreServicesComponent } from '../cambre-services/cambre-services.component';
-import { AgenceCambreComponent } from '../agence-cambre/agence-cambre.component';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-user',
@@ -10,13 +9,35 @@ import { AgenceCambreComponent } from '../agence-cambre/agence-cambre.component'
   imports: 
   [
     MatTabsModule,
-    CambreServicesComponent,
-    AgenceCambreComponent
+    RouterModule
   ],
   standalone: true
 })
 export class UserComponent {
   message: string | null = ''; 
+
+  navLinks: any[];
+  activeLinkIndex = -1; 
+  constructor(private router: Router) {
+    this.navLinks = [
+        {
+            label: 'Cambre Services',
+            link: './cambre-services',
+            index: 0
+        }, {
+            label: 'Agence Cambre',
+            link: './agence-cambre',
+            index: 1
+        }
+    ];
+}
+ngOnInit(): void {
+  this.router.events.subscribe((res) => {
+      this.activeLinkIndex = this.navLinks.indexOf(this.navLinks.find(tab => tab.link === '.' + this.router.url));
+  });
+}
+
+
 
   clearMessage() {
     this.message = null;

@@ -1,13 +1,25 @@
 <button (click)="logout()" class="logout-btn">Logout</button>
 
-<mat-tab-group>
+<!-- <mat-tab-group>
   <mat-tab label="Cambre Services">
     <app-cambre-services></app-cambre-services>
   </mat-tab>
   <mat-tab label="Agence Cambre">
     <app-agence-cambre></app-agence-cambre>
   </mat-tab>
-</mat-tab-group>
+</mat-tab-group> -->
+
+<nav mat-tab-nav-bar>
+  <a mat-tab-link
+  *ngFor="let link of navLinks"
+  [routerLink]="link.link"
+  routerLinkActive #rla="routerLinkActive"
+  [active]="rla.isActive">
+  </a>
+</nav>
+<router-outlet></router-outlet>
+
+
 
 <div *ngIf="message && message.trim()" class="alert alert-warning">
   {{ message }}
