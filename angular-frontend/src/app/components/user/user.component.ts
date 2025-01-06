@@ -22,23 +22,22 @@ export class UserComponent {
     this.navLinks = [
         {
             label: 'Cambre Services',
-            link: './cambre-services',
+            link: '/cambre-services',
             index: 0
         }, {
             label: 'Agence Cambre',
-            link: './agence-cambre',
+            link: '/agence-cambre',
             index: 1
         }
     ];
-}
-ngOnInit(): void {
-  this.router.events.subscribe((res) => {
-      this.activeLinkIndex = this.navLinks.indexOf(this.navLinks.find(tab => tab.link === '.' + this.router.url));
-  });
-}
+  }
 
-
-
+  ngOnInit(): void {
+    this.router.events.subscribe(() => {
+      this.activeLinkIndex = this.navLinks.findIndex(tab => tab.link === this.router.url);
+    });
+  }
+  
   clearMessage() {
     this.message = null;
   }
