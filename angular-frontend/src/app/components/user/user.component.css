@@ -275,8 +275,21 @@ button:hover {
   }
 }
 
-.mat-tab-body {
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
+.button-group {
+  display: flex;
+  gap: 10px;
+}
+
+.nav-button {
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.nav-button.active {
+  background-color: darkred;
+  color: white;
+  border-color: darkred;
 }
