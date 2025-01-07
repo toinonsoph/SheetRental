@@ -21,6 +21,8 @@ export class EditPropertiesComponent implements OnInit {
   propertyTypes: any[] = [];
   peopleIconUrl: string | null = null;
   roomIconUrl: string | null = null;
+  selectedEquipmentId: string | null = null;
+  allEquipments: any[] = [];
 
   constructor(private supabaseService: SupabaseService) {}
 
@@ -29,6 +31,16 @@ export class EditPropertiesComponent implements OnInit {
     await this.fetchPropertyTypes();
     await this.fetchPeopleIcon(); 
     await this.fetchRoomIcon(); 
+    await this.fetchAllEquipments();
+  }
+
+  async fetchAllEquipments(): Promise<void> {
+    try {
+      const data = await this.supabaseService.fetchAllEquipments();
+      this.allEquipments = data; 
+    } catch (error) {
+      console.error('Error fetching all equipment:', error);
+    }
   }
 
   async loadCards(): Promise<void> {
@@ -63,6 +75,7 @@ export class EditPropertiesComponent implements OnInit {
       this.currentProperty.equipment = equipment || [];
     } catch (error) {
       console.error('Error fetching equipment for property:', error);
+      this.currentProperty.equipment = [];
     }
   
     this.isPopupOpen = true;
@@ -197,4 +210,48 @@ export class EditPropertiesComponent implements OnInit {
     const encodedFileName = encodeURIComponent(fileName);
     return `${baseUrl}/storage/v1/object/public/${bucket}/${encodedFileName}`;
   }
+
+  async addEquipment(): Promise<void> {
+    if (!this.selectedEquipmentId || !this.currentProperty.id) {
+      console.error('Missing equipment ID or property ID.');
+      return;
+    }
+
+    try {
+      await this.supabaseService.addEquipmentToProperty(
+        this.currentProperty.id,
+        this.selectedEquipmentId
+      );
+
+      // Refresh the equipment list
+      this.currentProperty.equipment = await this.supabaseService.fetchEquipmentForProperty(this.currentProperty.id);
+    } catch (error) {
+      console.error('Error adding equipment to property:', error);
+    }
+  }
+
+  async removeEquipment(equipmentName: string): Promise<void> {
+    if (!this.currentProperty.id || !equipmentName) {
+      console.error('Missing property ID or equipment name.');
+      return;
+    }
+
+    try {
+      const equipment = this.allEquipments.find(e => e.name === equipmentName);
+      if (!equipment) {
+        console.error('Equipment not found.');
+        return;
+      }
+
+      await this.supabaseService.deleteEquipmentFromProperty(
+        this.currentProperty.id,
+        equipment.id
+      );
+
+      // Refresh the equipment list
+      this.currentProperty.equipment = await this.supabaseService.fetchEquipmentForProperty(this.currentProperty.id);
+    } catch (error) {
+      console.error('Error removing equipment from property:', error);
+    }
+  } 
 }

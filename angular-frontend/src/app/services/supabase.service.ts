@@ -142,7 +142,6 @@ export class SupabaseService {
         throw new Error(`Error uploading image: ${uploadError.message}`);
       }
 
-      // Insert equipment into the database
       const { error: insertError } = await this.supabase
         .from('equipment')
         .insert({
@@ -588,7 +587,7 @@ export class SupabaseService {
       .then(({ data }) => data);
   }
   
-  async fetchEquipmentForProperty(housingId: string): Promise<any[]> {
+  async fetchEquipmentForProperty(housingId: string): Promise<string[]> {
     if (!housingId) {
       console.error('Invalid housingId provided');
       return [];
@@ -597,7 +596,7 @@ export class SupabaseService {
     const { data, error } = await this.client
       .from('housingequipment')
       .select(`
-        equipment:equipmentid (id, name, image_path)
+        equipment:equipmentid (name)
       `)
       .eq('housingid', housingId);
   
@@ -606,7 +605,7 @@ export class SupabaseService {
       return [];
     }
   
-    return data.map((item: any) => item.equipment);
+    return data.map((item: any) => item.equipment.name);
   }
   
   async uploadImage(file: File): Promise<any> {
@@ -655,5 +654,73 @@ export class SupabaseService {
   extractFileNameFromUrl(url: string): string {
     const parts = url.split('/');
     return parts[parts.length - 1]; 
+  }
+
+  // EquipmentHousing table methods
+  async addEquipmentToProperty(housingId: string, equipmentId: string): Promise<void> {
+    const timestamp = new Date().toISOString();
+  
+    try {
+      const { error } = await this.supabase
+        .from('housingequipment')
+        .insert({
+          housingid: housingId,
+          equipmentid: equipmentId,
+          createdon: timestamp,
+          lastupdatedon: timestamp,
+          deleted: false, 
+        });
+  
+      if (error) {
+        throw new Error(`Error adding equipment to property: ${error.message}`);
+      }
+  
+      console.log('Equipment added successfully to property.');
+    } catch (err) {
+      console.error('Error adding equipment to property:', err);
+    }
+  }
+
+  async deleteEquipmentFromProperty(housingId: string, equipmentId: string): Promise<void> {
+    const timestamp = new Date().toISOString();
+  
+    try {
+      const { error } = await this.supabase
+        .from('housingequipment')
+        .update({
+          deleted: true,
+          lastupdatedon: timestamp,
+        })
+        .match({
+          housingid: housingId,
+          equipmentid: equipmentId,
+        });
+  
+      if (error) {
+        throw new Error(`Error deleting equipment from property: ${error.message}`);
+      }
+  
+      console.log('Equipment deleted successfully from property.');
+    } catch (err) {
+      console.error('Error deleting equipment from property:', err);
+    }
+  }  
+
+  async fetchAllEquipments(): Promise<any[]> {
+    try {
+      const { data, error } = await this.supabase
+        .from('equipment')
+        .select('id, name')
+        .eq('deleted', false);
+  
+      if (error) {
+        throw new Error(`Error fetching equipment: ${error.message}`);
+      }
+  
+      return data || [];
+    } catch (err) {
+      console.error('Error fetching all equipment:', err);
+      return [];
+    }
   }
 }
