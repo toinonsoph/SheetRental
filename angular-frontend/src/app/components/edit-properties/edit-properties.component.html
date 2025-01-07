@@ -60,6 +60,14 @@
     <form (ngSubmit)="saveProperty()" #propertyForm="ngForm" class="form-layout">
       <div class="form-row">
         <div class="input-group">
+            <label>House Image:</label>
+            <div *ngIf="currentProperty.image" class="image-preview-container">
+              <img [src]="currentProperty.image" alt="House Image" class="house-image-preview" />
+              <button type="button" (click)="removeImage()" class="remove-image-button">Remove Image</button>
+            </div>
+            <input type="file" (change)="onImageChange($event)" accept="image/*" class="image-upload-input" />
+          </div>
+        <div class="input-group">
           <label for="name">Name:</label>
           <input 
             id="name" 
