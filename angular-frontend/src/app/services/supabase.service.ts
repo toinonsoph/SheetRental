@@ -588,23 +588,25 @@ export class SupabaseService {
       .then(({ data }) => data);
   }
   
-  async fetchEquipmentForProperty(propertyId: string): Promise<any[]> {
-    if (!propertyId) {
-      console.error('Invalid propertyId provided');
+  async fetchEquipmentForProperty(housingId: string): Promise<any[]> {
+    if (!housingId) {
+      console.error('Invalid housingId provided');
       return [];
     }
   
     const { data, error } = await this.client
-      .from('equipment')
-      .select('*')
-      .eq('propertyId', propertyId);
+      .from('housingequipment')
+      .select(`
+        equipment:equipmentid (id, name, image_path)
+      `)
+      .eq('housingid', housingId);
   
     if (error) {
       console.error('Error fetching equipment for property:', error);
       return [];
     }
   
-    return data || [];
+    return data.map((item: any) => item.equipment);
   }
   
   async uploadImage(file: File): Promise<any> {

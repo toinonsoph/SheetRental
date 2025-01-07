@@ -56,16 +56,17 @@ export class EditPropertiesComponent implements OnInit {
 
   async openEditPopup(card: any): Promise<void> {
     this.isEditMode = true;
-    this.currentProperty = { ...card, address: card.address || {} }; 
+    this.currentProperty = { ...card, address: card.address || {} };
+  
     try {
       const equipment = await this.supabaseService.fetchEquipmentForProperty(card.id);
       this.currentProperty.equipment = equipment || [];
     } catch (error) {
       console.error('Error fetching equipment for property:', error);
     }
-    this.isPopupOpen = true;
-  }
   
+    this.isPopupOpen = true;
+  }  
 
   openAddPopup(): void {
     this.isEditMode = false;
