@@ -71,3 +71,12 @@
   color: #555;
   width: 100%; 
 }
+
+h4 {
+    text-align: center;
+    font-size: 2rem; 
+    font-weight: bold;
+    color: darkred;
+    margin: 10px 0; 
+    padding: 0; 
+}

@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { SupabaseService } from '../../services/supabase.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-edit-equipments',
@@ -10,7 +11,8 @@ import { SupabaseService } from '../../services/supabase.service';
   standalone: true,
   imports: [
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    CommonModule
   ],
 })
 export class EditEquipmentsComponent implements OnInit {
@@ -20,8 +22,11 @@ export class EditEquipmentsComponent implements OnInit {
   selectedEquipment: any = null;
   equipmentForm: { name: string; image: File | null } = { name: '', image: null };
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator; 
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }  
   constructor(private supabaseService: SupabaseService) {}
 
   async ngOnInit() {
@@ -36,14 +41,11 @@ export class EditEquipmentsComponent implements OnInit {
 
   openPopup(equipment: any = null) {
     this.showPopup = true;
-    this.selectedEquipment = equipment;
-
-    if (equipment) {
-      this.equipmentForm.name = equipment.name;
-      this.equipmentForm.image = equipment.image; 
-    } else {
-      this.equipmentForm = { name: '', image: null };
-    }
+    this.selectedEquipment = equipment || null;
+  
+    this.equipmentForm = equipment
+      ? { name: equipment.name, image: null }
+      : { name: '', image: null };
   }
 
   closePopup() {
