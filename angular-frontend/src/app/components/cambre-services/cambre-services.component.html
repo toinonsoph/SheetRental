@@ -18,7 +18,7 @@
 
 <br>
 <!-- Table for Materials -->
-<table mat-table [dataSource]="materials" class="mat-elevation-z8">
+<table *ngIf="materials" mat-table [dataSource]="materials" class="mat-elevation-z8">
   <ng-container matColumnDef="name_dutch">
     <th mat-header-cell *matHeaderCellDef> Name Dutch </th>
     <td mat-cell *matCellDef="let material"> {{ material.name_dutch }} </td>
