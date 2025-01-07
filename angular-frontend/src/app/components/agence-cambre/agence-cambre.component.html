@@ -1,8 +1,9 @@
-<div class="center-content">
+<div class="page-container">
+  <div class="center-content">
     <h3>Agence Cambre</h3>
-</div>
+  </div>
 
-<div class="button-group">
+  <div class="button-group">
     <button
       (click)="navigateTo('/properties')"
       [class.active]="activeLinkIndex === 0"
@@ -15,6 +16,7 @@
       class="nav-button">
       Equipments
     </button>
+  </div>
+
+  <router-outlet></router-outlet>
 </div>
-  
-<router-outlet></router-outlet>
