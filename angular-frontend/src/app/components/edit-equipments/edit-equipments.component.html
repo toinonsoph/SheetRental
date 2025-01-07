@@ -5,38 +5,40 @@
   <button mat-raised-button color="primary" class="darkred-button" (click)="openPopup()">Add New Equipment</button>
 </div>
 
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+<div class="table-container">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 mat-table">
 
-  <!-- Equipment Name Column -->
-  <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef> Equipment Name </th>
-    <td mat-cell *matCellDef="let element"> {{ element.name }} </td>
-  </ng-container>
+    <!-- Equipment Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Equipment Name </th>
+      <td mat-cell *matCellDef="let element"> {{ element.name }} </td>
+    </ng-container>
 
-  <!-- Icon Image Column -->
-  <ng-container matColumnDef="icon">
-    <th mat-header-cell *matHeaderCellDef> Icon </th>
-    <td mat-cell *matCellDef="let element">
-      <img [src]="element.iconUrl" alt="Icon" style="height: 50px; width: 50px;">
-    </td>
-  </ng-container>
+    <!-- Icon Image Column -->
+    <ng-container matColumnDef="icon">
+      <th mat-header-cell *matHeaderCellDef> Icon </th>
+      <td mat-cell *matCellDef="let element">
+        <img [src]="element.iconUrl" alt="Icon" class="icon-img">
+      </td>
+    </ng-container>
 
-  <!-- Action Buttons Column -->
-  <ng-container matColumnDef="actions">
-    <th mat-header-cell *matHeaderCellDef> Actions </th>
-    <td mat-cell *matCellDef="let element">
-      <button mat-button class="darkred-button" (click)="openPopup(element)">Edit</button>
-      <button mat-button class="darkred-button" (click)="onDeleteEquipment(element)">Delete</button>
-    </td>
-  </ng-container>
+    <!-- Action Buttons Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let element" class="action-buttons">
+        <button mat-button class="darkred-button" (click)="openPopup(element)">Edit</button>
+        <button mat-button class="darkred-button" (click)="onDeleteEquipment(element)">Delete</button>
+      </td>
+    </ng-container>
 
-  <!-- Header and Row Definitions -->
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
+    <!-- Header and Row Definitions -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
 
-<!-- Pagination -->
-<mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  <!-- Pagination -->
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons class="mat-paginator"></mat-paginator>
+</div>
 
 
 <!-- Popup Form -->

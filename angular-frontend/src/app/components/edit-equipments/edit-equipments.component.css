@@ -1,4 +1,4 @@
-/* Title */
+/* Center Title */
 .title {
   color: darkred;
   text-align: center;
@@ -6,13 +6,48 @@
   margin-bottom: 16px;
 }
 
-/* Add Button Container */
+/* Button Container */
 .button-container {
   text-align: center;
   margin-bottom: 16px;
 }
 
-/* Buttons */
+/* Table Container to Align Table and Paginator */
+.table-container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+/* Table Styling */
+.mat-table {
+  width: 100%;
+  margin: auto;
+  border-collapse: collapse;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.mat-header-cell, .mat-cell {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+/* Image in Icon Column */
+.icon-img {
+  height: 50px;
+  width: 50px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+/* Action Buttons Styling */
+.action-buttons {
+  display: flex;
+  gap: 8px; /* Adds spacing between buttons */
+}
+
 .darkred-button {
   background-color: darkred;
   color: white;
@@ -28,113 +63,11 @@
   background-color: #a10000;
 }
 
-/* Full-width Input Fields */
-.full-width {
-  width: 100%;
-}
-
-/* Table Styling */
-.mat-table {
-  width: 100%;
-  margin: auto;
-  border-collapse: collapse;
-  text-align: left;
-  background-color: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.mat-header-cell {
-  font-weight: bold;
-  color: darkred;
-  border-bottom: 2px solid #ddd;
-  padding: 12px;
-  text-align: left;
-}
-
-.mat-cell {
-  padding: 12px;
-  border-bottom: 1px solid #ddd;
-  font-size: 14px;
-  color: #333;
-}
-
-/* Responsive Table */
-@media screen and (max-width: 768px) {
-  .mat-table {
-    font-size: 12px;
-  }
-  .mat-header-cell, .mat-cell {
-    padding: 8px;
-  }
-}
-
-/* Image in Icon Column */
-.mat-cell img {
-  height: 50px;
-  width: 50px;
-  border-radius: 4px;
-  object-fit: cover;
-}
-
-/* Pagination Styling */
+/* Paginator */
 .mat-paginator {
   text-align: right;
   margin-top: 16px;
   font-size: 14px;
   color: #555;
-}
-
-.mat-paginator .mat-button {
-  color: darkred;
-}
-
-/* Popup Container */
-.popup-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-
-.popup {
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  width: 400px;
-  max-width: 90%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.popup h2 {
-  color: darkred;
-  margin-bottom: 16px;
-  font-size: 18px;
-}
-
-.popup-actions {
-  margin-top: 16px;
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-}
-
-/* Action Buttons */
-.popup-actions button {
-  padding: 8px 16px;
-  font-size: 14px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.popup-actions button:hover {
-  background-color: #f0f0f0;
+  width: 100%; 
 }
