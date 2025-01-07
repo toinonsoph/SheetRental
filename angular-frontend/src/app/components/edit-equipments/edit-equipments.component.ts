@@ -15,9 +15,10 @@ import { CommonModule } from '@angular/common';
     CommonModule
   ],
 })
+
 export class EditEquipmentsComponent implements OnInit {
   displayedColumns: string[] = ['name', 'icon', 'actions'];
-  dataSource = new MatTableDataSource<any>([]); 
+  dataSource = new MatTableDataSource<any>([]);
   showPopup = false;
   selectedEquipment: any = null;
   equipmentForm: { name: string; image: File | null } = { name: '', image: null };
@@ -26,14 +27,15 @@ export class EditEquipmentsComponent implements OnInit {
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
-  }  
+  }
+
   constructor(private supabaseService: SupabaseService) {}
 
   async ngOnInit() {
     try {
       const equipments = await this.supabaseService.getEquipmentForTable();
       this.dataSource.data = equipments;
-      this.dataSource.paginator = this.paginator; 
+      this.dataSource.paginator = this.paginator;
     } catch (error) {
       console.error('Error fetching equipment data:', error);
     }
@@ -42,7 +44,7 @@ export class EditEquipmentsComponent implements OnInit {
   openPopup(equipment: any = null) {
     this.showPopup = true;
     this.selectedEquipment = equipment || null;
-  
+
     this.equipmentForm = equipment
       ? { name: equipment.name, image: null }
       : { name: '', image: null };
