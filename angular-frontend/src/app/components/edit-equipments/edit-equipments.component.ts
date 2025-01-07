@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { SupabaseService } from '../../services/supabase.service';
-import { MatTableModule } from '@angular/material/table';
 
 @Component({
   selector: 'app-edit-equipments',
@@ -8,20 +9,29 @@ import { MatTableModule } from '@angular/material/table';
   styleUrls: ['./edit-equipments.component.css'],
   standalone: true,
   imports: [
-    MatTableModule
+    MatTableModule,
+    MatPaginatorModule
   ],
 })
 export class EditEquipmentsComponent implements OnInit {
   displayedColumns: string[] = ['name', 'icon', 'iconPath', 'actions'];
-  dataSource: any[] = [];
+  dataSource = new MatTableDataSource<any>([]); 
   showPopup = false;
   selectedEquipment: any = null;
   equipmentForm: { name: string; image: File | null } = { name: '', image: null };
 
+  @ViewChild(MatPaginator) paginator!: MatPaginator; 
+
   constructor(private supabaseService: SupabaseService) {}
 
   async ngOnInit() {
-    this.dataSource = await this.supabaseService.getEquipmentForTable();
+    try {
+      const equipments = await this.supabaseService.getEquipmentForTable();
+      this.dataSource.data = equipments;
+      this.dataSource.paginator = this.paginator; 
+    } catch (error) {
+      console.error('Error fetching equipment data:', error);
+    }
   }
 
   openPopup(equipment: any = null) {
@@ -30,7 +40,7 @@ export class EditEquipmentsComponent implements OnInit {
 
     if (equipment) {
       this.equipmentForm.name = equipment.name;
-      this.equipmentForm.image = null; // Reset the image
+      this.equipmentForm.image = equipment.image; 
     } else {
       this.equipmentForm = { name: '', image: null };
     }
@@ -52,19 +62,17 @@ export class EditEquipmentsComponent implements OnInit {
   async onSave() {
     try {
       if (this.selectedEquipment) {
-        // Update existing equipment
         await this.supabaseService.updateEquipment(
           this.selectedEquipment.id,
           this.equipmentForm,
-          this.selectedEquipment.image_path 
+          this.selectedEquipment.image_path
         );
       } else {
-        // Add new equipment
         await this.supabaseService.addEquipment(this.equipmentForm);
       }
-  
-      // Refresh the table
-      this.dataSource = await this.supabaseService.getEquipmentForTable();
+
+      const equipments = await this.supabaseService.getEquipmentForTable();
+      this.dataSource.data = equipments;
       this.closePopup();
     } catch (error) {
       console.error('Error saving equipment:', error);
@@ -73,14 +81,12 @@ export class EditEquipmentsComponent implements OnInit {
 
   async onDeleteEquipment(equipment: any) {
     const isConfirmed = confirm(`Are you sure you want to delete "${equipment.name}"?`);
-  
-    if (!isConfirmed) {
-      return;
-    }
-  
+    if (!isConfirmed) return;
+
     try {
-      await this.supabaseService.deleteEquipment(equipment.id, equipment.image_path);  
-      this.dataSource = await this.supabaseService.getEquipmentForTable();
+      await this.supabaseService.deleteEquipment(equipment.id, equipment.image_path);
+      const equipments = await this.supabaseService.getEquipmentForTable();
+      this.dataSource.data = equipments;
     } catch (error) {
       console.error('Error deleting equipment:', error);
     }
