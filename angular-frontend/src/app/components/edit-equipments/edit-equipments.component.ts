@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { SupabaseService } from '../../services/supabase.service';
+import { MatTableModule } from '@angular/material/table';
 
 @Component({
   selector: 'app-edit-equipments',
   templateUrl: './edit-equipments.component.html',
   styleUrls: ['./edit-equipments.component.css'],
   standalone: true,
+  imports: [
+    MatTableModule
+  ],
 })
 export class EditEquipmentsComponent implements OnInit {
   displayedColumns: string[] = ['name', 'icon', 'iconPath', 'actions'];
@@ -68,11 +72,14 @@ export class EditEquipmentsComponent implements OnInit {
   }
 
   async onDeleteEquipment(equipment: any) {
-    const confirmDelete = confirm(`Are you sure you want to delete ${equipment.name}?`);
-    if (!confirmDelete) return;
-
+    const isConfirmed = confirm(`Are you sure you want to delete "${equipment.name}"?`);
+  
+    if (!isConfirmed) {
+      return;
+    }
+  
     try {
-      await this.supabaseService.deleteEquipment(equipment.id);
+      await this.supabaseService.deleteEquipment(equipment.id, equipment.image_path);  
       this.dataSource = await this.supabaseService.getEquipmentForTable();
     } catch (error) {
       console.error('Error deleting equipment:', error);

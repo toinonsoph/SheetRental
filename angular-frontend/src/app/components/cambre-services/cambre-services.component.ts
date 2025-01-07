@@ -101,6 +101,5 @@ export class CambreServicesComponent implements OnInit {
     } catch (error) {
       console.error('Error deleting material:', error);
     }
-  }
-  
+  }  
 }
