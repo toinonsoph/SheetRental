@@ -26,13 +26,13 @@
       <br>
       <div class="card-footer">
         <div class="card-icon">
-          <img [src]="peopleIconUrl" alt="People icon" />
-          <span>{{ card.totalpersons }}</span>
-        </div>
-        <div class="card-icon">
-          <img [src]="roomIconUrl" alt="Room icon" />
-          <span>{{ card.totalrooms }}</span>
-        </div>
+            <img *ngIf="peopleIconUrl" [src]="peopleIconUrl" alt="People icon" />
+            <span>{{ card.totalpersons }}</span>
+          </div>
+          <div class="card-icon">
+            <img *ngIf="roomIconUrl" [src]="roomIconUrl" alt="Room icon" />
+            <span>{{ card.totalrooms }}</span>
+          </div>
         <br>
         <div class="equipment-icons">
           <div *ngFor="let icon of card.equipmentIcons" class="equipment-item">

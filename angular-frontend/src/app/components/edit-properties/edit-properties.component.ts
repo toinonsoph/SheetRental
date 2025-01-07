@@ -26,6 +26,8 @@ export class EditPropertiesComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     await this.loadCards();
     await this.fetchPropertyTypes();
+    await this.fetchPeopleIcon(); 
+    await this.fetchRoomIcon(); 
   }
 
   async loadCards(): Promise<void> {
