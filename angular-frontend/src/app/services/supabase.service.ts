@@ -102,6 +102,133 @@ export class SupabaseService {
     }
   }
 
+  async getEquipmentForTable() {
+    const { data, error } = await this.supabase.from('equipment').select('name, icon_path');
+    if (error) {
+      console.error('Error fetching equipment:', error);
+      return [];
+    }
+
+    // Generate public URLs for images
+    const equipmentWithUrls = data.map((item: any) => ({
+      name: item.name,
+      iconPath: item.icon_path,
+      iconUrl: this.supabase.storage.from('iconbucket').getPublicUrl(item.icon_path).data.publicUrl,
+    }));
+
+    return equipmentWithUrls;
+  }
+
+  async addEquipment(equipment: { name: string; image: File }) {
+    try {
+      // Upload the image to Supabase Storage
+      const fileName = `${equipment.image.name.replace(/\s+/g, '_')}`;
+      const { error: uploadError } = await this.supabase.storage
+        .from(environment.supabaseStorage.iconBucket)
+        .upload(fileName, equipment.image);
+
+      if (uploadError) {
+        throw new Error(`Error uploading image: ${uploadError.message}`);
+      }
+
+      // Insert equipment into the database
+      const { error: insertError } = await this.supabase
+        .from('equipment')
+        .insert({
+          name: equipment.name,
+          deleted: false,
+          createdon: new Date().toISOString(),
+          lastupdatedon: new Date().toISOString()
+        });
+
+      if (insertError) {
+        throw new Error(`Error adding equipment: ${insertError.message}`);
+      }
+
+      console.log('Equipment added successfully');
+    } catch (error) {
+      console.error('Error in addEquipment:', error);
+    }
+  }
+
+  async updateEquipment(id: number, equipment: { name: string; image: File | null }, currentImagePath: string) {
+    try {
+      let newImagePath = currentImagePath;
+
+      // If a new image is provided, upload it and delete the old image
+      if (equipment.image) {
+        const newFileName = `${equipment.image.name.replace(/\s+/g, '_')}`;      
+
+        // Delete the old image
+        const { error: deleteError } = await this.supabase.storage
+          .from(environment.supabaseStorage.iconBucket)
+          .remove([currentImagePath]);
+
+        if (deleteError) {
+          console.warn(`Error deleting old image: ${deleteError.message}`);
+        }
+
+        const { error: uploadError } = await this.supabase.storage
+        .from(environment.supabaseStorage.iconBucket)
+        .upload(newFileName, equipment.image);
+
+        if (uploadError) {
+          throw new Error(`Error uploading new image: ${uploadError.message}`);
+        }
+
+        newImagePath = newFileName;
+      }
+
+      // Update equipment in the database
+      const { error: updateError } = await this.supabase
+        .from('equipments')
+        .update({
+          name: equipment.name,
+          lastupdatedon: new Date().toISOString()
+        })
+        .eq('id', id);
+
+      if (updateError) {
+        throw new Error(`Error updating equipment: ${updateError.message}`);
+      }
+
+      console.log('Equipment updated successfully');
+    } catch (error) {
+      console.error('Error in updateEquipment:', error);
+    }
+  }
+
+  async deleteEquipment(id: number, imagePath: string) {
+    try {
+      // Soft delete the equipment
+      const { error: updateError } = await this.supabase
+        .from('equipments')
+        .update(
+        { 
+          deleted: true,
+          lastupdatedon: new Date().toISOString() 
+        })
+        .eq('id', id);
+
+      if (updateError) {
+        throw new Error(`Error soft deleting equipment: ${updateError.message}`);
+      }
+
+      // Delete the associated image from Supabase Storage
+      const { error: deleteError } = await this.supabase.storage
+        .from(environment.supabaseStorage.iconBucket)
+        .remove([imagePath]);
+
+      if (deleteError) {
+        console.warn(`Error deleting image: ${deleteError.message}`);
+      }
+
+      console.log('Equipment soft deleted successfully');
+    } catch (error) {
+      console.error('Error in deleteEquipment:', error);
+    }
+  }
+
   // HousingEquipment table methods
   async checkHousingEquipment(houseId: string, equipmentId: string): Promise<boolean> {
     try {
