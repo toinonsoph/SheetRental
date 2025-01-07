@@ -55,7 +55,7 @@ export class EditPropertiesComponent implements OnInit {
 
   async openEditPopup(card: any): Promise<void> {
     this.isEditMode = true;
-    this.currentProperty = { ...card };
+    this.currentProperty = { ...card, address: card.address || {} }; 
     try {
       const equipment = await this.supabaseService.fetchEquipmentForProperty(card.id);
       this.currentProperty.equipment = equipment || [];
@@ -64,10 +64,11 @@ export class EditPropertiesComponent implements OnInit {
     }
     this.isPopupOpen = true;
   }
+  
 
   openAddPopup(): void {
     this.isEditMode = false;
-    this.currentProperty = { address: {}, equipment: [] };
+    this.currentProperty = { address: {}, equipment: [] }; 
     this.isPopupOpen = true;
   }
 
@@ -78,12 +79,16 @@ export class EditPropertiesComponent implements OnInit {
 
   async saveProperty(): Promise<void> {
     try {
+      if (!this.currentProperty.address) {
+        this.currentProperty.address = {};
+      }
+  
       if (this.currentProperty.image && !this.currentProperty.image.startsWith('http')) {
         const { data, error } = await this.supabaseService.uploadImage(this.currentProperty.image);
         if (error) throw error;
         this.currentProperty.image = data.publicUrl;
       }
-
+  
       if (this.isEditMode) {
         await this.supabaseService.updateProperty(this.currentProperty.id, this.currentProperty);
       } else {
@@ -91,13 +96,13 @@ export class EditPropertiesComponent implements OnInit {
         const newProperty = await this.supabaseService.addProperty({ ...this.currentProperty, addressId });
         this.cards.push(newProperty);
       }
-
+  
       this.closePopup();
       this.setFilter(this.selectedFilter);
     } catch (error) {
       console.error('Error saving property:', error);
     }
-  }
+  }  
 
   async deleteCard(id: string): Promise<void> {
     if (confirm('Are you sure you want to delete this property?')) {
