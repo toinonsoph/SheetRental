@@ -14,7 +14,7 @@ import { SupabaseService } from '../../services/supabase.service';
   ],
 })
 export class EditEquipmentsComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'icon', 'iconPath', 'actions'];
+  displayedColumns: string[] = ['name', 'icon', 'actions'];
   dataSource = new MatTableDataSource<any>([]); 
   showPopup = false;
   selectedEquipment: any = null;

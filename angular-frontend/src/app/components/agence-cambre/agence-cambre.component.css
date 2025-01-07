@@ -46,10 +46,3 @@ body {
   color: darkred;
   border: 1px solid darkred;
 }
-
-router-outlet {
-  display: block;
-  min-height: calc(92vh - 2rem);
-  padding: 1rem;
-  box-sizing: border-box;
-}
