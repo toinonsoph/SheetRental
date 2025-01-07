@@ -32,6 +32,6 @@ export class AgenceCambreComponent implements OnInit {
     }
   
     navigateTo(route: string): void {
-      this.router.navigate([route], { relativeTo: this.router.routerState.root.firstChild!.firstChild });
+      this.router.navigate([route], { relativeTo: this.router.routerState.root.firstChild?.children?.find(c => c.routeConfig?.path === 'agence-cambre') });
     }
 }
