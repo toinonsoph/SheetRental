@@ -10,7 +10,7 @@
 </div>
 
 <div class="card-container">
-  <div class="card" *ngFor="let card of filteredCards">
+  <div class="card" *ngFor="let card of filteredCards || []">
     <div class="card-content">
       <h3 class="card-title">{{ card.name }}</h3>
       <p class="card-type">{{ card.propertyType }}</p>

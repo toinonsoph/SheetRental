@@ -32,6 +32,12 @@ export class EditPropertiesComponent implements OnInit {
     await this.fetchPeopleIcon(); 
     await this.fetchRoomIcon(); 
     await this.fetchAllEquipments();
+    this.currentProperty = {
+      name: '',
+      address: { street: '', number: '', zipcode: '8420', city: 'De Haan', country: 'Belgium' },
+      image: null,
+      equipment: [],
+    };
   }
 
   async fetchAllEquipments(): Promise<void> {
@@ -50,6 +56,8 @@ export class EditPropertiesComponent implements OnInit {
       this.filteredCards = [...this.cards];
     } catch (error) {
       console.error('Error loading cards:', error);
+      this.cards = [];
+      this.filteredCards = [];
     }
   }
 
@@ -84,10 +92,10 @@ export class EditPropertiesComponent implements OnInit {
   openAddPopup(): void {
     this.isEditMode = false;
     this.currentProperty = {
-      address: { street: '', number: '', postbox: '', zipcode: '8420', city: 'De Haan', country: 'Belgium' },
+      address: { street: '', number: '', zipcode: '8420', city: 'De Haan', country: 'Belgium' },
       image: null,
       equipment: [],
-    }; 
+    };
     this.isPopupOpen = true;
   }
 
