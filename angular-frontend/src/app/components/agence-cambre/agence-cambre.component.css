@@ -1,10 +1,19 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
+  color: #333;
+}
+
 .center-content {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 8vh;
   text-align: center;
-  background: #f4f4f4;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .button-group {
@@ -15,6 +24,9 @@
   height: auto;
   margin: 1rem 0;
   background: #fff;
+  padding: 0.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .nav-button {
@@ -22,12 +34,14 @@
   font-size: 1.2rem;
   border: none;
   cursor: pointer;
+  border-radius: 4px;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .nav-button.active {
   background-color: darkred;
   color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .nav-button:not(.active) {
@@ -36,8 +50,12 @@
   border: 1px solid darkred;
 }
 
-body {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
+router-outlet {
+  display: block;
+  min-height: calc(92vh - 2rem);
+  background: #f4f4f4;
+  padding: 1rem;
+  box-sizing: border-box;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
