@@ -44,15 +44,17 @@
   <div class="modal">
     <h2>{{ selectedEquipment ? 'Edit Equipment' : 'Add New Equipment' }}</h2>
     <form (ngSubmit)="onSave()">
-      <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Equipment Name</mat-label>
-        <input matInput [(ngModel)]="equipmentForm.name" name="name" required />
-      </mat-form-field>
+      <!-- Equipment Name -->
+      <div class="form-group">
+        <label for="equipment-name">Equipment Name:</label>
+        <input id="equipment-name" matInput [(ngModel)]="equipmentForm.name" name="name" required />
+      </div>
 
-      <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Upload Image</mat-label>
-        <input type="file" (change)="onFileSelected($event)" />
-      </mat-form-field>
+      <!-- Upload Image -->
+      <div class="form-group">
+        <label for="upload-image">Upload Image:</label>
+        <input id="upload-image" type="file" (change)="onFileSelected($event)" />
+      </div>
 
       <div class="popup-actions">
         <button mat-button type="button" (click)="closePopup()">Cancel</button>
