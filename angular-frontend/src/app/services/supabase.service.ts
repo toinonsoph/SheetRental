@@ -589,15 +589,26 @@ export class SupabaseService {
   }
   
   async fetchEquipmentForProperty(propertyId: string): Promise<any[]> {
-    return this.client
+    if (!propertyId) {
+      console.error('Invalid propertyId provided');
+      return [];
+    }
+  
+    const { data, error } = await this.client
       .from('equipment')
       .select('*')
-      .eq('propertyId', propertyId)
-      .then(({ data }) => data);
+      .eq('propertyId', propertyId);
+  
+    if (error) {
+      console.error('Error fetching equipment for property:', error);
+      return [];
+    }
+  
+    return data || [];
   }
   
   async uploadImage(file: File): Promise<any> {
-    const fileName = `${Date.now()}_${file.name}`;
+    const fileName = `${file.name}`;
     const { data, error } = await this.client.storage
       .from(environment.supabaseStorage.bucket)
       .upload(fileName, file);

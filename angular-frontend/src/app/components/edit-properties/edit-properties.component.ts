@@ -69,7 +69,11 @@ export class EditPropertiesComponent implements OnInit {
 
   openAddPopup(): void {
     this.isEditMode = false;
-    this.currentProperty = { address: {}, equipment: [] }; 
+    this.currentProperty = {
+      address: { street: '', number: '', postbox: '', zipcode: '8420', city: 'De Haan', country: 'Belgium' },
+      image: null,
+      equipment: [],
+    }; 
     this.isPopupOpen = true;
   }
 
@@ -79,19 +83,18 @@ export class EditPropertiesComponent implements OnInit {
   }
 
   async saveProperty(propertyForm: NgForm): Promise<void> {
-    if (propertyForm.invalid) {
-      return; 
-    }
+    if (propertyForm.invalid) return;
   
     try {
+      // Ensure address is properly initialized
       if (!this.currentProperty.address) {
-        this.currentProperty.address = {};
+        this.currentProperty.address = { street: '', number: '', zipcode: '8420', city: 'De Haan', country: 'Belgium' };
       }
   
-      if (this.currentProperty.image && !this.currentProperty.image.startsWith('http')) {
-        const { data, error } = await this.supabaseService.uploadImage(this.currentProperty.image);
-        if (error) throw error;
-        this.currentProperty.image = data.publicUrl;
+      // Handle image upload
+      if (this.currentProperty.image && typeof this.currentProperty.image !== 'string') {
+        const uploadedImage = await this.supabaseService.uploadImage(this.currentProperty.image);
+        this.currentProperty.image = uploadedImage.publicUrl;
       }
   
       if (this.isEditMode) {
@@ -107,7 +110,7 @@ export class EditPropertiesComponent implements OnInit {
     } catch (error) {
       console.error('Error saving property:', error);
     }
-  } 
+  }
 
   async deleteCard(id: string): Promise<void> {
     if (confirm('Are you sure you want to delete this property?')) {
@@ -125,17 +128,8 @@ export class EditPropertiesComponent implements OnInit {
     const file = event.target.files[0];
     if (!file) return;
   
-    try {
-      if (this.currentProperty.image && typeof this.currentProperty.image === 'string') {
-        const fileName = this.supabaseService.extractFileNameFromUrl(this.currentProperty.image);
-        await this.supabaseService.deleteImageFromBucket(fileName);
-      }
-  
-      const uploadedImage = await this.supabaseService.uploadImage(file);
-      this.currentProperty.image = uploadedImage.publicUrl;
-    } catch (error) {
-      console.error('Error handling image change:', error);
-    }
+    // Store the file temporarily
+    this.currentProperty.image = file;
   }
   
   async removeImage(): Promise<void> {

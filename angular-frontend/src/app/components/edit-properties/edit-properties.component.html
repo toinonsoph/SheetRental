@@ -72,6 +72,7 @@
           <input 
             id="name" 
             [(ngModel)]="currentProperty.name" 
+            #name="ngModel"
             name="name" 
             placeholder="Enter name of property"
             required />
@@ -85,6 +86,7 @@
           <input 
             id="type" 
             [(ngModel)]="currentProperty.propertyType" 
+            #type="ngModel"
             name="type" 
             placeholder="Select type of property"
             required />
@@ -99,6 +101,7 @@
           <input 
             id="street" 
             [(ngModel)]="currentProperty.address.street" 
+            #street="ngModel"
             name="street" 
             placeholder="Enter street name for address of property"
             required />
@@ -112,6 +115,7 @@
           <input 
             id="number" 
             [(ngModel)]="currentProperty.address.number" 
+            #number="ngModel"
             name="number" 
             placeholder="Enter number for address of property"
             required />
