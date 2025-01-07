@@ -137,5 +137,57 @@ export class EditPropertiesComponent implements OnInit {
     } catch (error) {
       console.error('Error removing image:', error);
     }
-  }   
+  }  
+  
+  async fetchPeopleIcon(): Promise<void> {
+    try {
+      const { data, error } = await this.supabaseService.client
+        .storage
+        .from(environment.supabaseStorage.iconBucket)
+        .list('', { search: 'people.png' });
+
+      if (error) {
+        console.error('Error fetching People icon:', error);
+        return;
+      }
+
+      const matchingIcon = data?.find((file) => file.name === 'people.png');
+      if (matchingIcon) {
+        this.peopleIconUrl = this.getImageUrl(environment.supabaseStorage.iconBucket, matchingIcon.name);
+      } else {
+        console.warn('People icon not found.');
+      }
+    } catch (err) {
+      console.error('Unexpected error fetching People icon:', err);
+    }
+  }
+
+  async fetchRoomIcon(): Promise<void> {
+    try {
+      const { data, error } = await this.supabaseService.client
+        .storage
+        .from(environment.supabaseStorage.iconBucket)
+        .list('', { search: 'room.png' });
+
+      if (error) {
+        console.error('Error fetching Room icon:', error);
+        return;
+      }
+
+      const matchingIcon = data?.find((file) => file.name === 'room.png');
+      if (matchingIcon) {
+        this.roomIconUrl = this.getImageUrl(environment.supabaseStorage.iconBucket, matchingIcon.name);
+      } else {
+        console.warn('Room icon not found.');
+      }
+    } catch (err) {
+      console.error('Unexpected error fetching Room icon:', err);
+    }
+  }
+
+  getImageUrl(bucket: string, fileName: string): string {
+    const baseUrl = environment.supabaseUrl;
+    const encodedFileName = encodeURIComponent(fileName);
+    return `${baseUrl}/storage/v1/object/public/${bucket}/${encodedFileName}`;
+  }
 }

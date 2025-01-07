@@ -61,7 +61,7 @@ h4 {
 
 .card-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 20px;
   justify-items: center;
   padding: 20px;
@@ -78,7 +78,7 @@ h4 {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
   width: 100%;
-  max-width: 400px;
+  max-width: 300px; 
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -114,6 +114,23 @@ h4 {
   max-height: 200px;
   object-fit: cover;
   border-radius: 5px;
+}
+
+.card-icon img,
+.equipment-icons img {
+  width: 20px !important; 
+  height: auto;
+}
+
+.card-icon {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.equipment-item {
+  display: inline-block;
+  margin: 5px;
 }
 
 .edit-button,
@@ -190,4 +207,10 @@ h4 {
 
 .remove-image-button:hover {
   background-color: #900;
+}
+
+@media (max-width: 768px) {
+  .card-container {
+    grid-template-columns: 1fr; 
+  }
 }
