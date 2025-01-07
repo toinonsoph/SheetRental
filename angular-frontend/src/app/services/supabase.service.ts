@@ -103,21 +103,32 @@ export class SupabaseService {
   }
 
   async getEquipmentForTable() {
-    const { data, error } = await this.supabase.from('equipment').select('name, icon_path');
-    if (error) {
-      console.error('Error fetching equipment:', error);
+    try {
+      const { data, error } = await this.supabase.from('equipment').select('name');
+  
+      if (error) {
+        console.error('Error fetching equipment:', error);
+        return [];
+      }
+  
+      // Generate public URLs for the icons based on the name
+      const equipmentWithUrls = data.map((item: any) => {
+        const formattedName = item.name.replace(/\s+/g, '_'); 
+        const iconUrl = this.supabase.storage
+          .from(environment.supabaseStorage.iconBucket)
+          .getPublicUrl(`${formattedName}.png`).data.publicUrl;
+  
+        return {
+          name: item.name,
+          iconUrl,
+        };
+      });  
+      return equipmentWithUrls;
+    } catch (error) {
+      console.error('Unexpected error fetching equipment:', error);
       return [];
     }
-
-    // Generate public URLs for images
-    const equipmentWithUrls = data.map((item: any) => ({
-      name: item.name,
-      iconPath: item.icon_path,
-      iconUrl: this.supabase.storage.from('iconbucket').getPublicUrl(item.icon_path).data.publicUrl,
-    }));
-
-    return equipmentWithUrls;
-  }
+  }  
 
   async addEquipment(equipment: { name: string; image: File }) {
     try {
