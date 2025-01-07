@@ -57,49 +57,104 @@
 <div *ngIf="isPopupOpen" class="popup-modal">
   <div class="popup-content">
     <h3>{{ isEditMode ? 'Edit Property' : 'Add New Property' }}</h3>
-    <form (ngSubmit)="saveProperty()" class="form-layout">
+    <form (ngSubmit)="saveProperty()" #propertyForm="ngForm" class="form-layout">
       <div class="form-row">
         <div class="input-group">
           <label for="name">Name:</label>
-          <input id="name" [(ngModel)]="currentProperty.name" name="name" required />
+          <input 
+            id="name" 
+            [(ngModel)]="currentProperty.name" 
+            name="name" 
+            placeholder="Enter name of property"
+            required />
+            <div *ngIf="name.invalid && name.touched" class="error">
+                <small *ngIf="name.errors?.required">Name is required.</small>
+                <small *ngIf="name.errors?.maxlength">Name must be less than 500 characters.</small>
+            </div>
         </div>
         <div class="input-group">
           <label for="type">Type:</label>
-          <input id="type" [(ngModel)]="currentProperty.propertyType" name="type" required />
+          <input 
+            id="type" 
+            [(ngModel)]="currentProperty.propertyType" 
+            name="type" 
+            placeholder="Select type of property"
+            required />
+            <div *ngIf="type.invalid && type.touched" class="error">
+                <small *ngIf="type.errors?.required">Type is required.</small>
+            </div>
         </div>
       </div>
       <div class="form-row">
         <div class="input-group">
           <label for="street">Street:</label>
-          <input id="street" [(ngModel)]="currentProperty.address.street" name="street" required />
+          <input 
+            id="street" 
+            [(ngModel)]="currentProperty.address.street" 
+            name="street" 
+            placeholder="Enter street name for address of property"
+            required />
+            <div *ngIf="street.invalid && street.touched" class="error">
+                <small *ngIf="street.errors?.required">Street is required.</small>
+                <small *ngIf="street.errors?.maxlength">Street must be less than 500 characters.</small>
+            </div>
         </div>
         <div class="input-group">
           <label for="number">Number:</label>
-          <input id="number" [(ngModel)]="currentProperty.address.number" name="number" required />
+          <input 
+            id="number" 
+            [(ngModel)]="currentProperty.address.number" 
+            name="number" 
+            placeholder="Enter number for address of property"
+            required />
+            <div *ngIf="number.invalid && number.touched" class="error">
+                <small *ngIf="number.errors?.required">Number is required.</small>
+            </div>
         </div>
       </div>
       <div class="form-row">
         <div class="input-group">
           <label for="zipcode">Zipcode:</label>
-          <input id="zipcode" type="number" [(ngModel)]="currentProperty.address.zipcode" name="zipcode" value="8420" readonly />
+          <input 
+            id="zipcode" 
+            type="number" 
+            [(ngModel)]="currentProperty.address.zipcode" 
+            name="zipcode" 
+            value="8420" 
+            readonly />
         </div>
         <div class="input-group">
           <label for="city">City:</label>
-          <input id="city" [(ngModel)]="currentProperty.address.city" name="city" value="De Haan" readonly />
+          <input 
+            id="city" 
+            [(ngModel)]="currentProperty.address.city" 
+            name="city" 
+            value="De Haan" 
+            readonly />
         </div>
       </div>
       <div class="form-row">
         <div class="input-group">
           <label for="country">Country:</label>
-          <input id="country" [(ngModel)]="currentProperty.address.country" name="country" value="Belgium" readonly />
+          <input 
+            id="country" 
+            [(ngModel)]="currentProperty.address.country" 
+            name="country" 
+            value="Belgium" 
+            readonly />
         </div>
         <div class="input-group">
-          <label for="price">Price:</label>
-          <input id="price" type="number" [(ngModel)]="currentProperty.price" name="price" />
+          <label for="price">From price:</label>
+          <input 
+            id="price" 
+            type="number" 
+            [(ngModel)]="currentProperty.price" 
+            name="price" 
+            placeholder="Enter from price for the property"/>
         </div>
       </div>
       <div class="form-actions">
-        <button type="submit" class="btn-save">Save</button>
+        <button type="submit" class="btn-save" [disabled]="propertyForm.invalid">Save</button>
         <button type="button" class="btn-cancel" (click)="closePopup()">Cancel</button>
       </div>
     </form>

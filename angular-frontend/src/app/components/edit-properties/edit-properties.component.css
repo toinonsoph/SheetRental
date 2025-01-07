@@ -412,10 +412,26 @@ h4 {
 }
 
 .input-group input {
-  padding: 10px;
+  width: 100%;
+  padding: 10px 15px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 10px;
+  background-color: #f3f3f3;
   font-size: 1rem;
+  color: #333;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.input-group input::placeholder {
+  color: #999;
+  font-style: italic;
+}
+
+.input-group input:focus {
+  border: 1px solid darkred;
+  background-color: #eaeaea;
+  outline: none;
 }
 
 .form-actions {
@@ -446,6 +462,16 @@ h4 {
   .btn-cancel:active {
     transform: scale(0.95);
   }
+
+.error {
+  color: red;
+  font-size: 0.9em;
+  margin-top: 5px;
+}
+
+input.ng-invalid.ng-touched {
+  border-color: red;
+}
 
 @media (max-width: 768px) {
   .header-container {

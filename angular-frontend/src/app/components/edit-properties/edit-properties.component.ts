@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SupabaseService } from '../../services/supabase.service';
 import { environment } from '../../../environments/environment';
 import { CommonModule } from '@angular/common';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-edit-properties',
@@ -77,7 +78,11 @@ export class EditPropertiesComponent implements OnInit {
     this.currentProperty = {};
   }
 
-  async saveProperty(): Promise<void> {
+  async saveProperty(propertyForm: NgForm): Promise<void> {
+    if (propertyForm.invalid) {
+      return; 
+    }
+  
     try {
       if (!this.currentProperty.address) {
         this.currentProperty.address = {};
@@ -102,7 +107,7 @@ export class EditPropertiesComponent implements OnInit {
     } catch (error) {
       console.error('Error saving property:', error);
     }
-  }  
+  } 
 
   async deleteCard(id: string): Promise<void> {
     if (confirm('Are you sure you want to delete this property?')) {
