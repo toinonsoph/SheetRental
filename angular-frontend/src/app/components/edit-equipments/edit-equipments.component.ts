@@ -46,16 +46,17 @@ export class EditEquipmentsComponent implements OnInit {
     this.showPopup = true;
     this.selectedEquipment = equipment || null;
   
+    console.log(this.equipmentForm);
     this.equipmentForm = equipment
       ? {
           name: equipment.name,
-          image: null, // Leave the file field empty, as it's optional
-          iconUrl: equipment.iconUrl, // Add this to prefill the image
+          image: null, 
+          iconUrl: equipment.iconUrl, 
         }
       : {
           name: '',
           image: null,
-          iconUrl: '', // No image when adding new equipment
+          iconUrl: '', 
         };
   }
 
@@ -86,6 +87,7 @@ export class EditEquipmentsComponent implements OnInit {
           duration: 3000, 
         });
       } else {
+        console.log(this.equipmentForm);
         // Add new equipment
         await this.supabaseService.addEquipment(this.equipmentForm);
   
