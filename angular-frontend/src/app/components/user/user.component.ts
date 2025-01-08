@@ -17,7 +17,7 @@ import { AuthService } from '../../services/auth.service';
 export class UserComponent {
   message: string | null = '';
 
-  activeLinkIndex = -1;
+  activeLinkIndex = 0;
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -29,7 +29,7 @@ export class UserComponent {
       } else if (url === '/user/agence-cambre') {
         this.activeLinkIndex = 1;
       } else {
-        this.activeLinkIndex = -1; 
+        this.activeLinkIndex = 0; 
       }
     });
   }
