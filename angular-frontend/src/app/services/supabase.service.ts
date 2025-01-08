@@ -136,79 +136,38 @@ export class SupabaseService {
     try {
       console.log('Adding equipment:', equipment);
   
-      // Step 1: Upload the image to Supabase Storage
-      const fileName = `${equipment.image.name.replace(/\s+/g, '_')}`;
-      console.log('Uploading file:', fileName);
+      // Upload the image to Supabase Storage
+      await this.uploadToIconsBucket(equipment.image);
   
-      const { error: uploadError } = await this.supabase.storage
-        .from(environment.supabaseStorage.iconBucket)
-        .upload(fileName, equipment.image);
-  
-      if (uploadError) {
-        console.error('Error uploading image:', uploadError.message);
-        throw new Error(`Error uploading image: ${uploadError.message}`);
-      }
-      console.log('Image uploaded successfully:', fileName);
-  
-      // Step 2: Insert equipment data into the database
-      const { error: insertError } = await this.supabase.from('equipment').insert({
+      // Insert equipment data into the database (name, createdon, lastupdatedon)
+      const { error } = await this.supabase.from('equipment').insert({
         name: equipment.name,
-        image_path: fileName, // Save the image path in the database
         createdon: new Date().toISOString(),
         lastupdatedon: new Date().toISOString(),
-        deleted: false,
       });
   
-      if (insertError) {
-        console.error('Error inserting equipment:', insertError.message);
-        throw new Error(`Error adding equipment: ${insertError.message}`);
+      if (error) {
+        console.error('Error inserting equipment:', error.message);
+        throw new Error(`Error adding equipment: ${error.message}`);
       }
+  
       console.log('Equipment added successfully to the database');
     } catch (error) {
       console.error('Error in addEquipment:', error);
       throw error;
     }
   }
-    
-
+  
   async updateEquipment(
     id: string,
-    equipment: { name: string; image: File | null },
-    currentImagePath: string | null
+    equipment: { name: string; image: File | null }
   ) {
     try {
       if (equipment.image) {
-        // Upload the new image and delete the old one
-        const newFileName = `${equipment.image.name.replace(/\s+/g, '_')}`;
-        
-        if (currentImagePath) {
-          const oldFileName = this.extractFileNameFromUrl(currentImagePath);
-          const { error: deleteError } = await this.supabase.storage
-            .from(environment.supabaseStorage.iconBucket)
-            .remove([oldFileName]);
-  
-          if (deleteError) {
-            console.log(deleteError.message);
-            console.warn(`Error deleting old image: ${deleteError.message}`);
-          } else {
-            console.log('Old image deleted successfully:', oldFileName);
-          }
-        }
-  
-        const { error: uploadError } = await this.supabase.storage
-          .from(environment.supabaseStorage.iconBucket)
-          .upload(newFileName, equipment.image);
-  
-        if (uploadError) {
-          console.log(uploadError.message);
-          throw new Error(`Error uploading new image: ${uploadError.message}`);
-        } else {
-          console.log('New image uploaded successfully:', newFileName);
-        }
+        await this.uploadToIconsBucket(equipment.image);
       }
   
-      // Update equipment name in the database
-      const { error: updateError } = await this.supabase
+      const { error } = await this.supabase
         .from('equipment')
         .update({
           name: equipment.name,
@@ -216,17 +175,16 @@ export class SupabaseService {
         })
         .eq('id', id);
   
-      if (updateError) {
-        console.log(updateError.message);
-        throw new Error(`Error updating equipment: ${updateError.message}`);
-      } else {
-        console.log('Equipment updated successfully');
+      if (error) {
+        throw new Error(`Error updating equipment: ${error.message}`);
       }
+  
+      console.log('Equipment updated successfully');
     } catch (error) {
-      console.log(error);
       console.error('Error in updateEquipment:', error);
+      throw error;
     }
-  }    
+  }     
 
   async deleteEquipment(id: number, imagePath: string) {
     try {
@@ -743,4 +701,36 @@ export class SupabaseService {
       return [];
     }
   }
+
+  async uploadToIconsBucket(file: File): Promise<{ publicUrl: string }> {
+    try {
+      const bucketName = environment.supabaseStorage.iconBucket; 
+      const fileName = file.name.replace(/\s+/g, '_'); 
+  
+      // Upload the file to the bucket
+      const { data } = await this.supabase.storage
+        .from(bucketName)
+        .upload(fileName, file);
+  
+      if (!data) {
+        throw new Error('Failed to upload the file. No data returned.');
+      }
+  
+      console.log('File uploaded successfully:', fileName);
+  
+      // Get the public URL for the uploaded file
+      const { data: publicUrlData } = this.supabase.storage
+        .from(bucketName)
+        .getPublicUrl(fileName);
+  
+      if (!publicUrlData || !publicUrlData.publicUrl) {
+        throw new Error('Failed to generate the public URL.');
+      }
+  
+      return { publicUrl: publicUrlData.publicUrl };
+    } catch (error: any) {
+      console.error('Error in uploadToIconsBucket:', error.message || error);
+      throw new Error(`Upload failed: ${error.message || error}`);
+    }
+  }  
 }
