@@ -44,10 +44,18 @@ export class EditEquipmentsComponent implements OnInit {
   openPopup(equipment: any = null) {
     this.showPopup = true;
     this.selectedEquipment = equipment || null;
-
+  
     this.equipmentForm = equipment
-      ? { name: equipment.name, image: null }
-      : { name: '', image: null };
+      ? {
+          name: equipment.name,
+          image: null, // Leave the file field empty, as it's optional
+          iconUrl: equipment.iconUrl, // Add this to prefill the image
+        }
+      : {
+          name: '',
+          image: null,
+          iconUrl: '', // No image when adding new equipment
+        };
   }
 
   closePopup() {
@@ -66,22 +74,29 @@ export class EditEquipmentsComponent implements OnInit {
   async onSave() {
     try {
       if (this.selectedEquipment) {
+        // Edit existing equipment
         await this.supabaseService.updateEquipment(
           this.selectedEquipment.id,
-          this.equipmentForm,
-          this.selectedEquipment.image_path
+          {
+            name: this.equipmentForm.name,
+            image: this.equipmentForm.image, // New image if provided
+          },
+          this.selectedEquipment.iconUrl // Pass the current image path (iconUrl) for deletion
         );
       } else {
+        // Add new equipment
         await this.supabaseService.addEquipment(this.equipmentForm);
       }
-
+  
+      // Refresh the table
       const equipments = await this.supabaseService.getEquipmentForTable();
       this.dataSource.data = equipments;
+  
       this.closePopup();
     } catch (error) {
       console.error('Error saving equipment:', error);
     }
-  }
+  }     
 
   async onDeleteEquipment(equipment: any) {
     const isConfirmed = confirm(`Are you sure you want to delete "${equipment.name}"?`);

@@ -53,8 +53,15 @@
       <!-- Upload Image -->
       <div class="form-group">
         <label for="upload-image">Upload Image:</label>
-        <input id="upload-image" type="file" (change)="onFileSelected($event)" />
+        <input id="upload-image" type="file" (change)="onFileSelected($event)" accept="image/*" />
+        
+        <!-- Prefill current image in editing mode -->
+        <div *ngIf="equipmentForm.iconUrl" class="image-preview">
+          <p>Current Image:</p>
+          <img [src]="equipmentForm.iconUrl" alt="Current Image" class="icon-img" />
+        </div>
       </div>
+      
 
       <div class="popup-actions">
         <button mat-button type="button" (click)="closePopup()">Cancel</button>

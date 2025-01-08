@@ -133,80 +133,87 @@ export class SupabaseService {
   async addEquipment(equipment: { name: string; image: File }) {
     try {
       // Upload the image to Supabase Storage
-      const fileName = `${equipment.image.name.replace(/\s+/g, '_')}`;
+      const fileName = `${equipment.image.name.replace(/\s+/g, '_')}`; 
       const { error: uploadError } = await this.supabase.storage
         .from(environment.supabaseStorage.iconBucket)
         .upload(fileName, equipment.image);
-
+  
       if (uploadError) {
         throw new Error(`Error uploading image: ${uploadError.message}`);
       }
-
+  
+      // Insert equipment name into the database
       const { error: insertError } = await this.supabase
         .from('equipment')
         .insert({
           name: equipment.name,
-          deleted: false,
           createdon: new Date().toISOString(),
-          lastupdatedon: new Date().toISOString()
+          lastupdatedon: new Date().toISOString(),
+          deleted: false,
         });
-
+  
       if (insertError) {
         throw new Error(`Error adding equipment: ${insertError.message}`);
       }
-
+  
       console.log('Equipment added successfully');
     } catch (error) {
       console.error('Error in addEquipment:', error);
     }
-  }
+  }  
 
-  async updateEquipment(id: number, equipment: { name: string; image: File | null }, currentImagePath: string) {
+  async updateEquipment(
+    id: string,
+    equipment: { name: string; image: File | null },
+    currentImagePath: string | null
+  ) {
     try {
-      let newImagePath = currentImagePath;
-
-      // If a new image is provided, upload it and delete the old image
       if (equipment.image) {
-        const newFileName = `${equipment.image.name.replace(/\s+/g, '_')}`;      
-
-        // Delete the old image
-        const { error: deleteError } = await this.supabase.storage
-          .from(environment.supabaseStorage.iconBucket)
-          .remove([currentImagePath]);
-
-        if (deleteError) {
-          console.warn(`Error deleting old image: ${deleteError.message}`);
+        // Upload the new image and delete the old one
+        const newFileName = `${equipment.image.name.replace(/\s+/g, '_')}`;
+        
+        if (currentImagePath) {
+          const oldFileName = this.extractFileNameFromUrl(currentImagePath);
+          const { error: deleteError } = await this.supabase.storage
+            .from(environment.supabaseStorage.iconBucket)
+            .remove([oldFileName]);
+  
+          if (deleteError) {
+            console.warn(`Error deleting old image: ${deleteError.message}`);
+          } else {
+            console.log('Old image deleted successfully:', oldFileName);
+          }
         }
-
+  
         const { error: uploadError } = await this.supabase.storage
-        .from(environment.supabaseStorage.iconBucket)
-        .upload(newFileName, equipment.image);
-
+          .from(environment.supabaseStorage.iconBucket)
+          .upload(newFileName, equipment.image);
+  
         if (uploadError) {
           throw new Error(`Error uploading new image: ${uploadError.message}`);
+        } else {
+          console.log('New image uploaded successfully:', newFileName);
         }
-
-        newImagePath = newFileName;
       }
-
-      // Update equipment in the database
+  
+      // Update equipment name in the database
       const { error: updateError } = await this.supabase
-        .from('equipments')
+        .from('equipment')
         .update({
           name: equipment.name,
-          lastupdatedon: new Date().toISOString()
+          lastupdatedon: new Date().toISOString(),
         })
         .eq('id', id);
-
+  
       if (updateError) {
         throw new Error(`Error updating equipment: ${updateError.message}`);
+      } else {
+        console.log('Equipment updated successfully');
       }
-
-      console.log('Equipment updated successfully');
     } catch (error) {
       console.error('Error in updateEquipment:', error);
     }
-  }
+  }    
 
   async deleteEquipment(id: number, imagePath: string) {
     try {
