@@ -76,7 +76,11 @@ export class EditPropertiesComponent implements OnInit {
 
   async openEditPopup(card: any): Promise<void> {
     this.isEditMode = true;
-    this.currentProperty = { ...card, address: card.address || {} };
+    this.currentProperty = {
+      ...card,
+      address: card.address || { street: '', number: '', zipcode: '8420', city: 'De Haan', country: 'Belgium' },
+      equipment: [],
+    };
   
     try {
       const equipment = await this.supabaseService.fetchEquipmentForProperty(card.id);
@@ -85,7 +89,7 @@ export class EditPropertiesComponent implements OnInit {
       console.error('Error fetching equipment for property:', error);
       this.currentProperty.equipment = [];
     }
-  
+    console.log('Equipment:', this.currentProperty.equipment);
     this.isPopupOpen = true;
   }  
 
@@ -96,6 +100,7 @@ export class EditPropertiesComponent implements OnInit {
       image: null,
       equipment: [],
     };
+    console.log('Equipment:', this.currentProperty.equipment);
     this.isPopupOpen = true;
   }
 
@@ -224,42 +229,42 @@ export class EditPropertiesComponent implements OnInit {
       console.error('Missing equipment ID or property ID.');
       return;
     }
-
+  
     try {
       await this.supabaseService.addEquipmentToProperty(
         this.currentProperty.id,
         this.selectedEquipmentId
       );
-
+  
       // Refresh the equipment list
       this.currentProperty.equipment = await this.supabaseService.fetchEquipmentForProperty(this.currentProperty.id);
     } catch (error) {
       console.error('Error adding equipment to property:', error);
     }
-  }
+  }  
 
   async removeEquipment(equipmentName: string): Promise<void> {
     if (!this.currentProperty.id || !equipmentName) {
       console.error('Missing property ID or equipment name.');
       return;
     }
-
+  
     try {
       const equipment = this.allEquipments.find(e => e.name === equipmentName);
       if (!equipment) {
         console.error('Equipment not found.');
         return;
       }
-
+  
       await this.supabaseService.deleteEquipmentFromProperty(
         this.currentProperty.id,
         equipment.id
       );
-
+  
       // Refresh the equipment list
       this.currentProperty.equipment = await this.supabaseService.fetchEquipmentForProperty(this.currentProperty.id);
     } catch (error) {
       console.error('Error removing equipment from property:', error);
     }
-  } 
+  }   
 }

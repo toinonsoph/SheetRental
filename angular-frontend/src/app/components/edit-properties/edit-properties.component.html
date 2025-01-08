@@ -164,26 +164,26 @@
             name="price" 
             placeholder="Enter from price for the property"/>
         </div>
-        <div *ngIf="currentProperty.equipment?.length > 0">
-            <h4>Current Equipments</h4>
-            <ul>
-              <li *ngFor="let equipment of currentProperty.equipment">
-                {{ equipment }}
-                <button (click)="removeEquipment(equipment)">Remove</button>
-              </li>
-            </ul>
-          </div>
-          <div *ngIf="currentProperty.equipment?.length === 0">
-            <p>No equipment associated with this property.</p>
-          </div>
+        <div *ngIf="currentProperty?.equipment?.length > 0">
+          <h4>Current Equipment</h4>
+          <ul>
+            <li *ngFor="let equipment of currentProperty.equipment">
+              {{ equipment }}
+              <button (click)="removeEquipment(equipment)">Remove</button>
+            </li>
+          </ul>
+        </div>
+        <div *ngIf="!currentProperty?.equipment || currentProperty.equipment.length === 0">
+          <p>No equipment associated with this property.</p>
+        </div>
           
-          <h4>Add Equipment</h4>
-          <select [(ngModel)]="selectedEquipmentId">
-            <option *ngFor="let equipment of allEquipments" [value]="equipment.id">
-              {{ equipment.name }}
-            </option>
-          </select>
-          <button (click)="addEquipment()">Add</button>          
+        <h4>Add Equipment</h4>
+        <select [(ngModel)]="selectedEquipmentId">
+          <option *ngFor="let equipment of allEquipments" [value]="equipment.id">
+            {{ equipment.name }}
+          </option>
+        </select>
+        <button (click)="addEquipment()">Add</button>         
       </div>
       <div class="form-actions">
         <button type="submit" class="btn-save" [disabled]="propertyForm.invalid">Save</button>
