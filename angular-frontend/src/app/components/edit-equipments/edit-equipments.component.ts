@@ -3,6 +3,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { SupabaseService } from '../../services/supabase.service';
 import { CommonModule } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-edit-equipments',
@@ -29,7 +30,7 @@ export class EditEquipmentsComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  constructor(private supabaseService: SupabaseService) {}
+  constructor(private supabaseService: SupabaseService,  private snackBar: MatSnackBar) {}
 
   async ngOnInit() {
     try {
@@ -77,15 +78,20 @@ export class EditEquipmentsComponent implements OnInit {
         // Edit existing equipment
         await this.supabaseService.updateEquipment(
           this.selectedEquipment.id,
-          {
-            name: this.equipmentForm.name,
-            image: this.equipmentForm.image, // New image if provided
-          },
-          this.selectedEquipment.iconUrl // Pass the current image path (iconUrl) for deletion
+          this.equipmentForm,
+          this.selectedEquipment.iconUrl // Pass the current image path
         );
+  
+        this.snackBar.open('Equipment updated successfully!', 'Close', {
+          duration: 3000, // Duration in milliseconds
+        });
       } else {
         // Add new equipment
         await this.supabaseService.addEquipment(this.equipmentForm);
+  
+        this.snackBar.open('Equipment added successfully!', 'Close', {
+          duration: 3000, // Duration in milliseconds
+        });
       }
   
       // Refresh the table
@@ -95,6 +101,9 @@ export class EditEquipmentsComponent implements OnInit {
       this.closePopup();
     } catch (error) {
       console.error('Error saving equipment:', error);
+      this.snackBar.open('An error occurred while saving the equipment.', 'Close', {
+        duration: 3000,
+      });
     }
   }     
 
