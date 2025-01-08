@@ -39,6 +39,7 @@
 .mat-header-cell {
   font-weight: bold;
   background-color: #f9f9f9;
+  text-transform: uppercase;
 }
 
 .mat-cell {
@@ -52,12 +53,13 @@
   width: 40px;
   border-radius: 4px;
   object-fit: cover;
+  border: 1px solid #ddd;
 }
 
 /* Action Buttons Styling */
 .action-buttons {
   display: flex;
-  gap: 8px; /* Adds spacing between buttons */
+  gap: 8px;
 }
 
 .darkred-button {
@@ -68,14 +70,15 @@
   font-size: 14px;
   border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, transform 0.2s;
 }
 
 .darkred-button:hover {
   background-color: #a10000;
+  transform: scale(1.05);
 }
 
-/* Paginator */
+/* Paginator Styling */
 .mat-paginator {
   text-align: right;
   margin-top: 16px;
@@ -109,6 +112,22 @@
   font-family: Arial, sans-serif;
 }
 
+/* Add Black Border to the Form */
+.modal form {
+  border: 2px solid black;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  box-sizing: border-box;
+}
+
+/* Add Focus Highlight on Form */
+.modal form:focus-within {
+  border-color: darkred;
+  box-shadow: 0 0 5px darkred;
+}
+
+/* Modal Title */
 .modal h2 {
   text-align: center;
   color: darkred;
@@ -125,7 +144,7 @@
 }
 
 .form-group label {
-  flex: 1; /* Labels take up equal space */
+  flex: 1;
   text-align: right;
   margin-right: 10px;
   font-size: 14px;
@@ -136,7 +155,7 @@
 .form-group input,
 .form-group select,
 .form-group textarea {
-  flex: 2; /* Inputs take up more space */
+  flex: 2;
   padding: 8px;
   font-size: 14px;
   border: 1px solid #ccc;
@@ -181,13 +200,35 @@ textarea {
   background-color: darkred;
   color: white;
   font-weight: bold;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, transform 0.2s;
 }
 
 .popup-actions button:last-child:hover {
   background-color: #a10000;
+  transform: scale(1.05);
 }
 
+/* Info Box */
+.info-box {
+  background-color: #f4f4f4;
+  border: 1px solid darkred;
+  border-radius: 5px;
+  padding: 20px;
+  margin: 30px 0;
+  text-align: center;
+  color: #333;
+  width: 100%;
+  max-width: 900px;
+}
+
+/* Snackbar Styling */
+.mat-snack-bar-container {
+  background-color: #4caf50;
+  color: white;
+  font-size: 16px;
+}
+
+/* Image Preview */
 .image-preview {
   margin-top: 10px;
 }
@@ -198,22 +239,4 @@ textarea {
   border: 1px solid #ccc;
   padding: 5px;
   margin-top: 5px;
-}
-
-.mat-snack-bar-container {
-  background-color: #4caf50; 
-  color: white;
-  font-size: 16px;
-}
-
-.info-box {
-  background-color: #f4f4f4 !important;
-  border: 1px solid darkred !important;
-  border-radius: 5px;
-  padding: 20px;
-  margin: 30px 0;
-  text-align: center;
-  color: #333;
-  width: 100%;
-  max-width: 900px;
 }

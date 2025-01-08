@@ -52,26 +52,33 @@
       <!-- Equipment Name -->
       <div class="form-group">
         <label for="equipment-name">Equipment Name:</label>
-        <input id="equipment-name" matInput [(ngModel)]="equipmentForm.name" name="name" required />
+        <input
+          id="equipment-name"
+          matInput
+          [(ngModel)]="equipmentForm.name"
+          name="name"
+          required
+          autocomplete="name"
+          placeholder="Enter the name for the equipment"
+        />
       </div>
-
+    
       <!-- Upload Image -->
       <div class="form-group">
         <label for="upload-image">Upload Image:</label>
-        <input id="upload-image" type="file" (change)="onFileSelected($event)" accept="image/*" />
-        
-        <!-- Prefill current image in editing mode -->
-        <div *ngIf="equipmentForm.iconUrl" class="image-preview">
-          <p>Current Image:</p>
-          <img [src]="equipmentForm.iconUrl" alt="Current Image" class="icon-img" />
-        </div>
+        <input
+          id="upload-image"
+          type="file"
+          (change)="onFileSelected($event)"
+          accept="image/*"
+          autocomplete="off"
+        />
       </div>
-      
-
+    
       <div class="popup-actions">
         <button mat-button type="button" (click)="closePopup()">Cancel</button>
         <button mat-raised-button color="primary" type="submit">Save</button>
       </div>
-    </form>
+    </form>    
   </div>
 </div>
