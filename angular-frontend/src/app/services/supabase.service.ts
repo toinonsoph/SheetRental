@@ -132,38 +132,42 @@ export class SupabaseService {
 
   async addEquipment(equipment: { name: string; image: File }) {
     try {
-      // Upload the image to Supabase Storage
-      const fileName = `${equipment.image.name.replace(/\s+/g, '_')}`; 
+      console.log('Adding equipment:', equipment);
+  
+      // Step 1: Upload the image to Supabase Storage
+      const fileName = `${equipment.image.name.replace(/\s+/g, '_')}`;
+      console.log('Uploading file:', fileName);
+  
       const { error: uploadError } = await this.supabase.storage
         .from(environment.supabaseStorage.iconBucket)
         .upload(fileName, equipment.image);
   
       if (uploadError) {
-        console.log(uploadError.message);
+        console.error('Error uploading image:', uploadError.message);
         throw new Error(`Error uploading image: ${uploadError.message}`);
       }
+      console.log('Image uploaded successfully:', fileName);
   
-      // Insert equipment name into the database
-      const { error: insertError } = await this.supabase
-        .from('equipment')
-        .insert({
-          name: equipment.name,
-          createdon: new Date().toISOString(),
-          lastupdatedon: new Date().toISOString(),
-          deleted: false,
-        });
+      // Step 2: Insert equipment data into the database
+      const { error: insertError } = await this.supabase.from('equipment').insert({
+        name: equipment.name,
+        image_path: fileName, // Save the image path in the database
+        createdon: new Date().toISOString(),
+        lastupdatedon: new Date().toISOString(),
+        deleted: false,
+      });
   
       if (insertError) {
-        console.log(insertError.message);
+        console.error('Error inserting equipment:', insertError.message);
         throw new Error(`Error adding equipment: ${insertError.message}`);
       }
-  
-      console.log('Equipment added successfully');
+      console.log('Equipment added successfully to the database');
     } catch (error) {
-      console.log(error);
       console.error('Error in addEquipment:', error);
+      throw error;
     }
-  }  
+  }
+    
 
   async updateEquipment(
     id: string,
