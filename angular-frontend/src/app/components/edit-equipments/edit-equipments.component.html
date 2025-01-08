@@ -42,7 +42,12 @@
 <!-- Popup Modal -->
 <div class="modal-overlay" *ngIf="showPopup">
   <div class="modal">
-    <h2>{{ selectedEquipment ? 'Edit Equipment' : 'Add New Equipment' }}</h2>
+    <h2>{{ selectedEquipment ? 'Edit Equipment' : 'Add New Equipment' }}</h2>   
+      <!-- Information Box -->
+    <div class="info-box">
+        <h3>Information</h3>
+        <p>Please ensure the image is no more than <strong>10kb </strong>.</p>        
+    </div>
     <form (ngSubmit)="onSave()">
       <!-- Equipment Name -->
       <div class="form-group">

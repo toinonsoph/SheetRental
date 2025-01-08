@@ -83,7 +83,7 @@ export class EditEquipmentsComponent implements OnInit {
         );
   
         this.snackBar.open('Equipment updated successfully!', 'Close', {
-          duration: 3000, // Duration in milliseconds
+          duration: 3000, 
         });
       } else {
         // Add new equipment
