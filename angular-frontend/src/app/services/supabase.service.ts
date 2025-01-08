@@ -82,7 +82,7 @@ export class SupabaseService {
   async fetchEquipments() {
     try {
       const { data, error } = await this.supabase
-        .from('equipments')
+        .from('equipment')
         .select('id, name, image_path');
 
       if (error) {
@@ -219,7 +219,7 @@ export class SupabaseService {
     try {
       // Soft delete the equipment
       const { error: updateError } = await this.supabase
-        .from('equipments')
+        .from('equipment')
         .update(
         { 
           deleted: true,
