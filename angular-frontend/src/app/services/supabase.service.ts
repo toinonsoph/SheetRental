@@ -15,7 +15,9 @@ export class SupabaseService {
   equipmentColumns: string[] = ['name', 'image'];
 
   constructor() {
-    this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
+    if (!this.supabase) {
+      this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
+    }
   }
 
   get client() {

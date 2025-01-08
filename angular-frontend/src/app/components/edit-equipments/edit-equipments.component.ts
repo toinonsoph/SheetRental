@@ -76,38 +76,28 @@ export class EditEquipmentsComponent implements OnInit {
   async onSave() {
     try {
       if (this.selectedEquipment) {
-        // Edit existing equipment
+        // Update existing equipment
+        console.log('Editing equipment:', this.equipmentForm);
         await this.supabaseService.updateEquipment(
           this.selectedEquipment.id,
           this.equipmentForm,
           this.selectedEquipment.iconUrl
         );
-  
-        this.snackBar.open('Equipment updated successfully!', 'Close', {
-          duration: 3000, 
-        });
       } else {
-        console.log(this.equipmentForm);
         // Add new equipment
+        console.log('Adding new equipment:', this.equipmentForm);
         await this.supabaseService.addEquipment(this.equipmentForm);
-  
-        this.snackBar.open('Equipment added successfully!', 'Close', {
-          duration: 3000, 
-        });
       }
   
-      // Refresh the table
+      // Reload the table after saving
       const equipments = await this.supabaseService.getEquipmentForTable();
       this.dataSource.data = equipments;
   
       this.closePopup();
     } catch (error) {
       console.error('Error saving equipment:', error);
-      this.snackBar.open('An error occurred while saving the equipment.', 'Close', {
-        duration: 3000,
-      });
     }
-  }     
+  }       
 
   async onDeleteEquipment(equipment: any) {
     const isConfirmed = confirm(`Are you sure you want to delete "${equipment.name}"?`);
