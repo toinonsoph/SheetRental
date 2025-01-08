@@ -79,7 +79,7 @@ export class EditEquipmentsComponent implements OnInit {
         await this.supabaseService.updateEquipment(
           this.selectedEquipment.id,
           this.equipmentForm,
-          this.selectedEquipment.iconUrl // Pass the current image path
+          this.selectedEquipment.iconUrl
         );
   
         this.snackBar.open('Equipment updated successfully!', 'Close', {
@@ -90,7 +90,7 @@ export class EditEquipmentsComponent implements OnInit {
         await this.supabaseService.addEquipment(this.equipmentForm);
   
         this.snackBar.open('Equipment added successfully!', 'Close', {
-          duration: 3000, // Duration in milliseconds
+          duration: 3000, 
         });
       }
   

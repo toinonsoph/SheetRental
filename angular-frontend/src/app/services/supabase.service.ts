@@ -139,6 +139,7 @@ export class SupabaseService {
         .upload(fileName, equipment.image);
   
       if (uploadError) {
+        console.log(uploadError.message);
         throw new Error(`Error uploading image: ${uploadError.message}`);
       }
   
@@ -153,11 +154,13 @@ export class SupabaseService {
         });
   
       if (insertError) {
+        console.log(insertError.message);
         throw new Error(`Error adding equipment: ${insertError.message}`);
       }
   
       console.log('Equipment added successfully');
     } catch (error) {
+      console.log(error);
       console.error('Error in addEquipment:', error);
     }
   }  
@@ -179,6 +182,7 @@ export class SupabaseService {
             .remove([oldFileName]);
   
           if (deleteError) {
+            console.log(deleteError.message);
             console.warn(`Error deleting old image: ${deleteError.message}`);
           } else {
             console.log('Old image deleted successfully:', oldFileName);
@@ -190,6 +194,7 @@ export class SupabaseService {
           .upload(newFileName, equipment.image);
   
         if (uploadError) {
+          console.log(uploadError.message);
           throw new Error(`Error uploading new image: ${uploadError.message}`);
         } else {
           console.log('New image uploaded successfully:', newFileName);
@@ -206,11 +211,13 @@ export class SupabaseService {
         .eq('id', id);
   
       if (updateError) {
+        console.log(updateError.message);
         throw new Error(`Error updating equipment: ${updateError.message}`);
       } else {
         console.log('Equipment updated successfully');
       }
     } catch (error) {
+      console.log(error);
       console.error('Error in updateEquipment:', error);
     }
   }    
