@@ -21,7 +21,7 @@ export class EditEquipmentsComponent implements OnInit {
   dataSource = new MatTableDataSource<any>([]);
   showPopup = false;
   selectedEquipment: any = null;
-  equipmentForm: { name: string; image: File | null } = { name: '', image: null };
+  equipmentForm: { name: string; image: File | null; iconUrl?: string } = { name: '', image: null, iconUrl : '' };
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
