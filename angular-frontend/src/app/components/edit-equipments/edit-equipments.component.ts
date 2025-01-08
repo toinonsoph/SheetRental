@@ -71,7 +71,31 @@ export class EditEquipmentsComponent implements OnInit {
     if (file) {
       this.equipmentForm.image = file;
     }
-  }           
+  }
+
+  async onSave() {
+    try {
+      if (!this.equipmentForm.image) {
+        throw new Error('Please select an image for the equipment.');
+      }
+  
+      console.log('Saving new equipment:', this.equipmentForm);
+      await this.supabaseService.addEquipment(this.equipmentForm);
+  
+      const equipments = await this.supabaseService.getEquipmentForTable();
+      this.dataSource.data = equipments;
+  
+      this.snackBar.open('Equipment saved successfully', 'Close', {
+        duration: 3000,
+      });
+      this.closePopup();
+    } catch (error: any) {
+      console.error('Error saving equipment:', error.message || error);
+      this.snackBar.open('Failed to save equipment. Please try again.', 'Close', {
+        duration: 3000,
+      });
+    }
+  }         
 
   async onDeleteEquipment(equipment: any) {
     const isConfirmed = confirm(`Are you sure you want to delete "${equipment.name}"?`);
