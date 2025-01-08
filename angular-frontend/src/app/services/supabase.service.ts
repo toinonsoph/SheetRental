@@ -125,7 +125,7 @@ export class SupabaseService {
           iconUrl,
         };
       });  
-      return equipmentWithUrls;
+      return equipmentWithUrls.sort((a, b) => a.name.localeCompare(b.name));
     } catch (error) {
       console.error('Unexpected error fetching equipment:', error);
       return [];
@@ -136,10 +136,8 @@ export class SupabaseService {
     try {
       console.log('Adding equipment:', equipment);
   
-      // Upload the image to Supabase Storage
       await this.uploadToIconsBucket(equipment.image);
   
-      // Insert equipment data into the database (name, createdon, lastupdatedon)
       const { error } = await this.supabase.from('equipment').insert({
         name: equipment.name,
         createdon: new Date().toISOString(),
