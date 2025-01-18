@@ -105,12 +105,11 @@
       <div class="quantity-section">
         <div class="form-group">
           <div *ngFor="let card of cards" class="quantity-group form-group-horizontal">
-            <label>{{ card.name_dutch }}</label>
-            <br>
-            <label>{{ card.name_french }}</label>
-            <br>
-            <label>{{ card.name_german }}</label>
-            <br>
+            <div class="label-group">
+              <label>{{ card.name_dutch }}/</label>
+              <label>{{ card.name_french }}/</label>
+              <label>{{ card.name_german }}:</label>
+            </div>
             <input
               type="number"
               [(ngModel)]="quantities[card.name_dutch]"

@@ -342,3 +342,8 @@ h4{
     transform: rotate(360deg);
   }
 }
+
+.label-group {
+  display: flex;
+  flex-direction: column;
+}
