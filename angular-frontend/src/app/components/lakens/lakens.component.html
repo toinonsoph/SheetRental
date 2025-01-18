@@ -4,10 +4,10 @@
 </div>
 <br>
 <div class="info-box">
-  <p>Een aanvraag kan ook via mail (<a href="mailto:info@agencecambre.be">info&#64;agencecambre.be</a>), telefonisch (<a href="tel:+32479599060">+32 479/59.90.60</a>) of via de knop rechtsboven gebeuren.</p>      
+  <p>Een aanvraag kan ook via mail (<a href="mailto:info@agencecambre.be">info&#64;agencecambre.be</a>), telefonisch (<a href="tel:+32479599060">+32 479/59.90.60</a>) of via de knop rechtsboven gebeuren.</p>
   <p>Une demande peut également être faite par email (<a href="mailto: info@agencecambre.be ">info&#64;agencecambre.be</a>), par téléphone (<a href="tel:+32479599060"> +32 479 /59.90.60</a>) ou via le bouton en haut à droite se produisent.</p>
   <p>Eine Anfrage ist auch per E-Mail (<a href="mailto: info@agencecambre.be ">info&#64;agencecambre.be</a>), Telefon (<a href="tel:+32479599060"> +32 479 /59.90.60</a>) oder über den Button oben rechts möglich.</p>
-</div>  
+</div>
 <br>
 <div *ngIf="successMessage" class="success-message" [innerHTML]="successMessage"></div>
 
@@ -34,7 +34,7 @@
     <h4>Aanvraag/Commande/Bestellung</h4><br>
     <div *ngIf="errorMessage" class="error-message">
       {{ errorMessage }}
-    </div>      
+    </div>
     <br>
     <form (ngSubmit)="submitForm()">
       <div class="form-row">
@@ -48,7 +48,7 @@
             placeholder="Enter first name"
             required
           />
-          <small *ngIf="formSubmitted && !formData.firstName" class="error-text">           
+          <small *ngIf="formSubmitted && !formData.firstName" class="error-text">
             Voornaam is verplicht/ Le prénom est obligatoire/ Vorname ist erforderlich
           </small>
         </div>
@@ -105,7 +105,9 @@
       <div class="quantity-section">
         <div class="form-group">
           <div *ngFor="let card of cards" class="quantity-group form-group-horizontal">
-            <label>{{ card.name_dutch }} / {{ card.name_french }} / {{ card.name_german }}:</label>
+            <label>{{ card.name_dutch }}</label>
+            <label>{{ card.name_french }}</label>
+            <label>{{ card.name_german }}</label>
             <input
               type="number"
               [(ngModel)]="quantities[card.name_dutch]"
