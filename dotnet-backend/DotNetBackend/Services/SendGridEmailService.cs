@@ -11,7 +11,7 @@ namespace DotNetBackend.Services
         public SendGridEmailService(string apiKey)
         {
             _apiKey = apiKey ?? throw new ArgumentNullException(nameof(apiKey), "SendGrid API key is not configured.");
-            _fromAddress = new EmailAddress("tnsn@axi.be", "Cambre Services");
+            _fromAddress = new EmailAddress("toinon.naesen@hotmail.com", "Cambre Services");
         }
 
         public async Task<bool> SendEmailAsync(string toEmail, string subject, string plainTextContent, string? htmlContent = null)
