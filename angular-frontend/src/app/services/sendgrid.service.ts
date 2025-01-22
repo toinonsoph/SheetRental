@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
-  providedIn: 'root', 
+  providedIn: 'root',
 })
 export class SendGridService {
   private apiUrl = 'https://sheetrentalbackend.onrender.com/api/email';  // Backend API endpoint
@@ -37,7 +37,7 @@ export class SendGridService {
     const templateEmailRequest = {
         to: to,
         templateId: templateId,
-        dynamicData: dynamicData,
+        dynamic_template_data: dynamicData,
     };
 
     return this.http.post(`${this.apiUrl}/send-template`, templateEmailRequest, { responseType: 'text' });
@@ -52,7 +52,7 @@ export class SendGridService {
           to: to,
           templateId: templateId,
       };
-  
+
       return this.http.post(`${this.apiUrl}/send-template-no-data`, templateEmailRequest, { responseType: 'text' });
   }
 }
