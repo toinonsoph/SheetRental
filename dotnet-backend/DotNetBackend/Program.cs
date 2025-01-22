@@ -29,7 +29,8 @@ builder.Services.AddCors(options =>
     {
         policy.WithOrigins(
             "http://localhost:4200", 
-            "https://toinonsoph.github.io" 
+            "https://toinonsoph.github.io",
+            "https://lakensdehaan.be"
         )
         .AllowAnyHeader()
         .AllowAnyMethod();
