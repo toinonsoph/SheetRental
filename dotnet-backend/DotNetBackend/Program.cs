@@ -40,18 +40,19 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 // // Add middleware to handle OPTIONS preflight requests
-// app.Use(async (context, next) =>
-// {
-//     if (context.Request.Method == "OPTIONS")
-//     {
-//         context.Response.Headers.Append("Access-Control-Allow-Origin", "https://toinonsoph.github.io");
-//         context.Response.Headers.Append("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-//         context.Response.Headers.Append("Access-Control-Allow-Headers", "Content-Type, Authorization");
-//         context.Response.StatusCode = 204; 
-//         return;
-//     }
-//     await next();
-// });
+app.Use(async (context, next) =>
+{
+    if (context.Request.Method == "OPTIONS")
+    {
+        context.Response.Headers.Append("Access-Control-Allow-Origin", "*");
+        context.Response.Headers.Append("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        context.Response.Headers.Append("Access-Control-Allow-Headers", "Content-Type, Authorization");
+        context.Response.StatusCode = 204;
+        return;
+    }
+    await next();
+});
+
 
 // Enable CORS
 app.UseCors("AllowAngularApp");

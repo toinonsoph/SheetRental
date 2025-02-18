@@ -37,7 +37,7 @@ export class SendGridService {
     const templateEmailRequest = {
         to: to,
         templateId: templateId,
-        dynamic_template_data: dynamicData,
+        dynamicData: dynamicData,
     };
 
     return this.http.post(`${this.apiUrl}/send-template`, templateEmailRequest, { responseType: 'text' });
