@@ -121,18 +121,17 @@ export class LakensComponent implements OnInit {
         phone_number: this.formData.phone,
         dynamic_content: this.generateEmailHTML(),
         remark: this.formData.remark,
-        image_url: 'https://your-image-link.com/image.png' // Replace with your actual image URL
+        image_url: ''
       };
 
       this.smtpEmailService.sendEmail(emailData)
         .then(() => {
-          this.successMessage = 'E-mail is succesvol verzonden!';
+          this.successMessage = 'E-mail is succesvol verzonden! Wij zullen dit zo spoedig mogelijk behandelen en zullen u contacteren. / Email envoyé avec succès ! Nous traiterons cela dans les plus brefs délais et vous contacterons. / E-Mail erfolgreich gesendet! Wir werden uns schnellstmöglich darum kümmern und mit Ihnen Kontakt aufnehmen.';
           this.resetForm();
           this.toggleSpinner(false);
         })
         .catch(error => {
-          console.error('Error sending email:', error);
-          this.errorMessage = 'There was an issue with sending the email. Please try again.';
+          this.errorMessage = `Er was een probleem met het verzenden van de e-mail. Probeer het opnieuw of neem op een andere manier contact met ons op. / Un problème est survenu lors de l'envoi de l'e-mail. Veuillez réessayer ou nous contacter d'une autre manière. / Beim Senden der E-Mail ist ein Problem aufgetreten. Bitte versuchen Sie es erneut oder kontaktieren Sie uns auf andere Weise.`;
           this.toggleSpinner(false);
         });
     } else {
@@ -181,34 +180,15 @@ export class LakensComponent implements OnInit {
   }
 
   generateEmailHTML(): string {
-
-    const quantitiesHTML = this.cards
-      .map(card => {
-        const quantity = this.quantities[card.name_dutch] || 0;
-        return `<li>${card.name_dutch}: ${quantity}</li>`;
-      })
-      .join('');
-
     return `
-      <h1 style="color: darkred;">Cambre Services</h1>
-
-      <p>Er is een aanvraag gebeurd via de website voor Cambre Services.</p>
-      <br>
-
-      <p><strong>Naam:</strong> ${this.formData.firstName} ${this.formData.lastName}</p>
-      <p><strong>Mail:</strong> ${this.formData.mail}</p>
-      <p><strong>Telefoonnummer:</strong> ${this.formData.phone}</p>
-      <br>
-      <hr style="border: 1px solid #800000; margin: 10px 0;">
-      <br>
-      <h3>Aanvraag</h3>
-
-      <ul>${quantitiesHTML}</ul>
-
-      <p><strong>Opmerking:</strong> ${this.formData.remark}</p>
-      <br>
-
-      <hr style="border: 1px solid #800000; margin: 10px 0;">
+      <ul>
+        ${this.cards
+          .map(card => {
+            const quantity = this.quantities[card.name_dutch] || 0;
+            return `<li>${card.name_dutch}: ${quantity}</li>`;
+          })
+          .join('')}
+      </ul>
     `;
   }
 }
