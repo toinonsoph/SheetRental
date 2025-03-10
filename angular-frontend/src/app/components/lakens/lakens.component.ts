@@ -181,14 +181,12 @@ export class LakensComponent implements OnInit {
 
   generateEmailHTML(): string {
     return `
-      <ul>
         ${this.cards
           .map(card => {
             const quantity = this.quantities[card.name_dutch] || 0;
-            return `<li>${card.name_dutch}: ${quantity}</li>`;
+            return `- ${card.name_dutch}: ${quantity}`;
           })
-          .join('')}
-      </ul>
+          .join('\n')}
     `;
   }
 }
