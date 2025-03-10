@@ -2,12 +2,18 @@
 <nav class="navbar">
   <div class="navbar-logo">
   </div>
+
+  <!-- Hamburger Menu Button -->
+  <button class="hamburger" (click)="toggleMenu()">
+    &#9776;
+  </button>
+
   <nav mat-tab-nav-bar [tabPanel]="tabPanel" class="custom-tab-bar">
     <!-- Generate tabs dynamically using routerLink -->
     <a
       *ngFor="let link of links"
       mat-tab-link
-      [routerLink]="link.id" 
+      [routerLink]="link.id"
       [routerLinkActiveOptions]="{ exact: true }"
       routerLinkActive="active"
       class="custom-tab-link">

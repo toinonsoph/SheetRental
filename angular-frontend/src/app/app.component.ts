@@ -20,8 +20,14 @@ import { RouterModule } from '@angular/router';
   ],
 })
 export class AppComponent {
+  isMenuOpen = false;
+
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
   links = [
     { id: '/sheets', label: 'Lakens / Draps / Bettwâsche' },
     { id: '/rental', label: 'Vakantiewoningen / Location de maisons de vacances / Vermietung von Ferienhäuser' },
-  ];  
+  ];
 }
