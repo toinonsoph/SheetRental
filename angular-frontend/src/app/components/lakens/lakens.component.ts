@@ -128,7 +128,7 @@ export class LakensComponent implements OnInit {
         this.toggleSpinner(false);
       }).catch(error => {
         console.error('Error sending email:', error);
-        this.errorMessage = 'There was an issue with sending the email. Please try again.';
+        this.errorMessage = 'There was an issue with sending the email. Please try again. Bis';
         this.toggleSpinner(false);
       });
     } else {
