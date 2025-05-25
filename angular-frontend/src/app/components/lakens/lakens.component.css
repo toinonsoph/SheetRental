@@ -421,6 +421,14 @@ h4{
   }
 }
 
+.desktop-only {
+  display: inline-block;
+}
+
+.mobile-only {
+  display: none !important;
+}
+
 @media (max-width: 768px) {
   .desktop-only {
     display: none !important;
