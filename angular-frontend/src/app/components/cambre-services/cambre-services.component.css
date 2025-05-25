@@ -7,15 +7,15 @@ body {
 
 html, body {
   height: 100%;
-  margin: 0; 
+  margin: 0;
 }
 
 .center-content {
-  display: flex; 
-  justify-content: center; 
-  align-items: center; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 10vh;
-  text-align: center; 
+  text-align: center;
   background: #f4f4f4;
 }
 
@@ -63,7 +63,7 @@ html, body {
   padding: 15px;
   font-size: 16px;
   color: black;
-  border-bottom: 1px solid black; 
+  border-bottom: 1px solid black;
 }
 
 .styled-table th {
@@ -73,7 +73,7 @@ html, body {
 }
 
 .styled-table tr:hover {
-  background-color: #f1f1f1; 
+  background-color: #f1f1f1;
 }
 
 .styled-table td button {
@@ -234,18 +234,26 @@ button:hover {
 }
 
 .mdc-button__label {
-  color: black !important; 
-  font-weight: bold; 
+  color: black !important;
+  font-weight: bold;
 }
 
 table.mat-elevation-z8 {
-  width: 100%; 
-  max-width: none; 
-  margin: 0 auto; 
+  width: 100%;
+  max-width: none;
+  margin: 0 auto;
 }
 
 .center-container {
-  max-width: 1600px; 
+  max-width: 1600px;
+}
+
+.desktop-only {
+  display: inline-block;
+}
+
+.mobile-only {
+  display: none;
 }
 
 @media (max-width: 768px) {
@@ -278,6 +286,31 @@ table.mat-elevation-z8 {
     font-size: 12px;
     padding: 8px 10px;
   }
+
+  .desktop-only {
+    display: none;
+  }
+
+  .mobile-only {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .center-button button {
+    width: 90%;
+    max-width: 320px;
+    font-size: 16px;
+    padding: 12px;
+    background-color: darkred;
+    border: none;
+    color: white;
+    border-radius: 6px;
+  }
+
+  .center-button button:hover {
+    background-color: #aa0000;
+  }
 }
 
 /* Center the title and move it higher */
@@ -299,7 +332,7 @@ table.mat-elevation-z8 {
   border-collapse: collapse;
   background-color: #f9f9f9;
   text-align: center;
-  margin-top: 10px; 
+  margin-top: 10px;
 }
 
 .styled-table th,
