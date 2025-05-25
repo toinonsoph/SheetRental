@@ -419,29 +419,29 @@ h4{
   .button-group button {
     width: 100%;
   }
+}
 
-  .desktop-button {
+@media (max-width: 768px) {
+  .desktop-only {
     display: none !important;
   }
 
-  .mobile-button-wrapper {
+  .mobile-only {
     display: flex !important;
     justify-content: center;
     margin-top: 20px;
+    margin-bottom: 30px;
   }
 
-  .mobile-button {
+  .mobile-only .request-button {
     width: 90%;
     max-width: 320px;
-    font-size: 16px;
     padding: 12px;
     background-color: darkred;
     color: white;
     border: none;
     border-radius: 6px;
-  }
-
-  .mobile-button:hover {
-    background-color: #aa0000;
+    font-weight: bold;
+    font-size: 16px;
   }
 }

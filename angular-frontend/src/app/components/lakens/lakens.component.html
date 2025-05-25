@@ -11,8 +11,8 @@
   <p>Eine Anfrage ist per E-Mail (<a href="mailto: katelijne.schallier@telenet.be ">katelijne.schallier&#64;telenet.be</a>), Telefon (<a href="tel:+32479599060"> +32 479 /59.90.60</a>) oder über den Button oben rechts möglich.</p>
 </div>
 <br>
-<div class="btn btn-primary mobile-only center-button">
-  <button class="request-button" (click)="openPopup()" style="background-color: darkred; border-color: darkred; color: white;">Aanvraag/Commande/Bestelling</button>
+<div class="mobile-only">
+  <button class="btn btn-primary request-button" (click)="openPopup()">Aanvraag/Commande/Bestelling</button>
 </div>
 <br>
 <div *ngIf="successMessage" class="success-message" [innerHTML]="successMessage"></div>
