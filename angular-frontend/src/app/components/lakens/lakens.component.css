@@ -347,3 +347,28 @@ h4{
   display: flex;
   flex-direction: column;
 }
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.header-container h3 {
+  margin: 0;
+}
+
+@media (max-width: 1024px) {
+  .header-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .header-container button {
+    align-self: flex-start;
+    margin-top: 10px;
+  }
+}
