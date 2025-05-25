@@ -56,6 +56,14 @@
     line-height: 1.4;
   }
 
+  .desktop-button {
+    display: inline-block;
+  }
+
+  .mobile-button-wrapper {
+    display: none;
+  }
+
   /* Responsive Design */
   @media (max-width: 480px) {
     .card-container {
@@ -410,5 +418,30 @@ h4{
 
   .button-group button {
     width: 100%;
+  }
+
+  .desktop-button {
+    display: none !important;
+  }
+
+  .mobile-button-wrapper {
+    display: flex !important;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .mobile-button {
+    width: 90%;
+    max-width: 320px;
+    font-size: 16px;
+    padding: 12px;
+    background-color: darkred;
+    color: white;
+    border: none;
+    border-radius: 6px;
+  }
+
+  .mobile-button:hover {
+    background-color: #aa0000;
   }
 }
