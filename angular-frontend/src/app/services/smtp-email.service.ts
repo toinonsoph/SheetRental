@@ -6,7 +6,7 @@ import emailjs from '@emailjs/browser';
 })
 export class SmtpEmailService {
 
-  private serviceId = 'service_a8f9q06';
+  private serviceId = 'service_j2v7skr';
   private templateId = 'template_0r0ccys';
   private publicKey = '0w6h4pD-8i92xWBfh';
 
