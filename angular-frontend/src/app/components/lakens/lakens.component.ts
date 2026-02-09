@@ -31,6 +31,9 @@ export class LakensComponent implements OnInit {
     lastName: '',
     mail: '',
     phone: '',
+    holidayHome: '',
+    periodFrom: '',
+    periodTo: '',
     remark: ''
   };
 
@@ -119,6 +122,9 @@ export class LakensComponent implements OnInit {
         last_name: this.formData.lastName,
         email: this.formData.mail,
         phone_number: this.formData.phone,
+        holiday_home: this.formData.holidayHome,
+        period_from: this.formData.periodFrom,
+        period_to: this.formData.periodTo,
         dynamic_content: this.generateEmailHTML(),
         remark: this.formData.remark,
         image_url: ''
@@ -148,6 +154,9 @@ export class LakensComponent implements OnInit {
       lastName: '',
       mail: '',
       phone: '',
+      holidayHome: '',
+      periodFrom: '',
+      periodTo: '',
       remark: ''
     };
     this.initializeQuantities();
@@ -169,7 +178,10 @@ export class LakensComponent implements OnInit {
       this.formData.firstName &&
       this.formData.lastName &&
       isEmailValid &&
-      isPhoneValid
+      isPhoneValid &&
+      this.formData.holidayHome &&
+      this.formData.periodFrom &&
+      this.formData.periodTo
     );
   }
 

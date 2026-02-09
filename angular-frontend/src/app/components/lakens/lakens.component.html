@@ -107,6 +107,61 @@
         </div>
       </div>
       <br>
+      <div class="section-divider"></div>
+      <br>
+
+<div class="form-row">
+  <div class="form-group">
+    <label for="holidayHome">
+      Naam vakantiehuis/Nom de la maison de vacances/Name des Ferienhauses:
+    </label>
+    <input
+      id="holidayHome"
+      type="text"
+      [(ngModel)]="formData.holidayHome"
+      name="holidayHome"
+      placeholder="Enter holiday home name"
+      required
+    />
+    <small *ngIf="formSubmitted && !formData.holidayHome" class="error-text">
+      Naam is verplicht/ Le nom est obligatoire/ Name ist erforderlich
+    </small>
+  </div>
+</div>
+
+<div class="form-row">
+  <div class="form-group">
+    <label for="periodFrom">
+      Periode van/Période du/Zeitraum von:
+    </label>
+    <input
+      id="periodFrom"
+      type="datetime-local"
+      [(ngModel)]="formData.periodFrom"
+      name="periodFrom"
+      required
+    />
+    <small *ngIf="formSubmitted && !formData.periodFrom" class="error-text">
+      Startdatum is verplicht/ Date de début obligatoire/ Startdatum erforderlich
+    </small>
+  </div>
+
+  <div class="form-group">
+    <label for="periodTo">
+      Periode tot/Période au/Zeitraum bis:
+    </label>
+    <input
+      id="periodTo"
+      type="datetime-local"
+      [(ngModel)]="formData.periodTo"
+      name="periodTo"
+      required
+    />
+    <small *ngIf="formSubmitted && !formData.periodTo" class="error-text">
+      Einddatum is verplicht/ Date de fin obligatoire/ Enddatum erforderlich
+    </small>
+  </div>
+</div>
 
       <div class="quantity-section">
         <div class="form-group">
